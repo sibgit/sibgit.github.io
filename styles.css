@@ -1,3 +1,28 @@
 .animal-table {
 	width : 100%;
 }
+
+.animal-table td{
+	font-size: 2em;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #008080;
+}
+
+h1 {
+	font-size: 3em;
+	font-family: Arial, Helvetica, sans-serif;
+	color: black;
+}
+
+h2 {
+	font-size: 2em;
+	font-family: Arial, Helvetica, sans-serif;
+	color: black;
+}
+
+
+a { 
+	text-decoration: none; 
+	font-family: Arial, Helvetica, sans-serif;
+	color: #008080;
+}
