@@ -26,7 +26,7 @@ p {
 ul {
 	display: grid;
 	grid-template-columns: repeat(2, auto); /* Two equal-width columns */
-	grid-template-rows: repeat(7, auto);
+	grid-template-rows: repeat(8, auto);
 	grid-auto-flow: column;
 	max-width: 1000px;
 	gap: 10px; /* Space between items */
