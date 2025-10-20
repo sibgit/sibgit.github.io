@@ -221,3 +221,14 @@ Please note that this schedule is approximate.
 * [Atlassian Git tutorial - become a git guru](https://www.atlassian.com/git/tutorials)
 
 <br>
+
+## Acknowledgments and funding
+
+### Funding
+
+* The development of this course has been funded by the Swiss State Secretariat
+  for Education, Research and Innovation
+  ([SERI](https://www.sbfi.admin.ch/sbfi/en/home.html)) trough the
+  [SIB Swiss Institute of Bioinformatics](https://www.sib.swiss).
+* Other funding sources include:
+  * European Union's Horizon Europe Framework Program (grant number 101080997).
