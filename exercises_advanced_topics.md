@@ -160,7 +160,7 @@ Proceed as follows:
     * c778c05 Add 'command_mode' file: commands for vim's command mode
     * 8186e45 Add 'normal_mode' file: commands for vim's normal mode
     * c454a04 README: add vim modes and open file example
-    * 0fbf901 First commit of the vim cheat-sheet project. Add README fil
+    * 0fbf901 First commit of the vim cheat-sheet project. Add README file
     ```
 
     <br>
