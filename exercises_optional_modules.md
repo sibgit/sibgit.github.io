@@ -75,7 +75,7 @@ and have certain types of files tracked by Git LFS.
 1. Change directory to `exercise_6/test_lfs.git`. Initialize a new empty Git repository, and make
    a first commit that only adds the `README.md` file.
 
-   **Important:** if you have not run the `git lfs install` command yet at least once on your
+   **Important:** if you have not run the `git lfs install` command yet (at least once) on your
    system, please do it now.
 
 2. Make a second commit that adds all files present in the directory. However, the following files
