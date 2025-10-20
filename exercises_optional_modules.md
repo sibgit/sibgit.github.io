@@ -9,53 +9,81 @@
 ## Exercise 5 - The Git reference web page gets better with submodules [40 min]
 **Objective:** introduction to git submodule.
 
-This exercise is based on a small web-page showing a list of useful tools and the "git reference
-web page" you might remember from the *Version Control with Git – First Steps* exercises.
+In this exercise, we will implement some improvements to 2 web pages using **submodules**. The
+projects for these web pages are the following:
+* The [git resource webpage](https://github.com/sibgit/git_resources_webpage), which you might
+  remember from the *Version Control with Git – First Steps* exercises.
+* The [useful tools webpage](https://github.com/sibgit/useful-tools), a page that shows a list of
+  useful tools for the part of our lives that does not involve typing Git commands in a shell.
 
-The idea is that we have a submodule with a custom CSS style, and that we re-use it in the
-two different Git repositories.
+<br>
 
-### A) Clone projects containing a submodule
+### A) Clone the projects - including their submodule
 * Change into the `exercise_5` directory - it should be empty.
-* Clone the following 2 repos. Please note that the repos contain submodules, so make sure to also
-  download their content:
-   * [https://github.com/sibgit/git-resources](https://github.com/sibgit/git-resources).
-   * [https://github.com/sibgit/useful-tools](https://github.com/sibgit/useful-tools).
-* Display the two web-pages in your local browser (`references.html` and `useful-tools.html`).
-  They should both show a *glitter effect* when moving the mouse pointer.
+* Clone the repositories for the 2 web pages (see links above). They contain submodules, so
+  **make sure to also download the submodule content**.
+* Display the two web-pages `references.html` and `useful-tools.html` in your local browser (one is
+  in each of the repo you just cloned). They should both show a *glitter effect* when moving the
+  mouse pointer.
 * Have a look at `.gitmodules` to see what submodules are in these projects.
 
-**Question**: which command would you use to perform a pull on those repositories?
+**Questions**:
+* Which command would you use to update the content of the `git_resources_webpage` and
+  `useful-tools` repositories (so that changes also affect submodules)?
+* Where would you need to run this command? In the main project (e.g. `git_resources_webpage`) or
+  inside the `glitter-cursor` submodule directory?
 
 <br>
 
-### B) Change the style of the two sites by adding a submodule
-* Fork [https://github.com/sibgit/great-style](https://github.com/sibgit/great-style) into your
-  GitHub account. It will be our new submodule.
-* Add the **FORKED** submodule to both local repositories.
-* Display again the two web-pages, they should now have another style.
-* Make sure to commit the addition of the submodule to the two local repositories.
-* Have again a look at `.gitmodules` to see how it changed.
+### B) Change the style of the web sites by adding a submodule
+* Go to [the great-style GitHub page](https://github.com/sibgit/great-style) in your browser and
+  create a **Fork** of the project. To create a fork, simply go to the web page of "great-style"
+  and click on the **Fork** button (near the top right).
+* This will create **a copy** of the original project under your GitHub/GitLab account. You will
+  be the **owner** of this forked project.
+* Add the **forked** *great-style* repo as a new submodule to both `git_resources_webpage` and
+  `useful-tools`.  
+  :fire: **Important:** make sure to use the **forked** project, and *not* the original project!
+* Refresh the two web pages in your browser, they should now have another style.
+* **Commit** the changes (i.e. the addition of the new submodule) in your two local repos
+  (`git_resources_webpage` and `useful-tools`) with the commit message
+  `"Add great-style submodule"`.
+* Have again a look at the `.gitmodules` files to see how they changed.
 
 <br>
 
-### C) Make a change in the submodule
-The colors of the links change rather fast, so we want to slow it down. We will first do the
-changes from within the project *git-resources* and then pull the latest version of the submodule
-in *useful-tools*.
+### C) Improve the great-style submodule
+If you look at your web pages, you can notice that the colors of the hyperlinks change rather
+quickly, to the point where we cannot enjoy this mesmerizing great style to its full extent. So
+let's slow that down a bit.
 
-* Go into *git-resources* and in `great-style/great_style.css` change the `--anim-cicle-time` to 10s.
-* Display *references.html* to verify that the colors change slower.
-* Commit the change in the submodule.
-* Push the commit to your fork.
-<br>
+We will first do the changes from within the project `git_resources_webpage` and then pull the
+latest version of the submodule in `useful-tools`.
+* Open the file `git_resources_webpage/great-style/great_style.css` in a text editor, and change
+  the `--anim-cicle-time` value to 10s (line 4 of the file).
+* Reload the web page *references.html* in your browser, and verify that the colors now change
+  more slowly.  
+* Wait... did we just make a great style even greater? *Yes, we did !*  
+  Let's keep these changes for posterity by committing them to the `great_style` submodule and then
+  pushing them to the remote (your forked *great-style* remote).  
+  **Note:** if you get a message telling you that you are not allowed to push, then it's probably
+  because you have added the original *great-style* project as a remote, and not the forked version.
+* Almost done. All that is left to is to update the *git_resources_webpage* repository so that it
+  points at the new version of *great-style* that we just committed.  
+  Go back to the root of `git_resources_webpage`, and commit the changes (the update in the version
+  of the *great-style* submodule) with the message
+  `"Update great-style submodule with slowed-down color changes"`  
 
-**Question**: What would be the command to push your changes to *git-resources* and it's
-submodules at once? (In this case you won't be able to push to *git-resources*, since you don't
-have the permissions).
+**Question**: in the current setup, you cannot push the changes in `git_resources_webpage` to the
+remote repo because you do not have write permission on it. However, if you did, what would be
+the command to push your changes in both *git-resources* and its submodules all at once?
 
-* Go into *useful-tools* and get the new version of the submodule.
-* Verify the result by looking at *useful-tools.html* and commit the changes.
+Finally, you should now update the *great-style* submodule also in your local `useful-tools`
+repository:
+* Enter the `useful-tools` repo and get the new version of the *great-style* submodule.
+* Reload the page *useful-tools.html* in your browser and verify that the colors now also change
+  more slowly.
+* Commit your changes.
 
 
 <br>
@@ -65,8 +93,6 @@ have the permissions).
 ## Exercise 6 - Git LFS (Large File Storage)
 **Objective:** learn to use Git LFS in two different use cases: starting with a Git repo from
 scratch, and starting with an already existing Git repo.
-
-<br>
 
 ### A) Create a new Git repository from scratch with Git LFS file tracking [20 min]
 In this first part of the exercise, you are asked to create a new Git repository from scratch,
@@ -158,17 +184,17 @@ As its name suggests, this repo contains images of arctic animals in different f
 
       **Note:** as you can see, the data seems now to be duplicated between the LFS cache and the
       git object store, because the size of the object store has not decreased compared to when we
-      first checked-it. However, this is only temporary: at some point Git will do garbage
-      collection of all the commits from the old history, and the copy of the files present in the
-      [`.git/objects`] will be removed.  
-      To force immediate removal of the files, you can run:
+      first checked-it. However, this is only temporary: at some point Git will do
+      garbage-collection of all the commits from the old history, and the copy of the files
+      present in the `.git/objects` directory will be removed.  
+      To force immediate removal of the files, you can manually trigger garbage-collection:
        ```
        git reflog expire --expire-unreachable=now --all
        git gc --prune=now
        ```
       If you check `du -sh .git/objects` again after this operation, you will see that the size of
-      the Git object store is now down to 40 KB! All the files now tracked by LFS have been deleted
-      from it.
+      the Git object store is now down to < 40 KB! All the files now tracked by LFS have been
+      deleted from it.
 
 4. At the root of the `exercise_6` directory (i.e. outside of the `arctic_animals.git` repo), you
    should find an untracked file named `animal_humpback_whale.bmp`. Add this image to the Git repo
