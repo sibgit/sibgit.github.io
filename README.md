@@ -111,23 +111,17 @@ before the start of the course.
 * Please complete the [environment setup instructions](Setting_up_your_environment.md)
   **before** the start of the course.  
 * In particular, make sure to communicate us your GitHub user name
-  **at least 2 days before** the start of the course via the google doc -
-  see the [environment setup instructions](Setting_up_your_environment.md).
+  **at least 2 days before** the start of the course - see the
+  [environment setup instructions](Setting_up_your_environment.md).
 
 <br>
 
-## Course links, exercises and slides
+## Course material
 
 :fire:
 **Please note:** the definitive course material (slides and exercises) will be
 made available on the first day of the course. Until then files do not
 necessarily correspond to the final version.
-
-Useful links during the course:
-
-* [Google doc](https://docs.google.com/document/d/1EX72NInz-eA2d2GOa5aTB8D88GWb91Sk-sCNHwQYXqE):
-  for asking questions, finding your team (exercise 4), and see answers to
-  previously asked questions.
 
 ### Course slides
 

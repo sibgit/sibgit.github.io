@@ -2,12 +2,14 @@
 
 :dart:
 **Objective:** learn to use Git LFS in two different use cases:
+
 * Starting with a Git repo from scratch - **Exercise 1**.
 * Starting with an already existing Git repo - **Exercise 2**.
 
 :dart:
 **Cleanup:** when you are done with the exercises, you can delete your repo on
 GitHub, so you don't waste precious storage space:
+
 * In your repo on GitHub, go to **Settings**.
 * Scroll to the bottom of the page. You will see a **"Danger Zone"** box.
   Click on **"Delete this repository"**.
@@ -25,7 +27,35 @@ least once) on your system, please do it now.
 <br>
 <br>
 
+## Installing Git-LFS on your computer
+
+The Git-LFS extension does not come by default with Git, and must therefore be
+manually installed before starting the exercises.
+
+Installation instructions by operating system:
+
+* **Linux:** install Git LFS using your distribution's official package manager:
+
+  * Ubuntu/Debian: `apt-get install git-lfs`
+  * Fedora/CentOS: `dnf install git-lfs`
+  * Downloading it from [https://git-lfs.github.com](https://git-lfs.github.com)
+
+* **Windows:** Git LFS is packaged directly with
+  [Git for Windows](https://git-scm.com/download/win), therefore no extra
+  installation is needed.
+
+* **MacOS:** Git LFS can be installed by either:
+
+  * Downloading it from [https://git-lfs.github.com](https://git-lfs.github.com)
+  * Installing via Homebrew: `brew install git-lfs`
+  * Installing via MacPorts: `port install git-lfs`
+
+<br>
+<br>
+<br>
+
 ## Exercise 1 - Create a new Git repository from scratch with Git LFS file tracking [20 min]
+
 In this first exercise, you are asked to create a new Git repository from
 scratch, and have certain types of files tracked by Git LFS.
 
@@ -63,6 +93,7 @@ scratch, and have certain types of files tracked by Git LFS.
 <br>
 
 ## Exercise 2 - Migrate an existing directory to Git LFS [40 min]
+
 In this exercise, you will start with an existing Git repo named
 `arctic_animals.git`. As its name suggests, this repo contains images of arctic
 animals in different formats.
