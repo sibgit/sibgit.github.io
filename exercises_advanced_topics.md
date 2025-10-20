@@ -304,6 +304,14 @@ asking you to change things: *it's by design*!
    Create an alternate branch named `second_choice` at the point in history
    where the `my_quotes.md` file was still empty and switch to it. Verify that
    `my_quotes.md` does indeed not contain any quotes.
+   :owl:
+   **Reminder:** by default, new branches are created at the current **`HEAD`**
+   position, but you also create them at any arbitrary commit by passing the
+   reference to that commit:
+   ```sh
+   git branch <branch name> <commit ref>
+   git switch -c <branch name> <commit ref>  # Create new branch and switch to it.
+   ```
 
 8. Add 3 new Chuck Norris quotes to the `my_quotes.md` file, and commit. This
    time, we make a single commit with all quotes. Then, have a look at your
@@ -488,27 +496,18 @@ seen during the course.
 
 <br>
 
+### Introductory notes
 **We have saved the best for last!** In this collaborative exercise, you will
 **team-up with two fellow pirates** in order to retrieve the lost treasure of
 the feared pirate [John Longsilver](https://en.wikipedia.org/wiki/Long_John_Silver).  
 Get ready for a quest that will be *legend* ... wait for it ... *dary !!*
-
-### Introductory notes
-While this exercise is somewhat *gameified*, it covers many of the important
-operations and collaborative workflows you will encounter when doing real work.
-For instance:
-* Each of the *quests* you complete in this exercise should be seen as the
-  equivalent of adding a **new feature** to a software or data analysis
-  pipeline.
-* Completing a quest, merging your work into the `main` branch and adding a tag,
-  would be the equivalent of making a **new release** of your software/pipeline.
 
 In your quests, you will be asked to follow a **collaborative workflow** that
 uses the following branches:
 * **`main`:** this is the **production branch**, i.e. the branch on which only
   final, production ready, material is published. Do *not* work directly on the
   `main` branch.
-* Short-lived **personal branches** (feature branches) will be created by each
+* Short-lived **personal branches** (feature branches) will be used by each
   team member to add their work, before merging it into `main`.
 * Each **new release** of your work will be indicated by **a tag**.
 
@@ -555,12 +554,9 @@ repo and the remote, you can either:
 
 ### A) Organize your crew
 
-1. **Get together:** go to the
-   [course's google doc page](https://docs.google.com/document/d/1EX72NInz-eA2d2GOa5aTB8D88GWb91Sk-sCNHwQYXqE)
-   and check which team you belong to by looking at the **Team** column in the
-   GitHub/GitLab user names table.
-    * **On-site course:** locate your other team members in the classroom and
-      sit together so you can communicate.
+1. **Get together:**
+    * **On-site course:** locate your team members in the classroom and sit
+      together so you can communicate.
     * **Online course:** you will be placed in a breakout-room with your
       teammates. Remember to use the "share screen" function to help each
       other or show to other team members what you are doing on your machine.
@@ -574,54 +570,53 @@ repo and the remote, you can either:
 
 
 ### B) Create a shared Git repo on GitHub/GitLab
-1. Go to `exercise_4/treasure_hunt.git`. As you will see, this is a Git
-   repository that already contains some files and commits.
+The first thing you need to do before embarking on your quest is to
+**setup a remote repository** for your crew on [GitHub](https://github.com).
+You will use it as a shared remote repo to synchronize your local Git repos
+within the team.
 
-2. :fire:
-   **IMPORTANT step for Windows users**
-   **(if you are on Linux or Mac, you should skip this step)**.
-   Windows users only - run the following command *inside* the Git repository:
-    ```sh
-    git config core.filemode false
-    # Do not add the `--global` flag, so that this change only affects the current repo.
-    ```
-   This will instruct Git to ignore differences in *execution permissions* of
-   files, and is needed because Windows does not use the same file permission
-   system as Linux/MacOS.
+As you only need 1 remote for the entire team, the following instructions
+should be carried-out **only by 1 member of the team**:
+* In your browser, login to [GitHub](https://github.com) and then go to the
+  public repository: https://github.com/sibgit/treasure-hunt
+* You only have read-access to that repository, but for this exercise, you and
+  your team will need a repository where you are allowed to both read and
+  write.
+  The solution here is to **fork the repository**. Forking allows
+  you to get your own copy of a repository (under your GitHub account), on
+  which you then have full ownership.
+* **Fork the treasure-hunt repository** using the instructions given in the
+  **helper slides of exercise 4**.
+  * :fire:
+    **Important:** make sure that to copy **all branches** when forking the
+    repository. For this you must **uncheck "Copy the main branch only"**,
+    which is enabled by default.
+* Once the forked repo is created, the owner of the repo must **give access**
+  to the **other team members**, who must **accept the invitation** to join
+  the new repo (you will receive an email from GitHub/GitLab, or you can
+  check the notifications in your GitHub/GitLab user account).
 
-3. The first thing you need to do before embarking on your quest is to
-   **setup a remote repository** for your crew on either
-   [GitHub](https://github.com) or [GitLab](https://gitlab.com).
-   You will use this as a shared remote repo to synchronize your local Git
-   repos within the team.
+<br>
 
-   As you only need 1 remote for the entire team, proceed as follows:
-    * **One team member** should create a new **public repository** under
-      their GitHub/GitLab user account. You can name it anything,
-      e.g. `treasure-hunt`.
-    * Once the repo is created, the owner of the repo must **give access** to
-      the **other team members**, who must **accept the invitation** to join
-      the new repo (you will in receive an email from GitHub/GitLab, or you can
-      check the notifications in your GitHub/GitLab user account).
-    * :dart: **Hint:** for instructions on how to create a new repo on
-      GitHub/GitLab and how to give access to other people, please see the
-      exercise 4 helper slides.
-   <br>
+All team members can now go into their `exercise_4/` directory (which should
+be empty), and **clone the treasure-hunt repository** that your team just setup
+on GitHub.
+* :fire:
+  **Important:** make sure to clone the forked repository of your team, and
+  *not* the original repo at https://github.com/sibgit/treasure-hunt.
 
-4. All members of the crew should add the newly created GitHub/GitLab project
-   as a **remote** to their local copy of `treasure_hunt.git` (please use
-   **`origin`** as remote name).  
-   In addition:
-    * One pirate should **push the `main` branch** to the remote.
-    * The other pirates, should set `origin/main` as the **upstream** for their
-      local `main` branch. This is done with the following commands:
-      ```yaml
-      git fetch
-      git branch --set-upstream-to=origin/main
-      ```
-      This tells Git that the remote branch `origin/main` is the remote branch
-      associated to your local branch `main` (so when you pull or push, it will
-      pull/push from/to that branch).
+:fire:
+**IMPORTANT step for Windows users**
+**(if you are on Linux or Mac, you should skip this step)**.
+ Windows users only - run the following command *inside* the Git repository:
+  ```sh
+  git config core.filemode false
+  # Do not add the `--global` flag, so that this change only affects the current repo.
+  ```
+ This will instruct Git to ignore differences in *execution permissions* of
+ files, and is needed because Windows does not use the same file permission
+ system as Linux/MacOS.
+
 
 <br>
 
@@ -633,15 +628,19 @@ should start your journey by carrying-out a little paperwork: signing the
 
 Signing the **pirate code**, and thereby officializing your participation and
 rank in the treasure hunt, is done by adding your name next to your role at the
-bottom of the `pirate_code.md` file, which is located at the root of the git
-repo.
-Please **pay particular attention to articles IX, X and XI of the contract!**
+bottom of the `pirate_code.md` file, which is located at the root of the Git
+repo. Pay **particular attention to articles VIII, IX and X** of the contract!
 
 1. **Sign the pirate code:**
     * Each pirate creates a new local personal branch (pointing at the latest
       commit of `main`): the personal branches should be named `add-crew-cp`
       (Captain), `add-crew-qm` (Quartermaster) and `add-crew-fm` (First-mate)
       respectively.
+      * :pushpin:
+        If one person of the group is having the role of multiple pirates
+        (i.e. you are < 3 people in the team), then they should create only
+        a single personal branch and do the work for all of their roles on
+        that branch. This applies for all quests in this exercise.
     * On your personal branch, sign the pirate code by replacing `NAME HERE`
       with your name (on the line that is matching your rank).  
       :fire:
@@ -652,35 +651,40 @@ Please **pay particular attention to articles IX, X and XI of the contract!**
       change should be added as a new commit to the first-mate's personal
       branch.
 
-2. **Share the signatures:** In turn, each pirate can now add their commit to
-   the `main` branch by:
+2. **Share the signatures:** each pirate can now add their commit to the `main`
+   branch by:
     * Pulling new changes on `main` from the remote.
-    * Rebasing their personal branch on `main` (the first person to add
+    * **Rebasing** their personal branch on `main` (the first person to add
       their commit does in principle not need to do this).
-    * Merging their personal branch into `main` - this should now be a
-      **fast-forward** merge.
+    * **Merging** their personal branch into `main` - this should now be a
+      *fast-forward* merge.
     * Pushing their changes on `main` back to the remote.
     * Inform other team members that they can now pull the changes on `main`
       (so that everyone stays in sync).
+    * :sparkles:
+      **Tip:** the best practice when merging changes into a shared branch
+      such as `main` is to always fetch/pull changes on the branch before
+      merging, to make sure that you are up-to-date. This is because in the
+      real world, team members will not be contacting each other each time
+      they push a change on `main`, and it's your responsibility to stay
+      up-to-date.
 
 3. **When everyone has added their changes to `main`** (and everyone has
    pulled the changes), the `pirate_code.md` file in everyone's local `main`
    branch should now contain the signatures of the entire crew.  
-   To verify that things were done properly, run the following in your shell
+   To verify that things were done properly, run the following command
    (while on the `main` branch):
-    ```yaml
+    ```sh
+    # Note: you must be at the root of the Git repo to run this command.
     ./verify_contract.sh
     ```
-   The names and ranks of all crew-members should be proudly displayed (note:
-   you must be at the root of the git repo to run this command).
+   The names and ranks of all crew-members should be proudly displayed :tada:.
 
-4. If the step above is working as expected for the entire team, it's time to
-   **make a new release** of your work:
-    * To label this new "release", the **Quartermaster** should add a **tag**
-      named **`contract-signed`** (on the latest commit of `main`) , then push
-      the tag to the remote with:
-        ```yaml
-        git push origin --tags
+4. It's now time to **make a new "release"** of your work by adding a **tag**:
+    * The **Quartermaster** should add a **tag** named **`contract-signed`** on
+      the latest commit of `main`, then push the tag to the remote with:
+        ```sh
+        git push --tags
         ```
     * The **Captain** and the **First-mate** should then run `git fetch` to
       retrieve the newly added tag from the remote.
@@ -690,8 +694,10 @@ Please **pay particular attention to articles IX, X and XI of the contract!**
       `git log --all --decorate --oneline --graph` to display your entire
       repo history along with tags.
 
-5. Each pirate can now delete their personal branch (`add-crew-cp`,
-   `add-crew-qm`, `add-crew-fm`).
+5. Each pirate can now **delete their personal branch** in their local repo.
+    * :owl:
+      **Reminder:** if you pushed your personal branch to the remote, you can
+      delete it on the remote with `git push origin --delete <branch name>`.
 
 That's it, the paperwork is done! Let's get on that ship and sail! :skull:
 
@@ -699,13 +705,12 @@ That's it, the paperwork is done! Let's get on that ship and sail! :skull:
 
 
 ### D) Treasure hunt part two: gear-up!
-Wait... did I just say "get on that ship"? Well, you see, the problem is
-that... there is no ship... yet! And we will need a flag too! And rum of
-course, lots of rum for this long journey.
+Wait... did I just say "get on that ship"? Well, the problem is that...
+there is no ship... yet! And we will need a flag too! And rum of course, lots
+of rum for this long journey.
 
 The second part of this quest is therefore to find those 3 items: **a ship**,
-**a flag**, and **rum bottles**.  
-You are 3 in the team, so split the task:
+**a flag**, and **rum bottles**. You are 3 in the team, so split the task:
 * The **Captain** will search for the **ship**.
 * The **Quartermaster** will search for the **flag**.
 * The **First-mate** will search for **rum bottles**.
@@ -713,44 +718,51 @@ You are 3 in the team, so split the task:
 This is how you should proceed:
 
 1. As for the first quest (*Signing the pirate code*), each pirate should
-   create a new personal branch to work on this quest: `add-supplies-cp`
+   **create a new personal branch** to work on this quest: `add-supplies-cp`
    (Captain), `add-supplies-qm` (Quartermaster) and `add-supplies-fm`
    (First-mate).  
-   As usual, the personal branches should initially be rooted the latest commit
-   of `main`.
+   As usual, the personal branches should initially be rooted on the latest
+   commit of `main`.
 
-2. If you look at the history of the `treasure_hunt.git` repo, you will see
-   that it has several branches that correspond to different locations:
-   **`Port-royal`**, **`Oyster-bay`** and **`Blackbird-castle`**.
-   Visit these different locations and ask local pirates for a hint of where
-   you can find the ship, flag and rum bottles by running the following command
+2. If you look at the history of the repo, you will see that it has several
+   branches that correspond to different locations:
+   **`port-royal`**, **`oyster-bay`** and **`blackbird-castle`**.
+   **Visit these different locations (by switching to the relevant branch)**
+   and ask local pirates for a hint of where you can find the ship, flag and
+   rum bottles by running the following command
    in your shell:
-    ```yaml
+    ```sh
     ./ask_a_pirate.sh
     ```
 
    :dart:
    **Hints:**
-    * **Locations correspond to commits!** Look at the history of the
-      `Port-royal`, `Blackbird-castle`, and `Oyster-bay` branches to find the
-      commit where an item is hidden (based on the hints you received from the
-      pirates).
-    * To visit a location, switch to the corresponding branch or check-out the
-      corresponding commit. Then explore the content of the working tree with
-      `ls -l`.
+    * **Locations in hints given by local pirates correspond to commits!**
+      Look at the history of the `port-royal`, `blackbird-castle`, and
+      `oyster-bay` branches to find the commit where an item is hidden (based
+      on the hints you received from the local pirates).
     * Each item to find corresponds to a file: `ship.ascii`, `flag.ascii` and
-      `rhum.ascii`. Note that the files
-      **are located in a subdirectory named `supplies/`**.
-    * Each team member should search for 1 item (as specified above).
+      `rhum.ascii`.
+      These files **are located in a subdirectory named `supplies/`**.
+    * :owl:
+      **Reminder:** to see the content of a commit, you can:
+      * Use **`git checkout <commit ref>`** to checkout the content of the
+        commit. You then enter *detached HEAD mode*, which you can leave by
+        switching back to a regular branch (e.g. your personal work branch).
+      * Use **`git show <commit ref>`** to show the changes added by a commit.
    <br>
 
 3. Once you have located the commit with the item you are looking for, you
-   should add it to your personal branch by **cherry-picking** the commit onto
-   your personal branch.
+   should **add it to your personal branch by cherry-picking** it onto your
+   personal branch.
 
-4. In turn, each pirate can now add their commit to the `main` branch using
-   the same procedure as in the first part of the quest - see **point 2** of
-   *Treasure hunt part one: sign the pirate code* if you need a refresher.
+4. **Merge your personal branch into `main`** and push your changes on `main`
+   to the remote.
+    * Us the same procedure as in the first part of the quest - see **point 2**
+      of *Treasure hunt part one: sign the pirate code* if you need a refresher.
+    * :fire:
+      If needed, make sure to **rebase your branch** before merging it (to
+      keep a cleaner history).
 
 5. After all pirates have added their commit and updated their repo, everyone's
    `main` branch should have 3 new commits (one made by each team member), and
@@ -759,27 +771,27 @@ This is how you should proceed:
 
 6. **Verify that you have all your gear** by running the command (on the
    `main` branch):
-    ```yaml
+    ```sh
+    # Note: you must be at the root of the Git repo to run this command.
     ./verify_supplies.sh
     ```
    If your ship is loaded with the correct supplies, a success message will be
-   displayed.
+   displayed. :flags:
 
 7. If everyone got a success message, it's time to **make a new release** of
    your work:
-    * To label this new "release", the **First-mate** should add a **tag**
-      named **`ready-to-sail`** on the latest commit of `main`, then push the
-      tag to the remote with the command:
-        ```yaml
-        git push origin --tags
+    * The **First-mate** should add a **tag** named **`ready-to-sail`** on the
+      latest commit of `main`, then push the tag to the remote with the
+      command:
+        ```sh
+        git push --tags
         ```
     * The **Captain** and the **Quartermaster** should then run `git fetch` to
       retrieve the newly added tag from the remote.
     * At this point, everyone should have the new tag in their local repo and
       everyone's `main` branch should be pointing to the same (latest) commit.
 
-8. Each pirate can now delete their personal branch (`add-supplies-cp`,
-   `add-supplies-qm`, `add-supplies-fm`).
+8. Each pirate can now **delete their personal work branch**.
 
 The ship is loaded and the flag is flying - now we're talking! All hands on
 deck and keep the powder dry - get ready for the final step of this
@@ -788,8 +800,8 @@ deck and keep the powder dry - get ready for the final step of this
 <br>
 
 
-### E) Treasure hunt part three: visit Skull-rock island to find the treasure
-Start by setting sail on `Skull-rock-island` (i.e. switch to the branch). The
+### E) Treasure hunt part three: visit Skull Rock island to find the treasure
+Start by setting sail on `skull-rock-island` (i.e. switch to the branch). The
 island was home to **John Longsilver** - a fearsome pirate with a healthy
 appetite for treasures. Unfortunately, pirate lives do sometimes take a turn
 for the shorter, and so did Longsilver's.
@@ -799,7 +811,7 @@ ever was one! - is still very much alive. Maybe that bird has some recollection
 of where Longsilver has been hiding his treasure?
 
 To hear what the parrot has to say, run the following command in your shell:
- ```yaml
+ ```sh
  ./listen_to_parrot.sh
  ```
 As you can see for yourself, the parrot isn't being helpful... but we can
@@ -807,30 +819,32 @@ change this, with a little... rebasing!
 
 Proceed as follows:
  1. **Switch** to the branch `work-in-progress`.
- 2. **Merge the commit** `Update the parrot's talking` into the commit
-    `Make the parrot more cooperative` using **interactive rebase** (i.e. these
-    two commits should become a single commit).
- 3. **Rebase** the `work-in-progress` branch on the `Skull-rock-island` branch.
-    If any conflict arises during the rebase, keep the version of the file(s)
-    that is(are) coming from the `work-in-progress` branch.
+ 2. **Squash the commit** `Update the parrot's talking` into the commit
+    `Make the parrot more cooperative` using **interactive rebase**: these
+    two commits should become a single commit (use the **`fixup`** instruction
+    to squash the commits).
+ 3. **Rebase** the `work-in-progress` branch on `skull-rock-island`. If a
+    conflict arises during the rebase, keep the version coming from the
+    `work-in-progress` branch (the version that starts with the line
+    `# Parrot remembers stuff...`).
  4. After the rebase is completed, run again:
-     ```yaml
+     ```sh
      ./listen_to_parrot.sh
      ```
     The bird should now be more cooperative and give you some hints on where to
-    look for **the keys** to unlock the **treasure chest**.
-
-You should now also have a new directory named `treasure_chest` at the root of
-your Git repo.
+    look for **the keys to unlock the treasure chest**.
+ 5. In addition, you should now also have a new directory named
+    `treasure_chest` at the root of your working tree (i.e. working directory).
+    You can verify this by running the command `ls -l` in your working
+    directory.
 
 To bring the treasure chest aboard your ship, the **First-mate** should do the
-following:
- 1. Merge `work-in-progress` into the `Skull-rock-island` branch (at this
-    point this should be a fast-forward merge).
- 2. Merge `Skull-rock-island` into the `main` branch. This will add the
-    treasure chest to the `main` branch - along with your new friend the
-    parrot!
- 3. Push the changes on branch `main` to the remote.
+following (:fire: **Important:** only the **First-mate** should perform this
+task, not the other pirates. Otherwise you will get diverging versions on the
+`main` branch):
+ 1. **Merge `work-in-progress` into `main`**. This will add the treasure chest
+    to the `main` branch - along with your new friend the parrot!
+ 2. **Push the changes** on branch `main` to the remote.
 
 The **Captain** and **Quartermaster** can now update their local repos with the
 changes that the **First-mate** just pushed to `main`. At this point everyone
@@ -840,14 +854,15 @@ Congratulations, you're *almost* there! Let's celebrate this with a
 **new release**:
  * The **Captain** should add a tag named **`treasure-found`** and push it to
    the remote with:
-    ```yaml
+    ```sh
     git push origin --tags
     ```
  * Everyone else can then run `git fetch` to get the new tag.
 
 Alright, let's see what John Longsilver has been hiding in his treasure. To
 open it, run:
-```yaml
+```sh
+# Note: you must be at the root of the Git repo to run this command.
 ./open_chest.sh
 ```
 *Shiver me timbers!* We are missing **the keys** to open the lock!
@@ -865,10 +880,10 @@ your own.
 ### F) Treasure hunt final part: opening the treasure
 We are now looking for the **3 keys to open the 3 locks of the chest**. To find
 where they are hidden, listen to the parrot's hints by running the command:
-```yaml
+```sh
 ./listen_to_parrot.sh
 ```
-Then go back to `Port-royal`, `Blackbird-castle` and `Oyster-bay` to find the
+Then go back to `port-royal`, `blackbird-castle` and `oyster-bay` to find the
 keys.
 
 :dart:
@@ -880,49 +895,46 @@ keys.
   that the key is near a candle.
 * Each key file must be placed in the correct lock directory, and renamed to
   the correct name:
-  * **Key 1** must be placed into `treasure_chest/lock_1` and renamed `key_1`.
-  * **Key 2** must be placed into `treasure_chest/lock_2` and renamed `key_2`.
-  * **Key 3** must be placed into `treasure_chest/lock_3` and renamed `key_3`.
+  * **Key 1** must be placed into `treasure_chest/lock_1` and named `key_1`.
+  * **Key 2** must be placed into `treasure_chest/lock_2` and named `key_2`.
+  * **Key 3** must be placed into `treasure_chest/lock_3` and named `key_3`.
 * Once you have located the correct file (based on the hints given by the
-  parrot), **checkout** the file to the `main` branch, rename and move it to
-  the correct location (see above), and make a new commit.
-  * **Reminder:** to **checkout a single file** from another branch use the
-    command:
-    ```yaml
-    git checkout <branch name> <path/to/file>
+  parrot), **checkout** the file to the `main` branch. Then rename and move it
+  to the correct location (see above), and make a new commit.
+  * To **retrieve/checkout a single file** from another branch use the command:
+    ```sh
+    git restore --source=<branch name> <path/to/file>
     ```
-    For this exercise, run the command while located at the root of
-    `treasure_hunt.git`.
+    For this exercise, you must run the command while located at the root of
+    the working tree (i.e. at the root of `treasure_hunt.git`).
   * To move and rename the file, use the command:
-    ```yaml
-    git mv <path/to/file> treasure_chest/lock_1/key_1  # For key 1
-    git mv <path/to/file> treasure_chest/lock_2/key_2  # For key 2
-    git mv <path/to/file> treasure_chest/lock_3/key_3  # For key 3
+    ```sh
+    mv <path/to/file> treasure_chest/lock_1/key_1  # For key 1
+    mv <path/to/file> treasure_chest/lock_2/key_2  # For key 2
+    mv <path/to/file> treasure_chest/lock_3/key_3  # For key 3
     ```
-
-  * :sparkles:
-    **Note:** it is also possible to use `git restore --source <branch name> <path/to/file>`
-    instead of `git checkout`.
-
+  * After the file is moved and renamed, you can stage it and make a commit.
 * :bomb:
-  **Do not modify the content of the key file in any way, this would destroy the keys**.
+  **Do not modify the content of the key file in any way, this would destroy it**.
 
 As before, this can be done as teamwork and each pirate retrieves one of the
 keys. This time however, **to save time** (and because we believe that by now
 you have understood the principle), you may
-**add your commit directly to `main` branch**, without created a temporary
-personal working branch (*crazy!* - I know :sunglasses:).  
+**add your commit directly to the `main` branch**, without creating a temporary
+working branch (*crazy!* - I know :sunglasses:).
 Make sure to actively coordinate with your team mates so that your `main`
 branch is up-to-date before you add a commit to it: you don't want any
 divergence in the `main` branch among the team!  
 
-When each pirate has added his key to `main` and everyone has updated their
-local Git repo copies, you can try to run again:
-```yaml
+When each pirate has added their key to `main`, and everyone has updated their
+local Git repo copies, you can try to **open the treasure again**:
+```sh
+# Note: you must be at the root of the Git repo to run this command.
 ./open_chest.sh
 ```
 If the keys are the correct files, have been placed in the correct lock, and
-have been correctly renamed, **the treasure should open**! :tada:
+have been correctly renamed, **the treasure should open**!
+:tada: :moneybag: :fireworks:
 
 <br>
 
@@ -935,12 +947,15 @@ agreed-upon during the course):
 2. **Create a new branch** named `exam-YOUR_FULL_NAME` rooted on the latest
    commit of `main` (replace `YOUR_FULL_NAME` with your actual name). Add a
    commit with your screenshot to this new branch and push it to the remote.
-3. **Send an email** with subject "Git course exam - your name" to
-   `robin.engler@sib.swiss` with the following information:
+3. **Send an email** with subject "Git course exam - your name" to the teacher
+   of the course with the following information:
     * Your **full name**.
     * The **URL of the remote repo** that you have used for this exercise. The
       repo must be public.
     * The **secret code** you found when opening the chest.
+   :pushpin:
+   The teacher's email address can be found at the top of the shared document
+   used for the class.
 4. **Make sure you have signed-up for the exam** on the Google doc of the
    course by highlighting your name in green.
 
