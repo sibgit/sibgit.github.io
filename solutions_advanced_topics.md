@@ -32,7 +32,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 
 2. Re-order the commits on `main` using **interactive rebase**:
     ```sh
-    git rebase -i 0fbf901
+    git rebase -i a818d5a
 
     # Display history of repo to see how it looks like after the rebase.
     git log --all --decorate --oneline --graph
@@ -42,21 +42,20 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
     **Important:** remember that in the interactive rebase file, the order of
     commits is oldest to newest from top to bottom. Your re-ordered interactive
     rebase commit list should thus look like (blank lines are optional):
-    ```
-    pick 5fda16e Edit README file
-    pick 82be314 Edit README file: add open file example
+    ```txt
+    pick 91aa2f3 2. Edit README file
+    pick 21d712d 3. Edit README file: add open file example
 
-    pick 8ec5c65 Add 'normal_mode' file: commands for vim's normal mode
-    pick b5ee406 Edit 'normal_mode' file: add 'dd' and 'yy' commands
-    pick e60e7c2 Edit 'normal_mode' file: add more commands
+    pick 9c7f8b4 4. Add 'normal_mode' file: commands for vim's normal mode
+    pick be7f832 5. Edit 'normal_mode' file: add 'dd' and 'yy' commands
+    pick ac17969 6. Edit 'normal_mode' file: add more commands
 
-    pick eb8d137 Add 'command_mode' file: commands for vim's command mode
-    pick 0119ede Edit 'command_mode' file: add more commands
+    pick c110031 7. Add 'command_mode' file: commands for vim's command mode
+    pick d95eb3d 8. Edit 'command_mode' file: add more commands
     ```
 
 3. Rebase `dev` branch on `main`. This automatically gets rid of the duplicated
-   commits that are left on `dev` after we did the interactive rebase (history
-   rewrite) on `main`:
+   commits that are left on `dev`:
     ```sh
     git log --all --decorate --oneline --graph
     git switch dev
@@ -67,10 +66,25 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
     git switch main
     ```
 
-4. To merge the different commits for each file we run an interactive rebase
-   on the first commit `git rebase -i HEAD~7` (or `git rebase -i 0fbf901`).
+4. To merge the different commits for each file, we again run an interactive
+   rebase on the first commit `git rebase -i HEAD~7`
+   (or `git rebase -i a818d5a`).
 
-   When editing the rebase command, there are 2 possibilities:
+   To merge and rename the commits 2 and 3, there are 2 possibilities:
+    * **Use the command `squash/s`** to squash the commits into their parents.
+      With this option, Git will open an editor at each squash operation and
+      ask us to edit/confirm the commit message manually.  
+      The edited rebase instructions should look like this (`s` is for `squash`
+      and `f` is for `fixup`):
+        ```txt
+        pick 9cf4b60 2. Edit README file
+        s fa952bb 3. Edit README file: add open file example
+        pick 32d2385 4. Add 'normal_mode' file: commands for vim's normal mode
+        f f4001cc 5. Edit 'normal_mode' file: add 'dd' and 'yy' commands
+        f 21a503e 6. Edit 'normal_mode' file: add more commands
+        pick 87dc1eb 7. Add 'command_mode' file: commands for vim's command mode
+        f 62c8c02 8. Edit 'command_mode' file: add more commands
+        ```
     * **Use the command `fixup/f`** to automatically discard the message of the
       commit being squashed into its parent. In this case we have to use
       `reword/r` for the first commit of the list, since we were explicitly
@@ -78,30 +92,17 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
       commit to `README: add vim modes and open file example`.  
       The edited rebase instructions should look like this (`r` is for `reword`
       and `f` is for `fixup`):
-        ```
-        r 9cf4b60 Edit README file
-        f fa952bb Edit README file: add open file example
-        pick 32d2385 Add 'normal_mode' file: commands for vim's normal mode
-        f f4001cc Edit 'normal_mode' file: add 'dd' and 'yy' commands
-        f 21a503e Edit 'normal_mode' file: add more commands
-        pick 87dc1eb Add 'command_mode' file: commands for vim's command mode
-        f 62c8c02 Edit 'command_mode' file: add more commands
+        ```txt
+        r 9cf4b60 2. Edit README file
+        f fa952bb 3. Edit README file: add open file example
+        pick 32d2385 4. Add 'normal_mode' file: commands for vim's normal mode
+        f f4001cc 5. Edit 'normal_mode' file: add 'dd' and 'yy' commands
+        f 21a503e 6. Edit 'normal_mode' file: add more commands
+        pick 87dc1eb 7. Add 'command_mode' file: commands for vim's command mode
+        f 62c8c02 8. Edit 'command_mode' file: add more commands
         ```
 
-    * **Use the command `squash/s`** to squash the commits into their parents.
-      With this option, Git will open an editor at each squash operation and
-      ask us to edit/confirm the commit message manually.  
-      The edited rebase instructions should look like this (`s` is for `squash`
-      and `f` is for `fixup`):
-        ```
-        pick 9cf4b60 Edit README file
-        squash fa952bb Edit README file: add open file example
-        pick 32d2385 Add 'normal_mode' file: commands for vim's normal mode
-        f f4001cc Edit 'normal_mode' file: add 'dd' and 'yy' commands
-        f 21a503e Edit 'normal_mode' file: add more commands
-        pick 87dc1eb Add 'command_mode' file: commands for vim's command mode
-        f 62c8c02 Edit 'command_mode' file: add more commands
-        ```
+
 
 5. Rebase the `dev` branch on `main`:
     ```sh
@@ -116,7 +117,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
    using the "d/drop" instruction).  
    The edited rebase instructions should look like this (only the 2
    non-duplicated commits are kept):
-    ```
+    ```txt
     pick 7c5827f Add image file showing a visual overview of vim modes
     pick be67a87 Maybe we should all switch to emacs...
     ```

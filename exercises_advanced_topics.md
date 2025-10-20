@@ -41,7 +41,8 @@ Proceed as follows:
 
 1. Enter the `exercise_1/vim_cheatsheet.git` repository and have a look at it's
    history. If you are using `vim` as an editor in Git, you can have a look at
-   the content of the files to learn about some useful `vim` commands.  
+   the content of the files in the repository to learn about some useful `vim`
+   commands.  
 
 2. Looking at the **commit history** on the `main` branch, you will see that
    the edits to the different files are all over the place. To make things more
@@ -63,9 +64,9 @@ Proceed as follows:
    :warning:
    Note that we are only re-ordering commits that affect completely different
    files, but we are keeping the order of commits that affect the same file
-   in the same order, because they "build on each other" (e.g. we could not
-   have the commit that edits the file `normal_mode` before the commit that
-   creates it!).
+   in the same relative order, because they "build on each other" (e.g. we
+   could *not* have the commit that edits the file `normal_mode.md` before the
+   commit that creates it!).
 
    <br>
 
@@ -73,7 +74,7 @@ Proceed as follows:
    using `git log --all --decorate --oneline --graph` (or `git adog`, if you
    created this alias).
    You should see that branch `dev` still contains the two "old" commits
-   (`8ec5c65` and `eb8d137`) from the shared history it had with the `main`
+   (`9c7f8b4` and `c110031`) from the shared history it had with the `main`
    branch before the rebase. These two commits are now duplicated between the
    two branches. To get rid of them, rebase `dev` on `main`, then return to
    `main`.
@@ -81,12 +82,11 @@ Proceed as follows:
    :pushpin:
    **Note:** after the rebase completed, you should observe that Git
    **automatically skipped the duplicated commits** on `dev`, because they have
-   the exact same content as their counterparts on `main`. Git gives us warning
-   about the skipped commits, but this is fine because skipping these commits
-   is precisely what we here intended.
+   the exact same content as their counterparts on `main`. Git lets us know
+   that the commits were skipped via the following warning:
    ```txt
-   warning: skipped previously applied commit 8ec5c65
-   warning: skipped previously applied commit eb8d137
+   warning: skipped previously applied commit 9c7f8b4
+   warning: skipped previously applied commit c110031
    ```
 
    <br>
@@ -99,10 +99,10 @@ Proceed as follows:
     * **Change** the commit message of the commit adding the README file to:
       `README: add vim modes and open file example`.
        ```
-        * Add 'command_mode' file: commands for vim's command mode
-        * Add 'normal_mode' file: commands for vim's normal mode
-        * README: add vim modes and open file example
-        * First commit of the vim cheat-sheet project. Add README file
+        * 7. Add 'command_mode' file: commands for vim's command mode
+        * 4. Add 'normal_mode' file: commands for vim's normal mode
+        * 2. README: add vim modes and open file example
+        * 1. First commit of the vim cheat-sheet project. Add README file
        ```
 
    :fire:
@@ -116,16 +116,18 @@ Proceed as follows:
    <br>
 
 5. Display the history of the repo using
-   `git log --all --decorate --oneline --graph`. You will see that, again,
-   **`dev` and `main` have diverged** with **duplicated commits**. At this
-   point, please temporarily save the hash of the commit to which `dev` is
-   currently pointing - you will need shortly.
+   `git log --all --decorate --oneline --graph`, or `git adog`, if you
+   created this alias.
+
+   You will see that, again, **`dev` and `main` have diverged** with
+   **duplicated commits**. At this point, please temporarily save the hash of
+   the commit to which `dev` is currently pointing - you will need shortly.
 
    To get rid of the duplicated commits, we need to rebase `dev` on `main`.
    However, in this case, a regular rebase will *not* be able to automatically
-   remove the duplicated commits (because they no longer exactly match).
-   Instead, a regular rebase would raise conflicts that you would then have
-   to manually resolve.
+   remove the duplicated commits (because they no longer exactly match on a
+   one-to-one basis). Instead, a regular rebase would raise conflicts that you
+   would then have to manually resolve.
 
    Since we know which commits are duplicated (all except the last 2 commits
    of `dev`), the **better approach here is to use interactive rebase** and
@@ -134,24 +136,28 @@ Proceed as follows:
    **Note:** an alternative approach would be to run `git rebase --skip` each
    time there is a conflict, to tell Git to skip the conflicting commit.
 
-   **To make sure that no changes were lost during your rebase**, run a
-   `git diff` between the commit of `dev` before the rebase (the hash you were
-   asked to temporarily save earlier) and the current version of `dev`.
-   If the rebase was done properly, **the diff should not yield any difference**.
+   :fire:
+   **Tip:** after the rebase completed, to ensure that the rebase was performed
+   properly and that **no changes/commits were lost** in the operation, you can
+   run the command `git diff <hash before rebase> dev` (where
+   `<hash before rebase>` is the hash you were asked to temporarily save
+   earlier). This will compare the content of the repo as it was just before
+   the rebase (i.e. when `dev` was pointing at `<hash before rebase>`), to its
+   state after the rebase (i.e. current position of `dev`). If the rebase was
+   done properly, **the diff should not yield any difference**.
 
    <br>
 
 6. **Switch back to the `main` branch**. At this point, the history of your
-   repo (`git log --all --decorate --oneline --graph`) should look like this
-   (commit ID values will differ):
+   repo should look like this (commit ID values will differ):
 
     ```
     * be67a87 (dev) Maybe we should all switch to emacs...
     * 7c5827f Add image file showing a visual overview of vim modes
-    * c778c05 (HEAD -> main) Add 'command_mode' file: commands for vim's command mode
-    * 8186e45 Add 'normal_mode' file: commands for vim's normal mode
-    * c454a04 README: add vim modes and open file example
-    * 0fbf901 First commit of the vim cheat-sheet project. Add README file
+    * c778c05 (HEAD -> main) 7. Add 'command_mode' file: commands for vim's command mode
+    * 8186e45 4. Add 'normal_mode' file: commands for vim's normal mode
+    * c454a04 2. README: add vim modes and open file example
+    * a818d5a 1. First commit of the vim cheat-sheet project. Add README file
     ```
 
 <br>
@@ -167,9 +173,13 @@ Proceed as follows:
       duplicated commands (the `dd` and `yy` commands are listed twice).
     * For *each* file to correct, create a `--fixup` commit (meaning you create
       2 fixup commits). You should
-      **carefully select to which commit each of the fixup applies**.
+      **carefully select to which commit each of the fixup applies**.  
+      :dart:
+      **Hint:** to learn about the `--fixup` and `--autosquash` options, look
+      at the supplementary material slides of the course.
     * Rebase (interactively) the branch `main` using the **`--autosquash`**
-      option to merge the `--fixup` commits as instructed.
+      option so that Git automatically adds the correct instructions and
+      order for the `--fixup` commits.
 
    :dart:
    **Hint:** before the interactive rebase, your history on the `main` branch
@@ -178,15 +188,15 @@ Proceed as follows:
     ```
     * 542f88d (HEAD -> main) fixup! Add 'command_mode' file: commands for vim's command mode
     * f0d33d7 fixup! README: add vim modes and open file example
-    * c778c05 Add 'command_mode' file: commands for vim's command mode
-    * 8186e45 Add 'normal_mode' file: commands for vim's normal mode
-    * c454a04 README: add vim modes and open file example
-    * 0fbf901 First commit of the vim cheat-sheet project. Add README file
+    * c778c05 7. Add 'command_mode' file: commands for vim's command mode
+    * 8186e45 4. Add 'normal_mode' file: commands for vim's normal mode
+    * c454a04 2. README: add vim modes and open file example
+    * a818d5a 1. First commit of the vim cheat-sheet project. Add README file
     ```
 
     <br>
 
-8. Now that we modified `main`, **rebase `dev` on `main` again**.  
+8. As we have once more modified `main`, **rebase `dev` on `main` again**.  
    :dart:
    **Hint:** to easily skip a commit, you can either use interactive rebase as
    we did earlier, or use a regular rebase and run **`git rebase --skip`** when
@@ -194,24 +204,24 @@ Proceed as follows:
    is detected).
 
    After the rebase, switch back to the `main` branch and display the history
-   of your repository (`git log --all --decorate --oneline --graph`). It should
-   look like this (commit ID values will differ):
+   of your repository. It should look like this (commit ID values will differ):
     ```
     * 062a1e2 (dev) Maybe we should all switch to emacs...
     * 07e7d86 Add image file showing a visual overview of vim modes
-    * 9a0188b (HEAD -> main) Add 'command_mode' file: commands for vim's command mode
-    * 4c17a23 Add 'normal_mode' file: commands for vim's normal mode
-    * 3becef8 Edit README file: add vim modes and open file example
-    * 0fbf901 First commit of the vim cheat-sheet project. Add README file
+    * 9a0188b (HEAD -> main) 7. Add 'command_mode' file: commands for vim's command mode
+    * 4c17a23 4. Add 'normal_mode' file: commands for vim's normal mode
+    * 3becef8 2. Edit README file: add vim modes and open file example
+    * a818d5a 1. First commit of the vim cheat-sheet project. Add README file
     ```
 
 9. There are 2 more things you can try:
     * **Merge the first 2 commits of the repo** into a single one: for this
       you will need to use the **`--root`** option of the `git rebase` command
-      (for details, see the course slides).
+      (for details, see the course supplementary slides).
     * **Change the commit message** of the latest commit of the `dev` branch
       from `Maybe we should all switch to emacs...` to
-      `Add xkcd comic image file`.
+      `Add xkcd comic image file`. You can do this easily with
+      `git commit --amend`.
 
 
 <br>
