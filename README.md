@@ -6,16 +6,29 @@
 
 <br>
 
+**Note:** course material such as slides and exercises will be made available on the first day of
+the course (until then files might either not be available or not correspond to the final version).
+Please complete the [environment setup](Setting_up_your_environment.md) **before** the start of the
+course.
 
-## Course links
+<br>
+
+## Course links and slides
 Useful links during the course:
-* [Course page](https://edu.sib.swiss/course/view.php?id=535): for giving your feedback at the end
+* [Course page](https://edu.sib.swiss/course/view.php?id=576): for giving your feedback at the end
   of the course. Please note that a login is required, credentials will be sent by email.
 * [Google doc](https://docs.google.com/document/d/1EX72NInz-eA2d2GOa5aTB8D88GWb91Sk-sCNHwQYXqE):
   for asking questions, finding your team (exercise 4), and see answers to previously asked
   questions.
 * [Zoom link](https://us02web.zoom.us/j/84868422273?pwd=YWdkT3NNVEltZCtPVy90TURSYzY1QT09): for
   online courses.
+
+**Course slides:**
+* [First steps with Git](slides_git_first_steps.pdf)
+* [Git advanced topics](slides_git_advanced_topics.pdf)
+
+**Git commands summary:**
+* [PDF document summarizing all commands seen during the course](git_command_summary.pdf)
 
 <br>
 
@@ -24,11 +37,12 @@ Useful links during the course:
 **Exercise material:** please download the following `.zip` files and decompress them on your
 local machine:
 * [Exercise material day 1](exercises_first_steps.zip)
-* [Exercise material day 2](exercises_advanced.zip)
+* [Exercise material day 2 and 3](exercises_advanced.zip)
 
 **Exercise instructions:**
 * [Exercises day 1 - first steps](exercises_first_steps.md)
-* [Exercises day 2 and 3 - advanced topics](exercises_advanced.md)
+* [Exercises day 2 - advanced topics](exercises_advanced_topics.md)
+* [Exercises day 3 - optional modules](exercises_optional_modules.md)
 
 **Exercise solutions** will be made available at the end of each day:
 * [Solutions day 1 - first steps](exercises_solutions_first_steps.md)
