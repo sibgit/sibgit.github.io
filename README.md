@@ -12,18 +12,18 @@
 
 Git is an open source, distributed, version control system for tracking changes
 in source code and other types of text documents. Created by Linus Torvald and
-first released in 2005, Git has become the de-facto standard for project source
-code management, and is extensively used both in open source and commercial
-software development. The usage of Git is not limited to code development, but
+first released in 2005, Git has become the de-facto standard for code/script
+management, and is extensively used both in open source and commercial software
+development. The usage of Git is not limited to code development, but
 can also be used to keep track of data analysis scripts and pipelines.
 
-This 2.5 day course gives a very comprehensive introduction to Git and its most
-useful commands, as well as an introduction to collaborative workflows and to
-using GitHub. The last half-day of the course is optional.
+This 2-day course gives a very comprehensive introduction to Git and its most
+useful commands, as well as an introduction to collaborative workflows using
+GitHub.
 
 The course covers the following topics:
 
-### Day 1: first steps with Git
+#### Day 1: first steps with Git
 
 * Introduction to version control systems and Git.
 * Git basics: your first commit.
@@ -32,21 +32,21 @@ The course covers the following topics:
   workflow examples.
 * Branch management: merge, rebase and cherry-pick.
 * Retrieving data from the Git database: git checkout.
-* Working with remotes: collaborating with Git.
+* Working with remotes: collaborating with Git and GitHub.
 * GitHub: a brief overview.
 
-### Day 2: Git advanced topics
+#### Day 2: Git advanced topics
 
 * Rewriting history: interactive rebase, git reset and commit amending.
 * The detached HEAD state explained.
 * The Git stash: Git’s “cut and paste” functionality.
 * Git tags: label important commits.
-* GitHub: creating a new project, adding new users and collaborating wit them.
+* GitHub: creating a new project, adding new users and collaborating with them.
 
-### Day 3 (half-day): optional modules
+#### Optional modules
 
-The last half-day of the course is optional and covers topics that can be
-useful in certain scenarios:
+This material is not formally presented during the course. It covers topics
+that can be useful in certain scenarios:
 
 * GitHub Actions and GitLab CI/CD: writing automated pipelines.
 * Git submodules: embed a Git repository as a subdirectory of another Git repo.
@@ -73,7 +73,9 @@ optional exam at the end of day 2 of the course. The SIB will recommend
 successful participants to receive 0.5 ECTS credits from their home
 institutions.
 
-### Prerequisites
+<br>
+
+## Course prerequisites
 
 ### Knowledge/competencies
 
@@ -98,11 +100,7 @@ before the start of the course.
 * For online classes, you should also have a working microphone as some
   exercises involve collaboration/communication with other participants.
 
-<br>
-<br>
-<br>
-
-## Setting-up your environment
+### Setting-up your environment
 
 * Please complete the [environment setup instructions](Setting_up_your_environment.md)
   **before** the start of the course.  
@@ -111,10 +109,13 @@ before the start of the course.
   see the [environment setup instructions](Setting_up_your_environment.md).
 
 <br>
-<br>
-<br>
 
 ## Course links, exercises and slides
+
+:fire:
+**Please note:** the definitive course material such as slides and exercises
+will be made available on the first day of the course. Until then files do not
+necessarily correspond to the final version.
 
 Useful links during the course:
 
@@ -123,30 +124,22 @@ Useful links during the course:
   previously asked questions.
 * [Zoom link](not available): for online courses only.
 
-**Course slides:**
+### Course slides
 
 * [First steps with Git](slides_git_first_steps.pdf)
 * [Git advanced topics](slides_git_advanced_topics.pdf)
+* Git commands summary:
+  [PDF document summarizing all commands seen during the course](git_command_summary.pdf)
 * [Git optional modules](slides_git_optional_modules.pdf)
 
-:fire:
-**Please note:** the definitive course material such as slides and exercises
-will be made available on the first day of the course. Until then files do not
-necessarily correspond to the final version.
+### Exercises
 
-**Git commands summary:**
+**Exercise instructions:** these instructions are best viewed in a web browser.
+Simply click on the link below to display them.
 
-* [PDF document summarizing all commands seen during the course](git_command_summary.pdf)
-
-<br>
-
-## Exercises
-
-**Exercise instructions:**
-
-* [Exercises day 1 - first steps](exercises_first_steps.md)
-* [Exercises day 2 - advanced topics](exercises_advanced_topics.md)
-* Exercises day 3 - optional modules:
+* Day 1: [exercises first steps](exercises_first_steps.md)
+* Day 2: [exercises advanced topics](exercises_advanced_topics.md)
+* Optional modules:
   * [optional exercise CI/CD](exercises_optional_cicd.md)
   * [optional exercise submodules](exercises_optional_submodules.md)
   * [optional exercise Git LFS](exercises_optional_LFS.md)
@@ -154,15 +147,16 @@ necessarily correspond to the final version.
 **Exercise material:** please download the following `.zip` files and
   decompress them on your local machine:
 
-* Exercise material day 1: [`exercises_first_steps.zip`](exercises_first_steps.zip)
-* Exercise material day 2: [`exercises_advanced.zip`](exercises_advanced.zip)
-* Exercise material day 3: [`exercises_optional_modules.zip`](exercises_optional_modules.zip)
+* Day 1: [`exercises_first_steps.zip`](exercises_first_steps.zip)
+* Day 2: [`exercises_advanced.zip`](exercises_advanced.zip)
+* Optional modules:
+  * [`exercises_optional_modules.zip`](exercises_optional_modules.zip)
 
 **Exercise solutions**:
 
-* [Solutions day 1 - first steps](solutions_first_steps.md)
-* [Solutions day 2 - advanced topics](solutions_advanced_topics.md)
-* Solutions day 3 - optional modules:
+* Day 1: [solutions first steps](solutions_first_steps.md)
+* Day 2: [solutions advanced topics](solutions_advanced_topics.md)
+* Optional modules:
   * Solutions CI/CD - solutions are integrated in exercise instructions.
   * [Solutions submodules](solutions_optional_submodules.md)
   * [Solutions Git LFS](solutions_optional_LFS.md)
@@ -173,8 +167,7 @@ necessarily correspond to the final version.
 
 Please note that this schedule is approximate.
 
-* **Day 1 and 2:** 9h00 - 17h00
-* **Day 3:** 9h00 - 12h15
+* **Day 1 and 2:** 9h00 - 17h30
 
 ### First steps with Git [day 1]
 
@@ -195,7 +188,7 @@ Please note that this schedule is approximate.
 * 15h45: Exercise 3 - corrections
 * 16h00: Working with remotes, GitHub
 * 16h15: Exercise 4
-* 17h00: End of day 1
+* 17h30: End of day 1
 
 ### Git advanced topics [day 2]
 
@@ -213,17 +206,7 @@ Please note that this schedule is approximate.
 * 14h30: Exercise 3 - corrections
 * 14h45: BREAK - 15 min
 * 15h00: Exercise 4
-* 17h00: End of day 2
-
-### Git optional modules [day 3, half day]
-
-* 09h00: Intro + review/reminder
-* 09h10: Git submodules
-* 09h30: Git LFS
-* 09h50: Pipeline automation: GitHub Actions and GitLab CI/CD
-* 10h30: BREAK - 15 min
-* 10h45: Optional module exercises
-* 12h15: End of course
+* 17h30: End of day 2
 
 ### Breaks
 
