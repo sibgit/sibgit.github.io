@@ -4,15 +4,16 @@
 
 [[_TOC_]]
 
+
 <br>
 
-:fire:
-**Please note:**
-* The definitive course material such as slides and exercises will be made
-  available on the first day of the course. Until then files might either not
-  be available or not correspond to the final version.
-* Please complete the [environment setup](Setting_up_your_environment.md)
-  **before** the start of the course.
+## Setting-up your environment
+
+* Please complete the [environment setup instructions](Setting_up_your_environment.md)
+  **before** the start of the course.  
+* In particular, make sure to communicate us your GitHub user name
+  **at least 2 days before** the start of the course via the google doc -
+  see the [environment setup instructions](Setting_up_your_environment.md).
 
 <br>
 
@@ -21,20 +22,22 @@ Useful links during the course:
 * [Google doc](https://docs.google.com/document/d/1EX72NInz-eA2d2GOa5aTB8D88GWb91Sk-sCNHwQYXqE):
   for asking questions, finding your team (exercise 4), and see answers to
   previously asked questions.
-* [Feedback form](https://forms.office.com/e/6gLdGVbNgX): for giving your
-  feedback at the end of the course.
-* [Zoom link](not available): for online courses.
+* [Zoom link](not available): for online courses only.
 
 **Course slides:**
 * [First steps with Git](slides_git_first_steps.pdf)
 * [Git advanced topics](slides_git_advanced_topics.pdf)
 * [Git optional modules](slides_git_optional_modules.pdf)
 
+:fire:
+**Please note:** the definitive course material such as slides and exercises
+will be made available on the first day of the course. Until then files not
+correspond to the final version.
+
 **Git commands summary:**
 * [PDF document summarizing all commands seen during the course](git_command_summary.pdf)
 
 <br>
-
 
 ## Exercises
 **Exercise instructions:**
@@ -54,19 +57,9 @@ Useful links during the course:
 
 <br>
 
-
-## Setting-up your environment
-Please complete the [environment setup instructions](Setting_up_your_environment.md)
-**before** the start of the course.  
-In particular, make sure to send us your GitHub user name
-**at least 2 days before** the start of the course.
-
-<br>
-
-
 ## Course schedule
 Please note that this schedule is approximate.
-* **Day 1 and 2:** 9h00 - 17h30
+* **Day 1 and 2:** 9h00 - 17h00
 * **Day 3:** 9h00 - 12h15
 
 **First steps with Git [day 1]**
@@ -86,8 +79,8 @@ Please note that this schedule is approximate.
 * 15h15: Exercise 3
 * 15h45: Exercise 3 - corrections
 * 16h00: Working with remotes, GitHub
-* 16h30: Exercise 4
-* 17h30: End of day 1
+* 16h15: Exercise 4
+* 17h00: End of day 1
 
 **Advanced topics [day 2]**
 * 09h00: Intro + review/reminder
@@ -104,7 +97,7 @@ Please note that this schedule is approximate.
 * 14h30: Exercise 3 - corrections
 * 14h45: BREAK - 15 min
 * 15h00: Exercise 4
-* 17h30: End of day 2
+* 17h00: End of day 2
 
 **Advanced topics: optional modules [day 3, half day]**
 * 09h00: Git submodules
