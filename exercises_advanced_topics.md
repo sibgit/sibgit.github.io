@@ -12,14 +12,15 @@
 In this exercise, your task is to perform a cleanup on an existing repository that contains
 instructions on how to use the `vim` editor.
 
-**Note:** in this exercise we will be **rewriting history** on the `master` branch of our
-repository. In a *production* environment, this **should ideally be avoided**.
+:fire:
+**Note:** in this exercise we will be **rewriting history on the `master` branch** of our
+repository. In a *production* environment, this **should in principle be avoided**.
 
 1. Enter the `exercise_1/vim_cheatsheet.git` repository and have a look at it's history.  
-   You can also display the content of the files - if you are using vim as an editor in Git,
-   it might even be of interest to you.
+   If you are using `vim` as an editor in Git, you can have a look at the content of the files
+   to learn about some `vim` commands.
 
-   Checkout the `dev` branch, and look at which files it contains. Then go back to the `master`
+   Switch to the `dev` branch, and look at which files it contains. Then go back to the `master`
    branch.
 
 2. Looking at the **commit history** on the `master` branch, you will see that edits to the
@@ -27,8 +28,8 @@ repository. In a *production* environment, this **should ideally be avoided**.
    group (in the history's chronology) the edits to each of the 3 files:
    `README.md`, `normal_mode.md` and `command_mode.md`.
 
-   Your first task is thus to re-order the commits on the `master` branch in the following order
-   (here listed from oldest to newest):
+   Your first task is thus to **re-order the commits on the `master` branch** in the following
+   order (here listed from oldest to newest):
    ```
     1. First commit of the vim cheat-sheet project. Add README file
     2. Edit README file
@@ -46,8 +47,13 @@ repository. In a *production* environment, this **should ideally be avoided**.
 
    You should see that branch `dev` still contains the two "old" commits (`8ec5c65` and `eb8d137`)
    from the shared history it had with  the `master` branch before the rebase. These two commits
-   are now duplicated between the two branches.  
-   To get rid of them, please rebase `dev` on `master`, then return to `master`.
+   are now duplicated between the two branches. To get rid of them, please rebase `dev` on
+   `master`, then return to `master`.
+
+   :pushpin:
+   **Note:** after the rebase completed, you should observe that Git **automatically skipped**
+   **the duplicated commits** on `dev`, because they have the exact same content as their
+   counterparts on `master`.
 
 4. All things considered, our repo history would look cleaner if, for each file, we had a single
    commit rather than having multiple small and incremental commits.  
@@ -60,35 +66,48 @@ repository. In a *production* environment, this **should ideally be avoided**.
     * First commit of the vim cheat-sheet project. Add README file
    ```
 
+   :fire:
    **Please note:**  
     * The commit message for the second commit is a new message. You will need to
-      **edit the commit message** during the rebase.
+      **edit the commit message during the rebase**.
     * The `README.md` file still has 2 commits - because it's first commit is also the first
-      commit of the repo.  
+      commit of the repo (and that first commit is more difficult - but not impossible - to
+      change).  
    <br>
 
 5. Display the history of the repo using `git log --all --decorate --oneline --graph`. You will
-   see that, again, `dev` and `master` have diverged with duplicated commits. Rebase `dev` on
-   `master` to get rid of the duplicated commits.
-   When you are done, switch back to branch `master`.  
+   see that, again, **`dev` and `master` have diverged** with **duplicated commits** (temporarily
+   save the hash of the commit to which `dev` is currently pointing - you will need shortly).
+   To get rid of the duplicated commits, rebase `dev` on  `master`.
 
-   **Hint:** use interactive rebase to easily get rid of the duplicated commits.  
+   :fire:
+   **Important:** in this case, a regular rebase will *not* be able to automatically remove
+   the duplicated commits (because they no longer exactly match).  
+   Instead, you should use **interactive rebase** and manually instruct Git to delete the
+   duplicated commits.
+
+   **To make sure that no changes were lost during your rebase**, try to run a `git diff`
+   between the commit of `dev` before the rebase and the current version of `dev`.
+   If the rebase was done properly, **the diff should not yield any difference**.
 
 6. As a final step, we want to fix a small bug in the `README.md` and `normal_mode.md` files:
+    * Switch back to branch `master`.
     * In the `README.md` file, remove the line starting with "TODO:".
-    * In the `normal_mode.md` file, remove the two last lines which contain duplicated commands.
+    * In the `normal_mode.md` file, remove the last two lines that contain duplicated commands
       (the "dd" and "yy" commands are listed twice).
    <br>
 
-   For *each file* to correct, create a `--fixup` commit (so you create 2 fixup commits). You
-   should carefully select to which commit the fixup applies. Then rebase using `--autosquash`.
-   When you are done, rebase `dev` on `master` again (**Hint:** to easily skip a commit, you can
-   either use interactive rebase as before, or use `git rebase --skip` when a conflict arises -
-   see also the message that git is printing when a conflict is detected).
+   For *each* file to correct, create a `--fixup` commit (so you create 2 fixup commits). You
+   should **carefully select to which commit each of the fixup applies**. Then rebase using the
+   `--autosquash` option.
+
+   When you are done, rebase `dev` on `master` again (**hint:** to easily skip a commit, you can
+   either use interactive rebase as before, or use a regular rebase and run `git rebase --skip`
+   when a conflict arises - see also the message that git is printing when a conflict is detected).
 
    After the rebase, switch back to the `master` branch and display the history of your repository
-   with `git log --all --decorate --oneline --graph`.  
-   It should look like this (note: commit ID values will differ):
+   (`git log --all --decorate --oneline --graph`). It should look like this (note: commit ID
+   values will differ):
     ```
     * 062a1e2 (dev) Maybe we should all switch to emacs...
     * 07e7d86 Add image file showing a visual overview of vim modes
@@ -102,9 +121,9 @@ repository. In a *production* environment, this **should ideally be avoided**.
 
 ### Additional tasks (if you have time)
 7. There are 2 more things you can try:
-    * Merge the first 2 commits of the repo into a single one: for this you will need to use
+    * **Merge the first 2 commits of the repo** into a single one: for this you will need to use
       the **`--root`** option of the `git rebase` command (for details, see the course slides).
-    * Change the commit message of the latest commit of the `dev` branch from
+    * **Change the commit message** of the latest commit of the `dev` branch from
       "Maybe we should all switch to emacs..." to "Add xkcd comic image file".
 
 
@@ -112,12 +131,11 @@ repository. In a *production* environment, this **should ideally be avoided**.
 <br>
 
 
-
 ## Exercise 2 - The big reset [40 min]
 **Objective:** get familiar with `git reset` and its `--mixed`, `--soft` and `--hard` options.
 
-In this exercise, you will build a new Git repo to keep track of your favorite Chuck Norris
-quotes. Please note that, in order show you some use cases of `git reset`, we will
+In this exercise, you will build a Git repo to keep track of our favorite Chuck Norris quotes.  
+Please note that, in order show you some use cases of `git reset`, we will
 **intentionally make some mistakes**, so that we can then correct them. So don't be unsettled by
 the fact that this exercise keeps asking you to change things: it's by design!
 
@@ -135,13 +153,15 @@ Let's get started:
 4. Wait, that commit message is not nearly dramatic enough for what is about to unfold in this
    exercise. Let's change it to: "Starting The Big Reset".  
    **Note:** while the optimal way to do this is using `git commit --amend`, we here suggest that
-   you try to use `git reset` (with either `--soft` or `--mixed` options).
+   you try to use `git reset` (with either the `--soft` or `--mixed` options).
 
 5. Actually, there's still a thing we forgot: there is a `chuck_norris_quotes.txt` file in the
    repo - but we will not track it. So put it on the list of files to be ignored by Git and make
-   this change part of the very *first* commit of the history (i.e. the file you added to ignore
+   this change **part of the very first commit of the history** (i.e. the file you added to ignore
    `chuck_norris_quotes.txt` should be part of the first commit).  
-   **Hint:** you will need to use a combination of reset and amending.
+   :fire:
+   **Hint:** you will need to use a combination of reset and amending, and then re-do the
+   second commit.
 
 6. Alright, fixing stuff is fun, but let's try to get some real work done here. Open the
    `chuck_norris_quotes.txt` file and select your 3 favorite quotes. Add each of your 3 quotes
@@ -149,27 +169,28 @@ Let's get started:
    after that, you should have 3 additional commits in your history, and a total of 5 commits).
 
 7. With so many epic quotes to chose from it was hard to select only 3! But wait - Git has a
-   solution for us: **branches**! Let's create an alternate branch, where we can have 3 other
-   favorite quotes.  
+   solution for us: **branches**! - we could have an alternate branch with 3 other favorite quotes.  
    Create a new branch - let's name it `second_choice` - at the point in history where the
-   `my_quotes.md` file was still empty. Then checkout/switch to your new `second_choice` branch
-   and verify that `my_quotes.md` does not contain any quotes.
+   `my_quotes.md` file was still empty, then switch to the new `second_choice` branch and
+   verify that `my_quotes.md` does not contain any quotes.
 
-8. Add 3 new quotes to the file, and commit. Make a single commit with all quotes this time.  
+8. Add 3 new quotes to the file, and commit. This time, make a single commit with all quotes.  
    Then, have a look at your repo's history with `git log --all --decorate --oneline --graph`.
 
 9. Upon reflection, why not put all of our favorite quotes into the `my_quotes.md` file: who said
-   we could have only 3! To do this, merge branch `second_choice` into `master`. This will be a
-   **3-way merge** (i.e. non-fast-forward) - so get ready for some **conflict resolution** action.
+   we could have only 3!  
+   To do this, merge branch `second_choice` into `main`/`master`. This will be a **3-way merge**
+   (i.e. non-fast-forward) - so get ready for some possible **conflict resolution** action.
 
 10. After the merge is done, let's look at the history of our Git repo again with
     `git log --all --decorate --oneline --graph`. You can see that, as expected, the 3-way merge
     introduced an additional **merge commit**, so our history is not as clean as could be.
 
     Can we fix it? *Yes, we can!*
-     * Revert the repository to its state before the merge (**hint:** time to put that `--hard`
-       option to good use!).
-     * Rebase `second_choice` on `master`, before merging `second_choice` into `master`.
+     * Revert the repository to its state before the merge. **Hint:** time to put that `--hard`
+       option to good use!.
+     * Rebase `second_choice` on `main`/`master`, before merging `second_choice` into
+       `main`/`master`.
     <br>
 
     When you are done, run `git log --all --decorate --oneline --graph` and marvel at your
@@ -185,16 +206,16 @@ Let's get started:
 
 You are busy working on the `dev` branch of a data analysis pipeline, when you get a message from
 a user: they want you to backport the support for a new type of input data onto an old version
-of the pipeline (version 1.0.1). You try to argue that this is an old version with security
+of the pipeline (version `1.0.1`). You try to argue that this is an old version with security
 vulnerabilities, and that they should not use it anymore... but they *just don't care*. As a
 problem never comes alone, they need this *right now*.
 
 1. Change into `exercise_3/backport.git` and have a look at the Git repository's history.
    Note the different branches and tags.  
    **Reminder:** you can use `git log --all --decorate --oneline --graph` to display the entire
-   repo's history (or `git adog`, if you have created this alias).
+   repo's history - or `git adog`, if you have created this alias.
 
-2. Implementing the backport is urgent, so you will finish your work on the `dev` branch later.
+2. Implementing the backport is urgent, so you will finish your work on the `dev` branch later.  
    Stash away any uncommitted change, so you don't lose your hard work, then go back to version
    `1.0.1` of the project.
     * **Question:** where is the `HEAD` pointer now?
@@ -216,14 +237,14 @@ problem never comes alone, they need this *right now*.
 
 5. Technically, after tagging our new commit with `v1.0.1b`, the `backport` branch is not really
    needed anymore, since a tagged commit will not be garbage collected. So let's delete this
-   branch.
+   branch (using a force deletion if needed).
 
 6. That's it. Now we can finally get back to work on `dev`.
     * Restore the stashed content on `dev`
-    * Commit it and you're done (you can use commit message "Improve file import tests").
+    * Commit the changes and you're done (you can use commit message "Improve file import tests").
    <br>
 
-   At this point, your git history should look like this:
+   At this point, your working tree should be clean and you git history should look like this:
     ```
     * 0bc9428 (HEAD -> dev) Improve file import tests
     * a9096d0 Add tests for import module
@@ -277,7 +298,7 @@ problem never comes alone, they need this *right now*.
 **Objective:** collaborative exercise to review the Git commands and concepts seen during the
 course.  
 For participants who wish to receive **ECTS credits** for this course, this exercise also serves
-as exam - please see the instructions at the end of the exercise.
+as **exam** - please see the instructions at the end of the exercise.
 
 We have saved the best for last! In this collaborative exercise, you will
 **team-up with two fellow pirates** in order to retrieve the lost treasure of the feared pirate
@@ -292,27 +313,32 @@ operations and collaborative workflows you would encounter while doing real work
 * Completing a quest, merging your work into the `main` branch and adding a tag, would be the
   equivalent of making a **new release** of your work/software.
 
-At least during the first 2 quests (sections C and D), you will be asked to follow a
-**collaborative workflow** that uses the following branches:
+At least during the first 2 quests (sections C and D of the exercise), you will be asked to
+follow a **collaborative workflow** that uses the following branches:
 * **`main`** is the *production* branch, i.e. the branch on which only final, production ready,
   material is published. Do *not* work directly on the `main` branch.
-* **`devel`** (for "develop") is the branch where the team will consolidate each "feature" (i.e.
-  each quest of the treasure hunt) before merging it to `main` when a quest is completed.
+* **`devel`** (for "develop") is the *pre-release* branch where the team will consolidate each
+  "feature" (i.e. each quest of the treasure hunt) before merging it to `main` when a quest is
+  completed.
 * Short-lived **personal branches** (feature branches) will be created by each team member to add
   their work, before merging it into `devel`. As this is an exercise and we do not have much time,
   the personal branches will only contain 1 (or sometimes 2) commits before they get merged into
-  `devel`, but you can imagine that in a real application more commits would be added.
+  `devel`. In a real application more commits would probably added on personal branches before
+  they get merged.
 
 :fire: **Important** - please pay particular attention to:
-* Keep a **clean history** by avoiding unnecessary merges, and rebase branches to be merged before
-  merging them whenever possible.
+* Keep a **clean history** by avoiding unnecessary merges. Rebase branches to be merged before
+  merging them whenever possible (unless explicitly instructed otherwise).
 * Use **clear and meaningful commit messages** for your commits.
 * **Delete temporary branches** that are no longer needed (e.g. a personal feature branch).
 * Please pay particular attention to these points if you are taking this exercise as **exam**.
-* Make sure to **carefully read** the instructions and **hints** given for each section, before
+* **Make sure to carefully read the instructions and hints** given for each section, before
   starting the work.
+* **Please ask for help** if you are stuck at any point, especially if you cannot solve one of
+  the riddles.
 
 <br>
+
 
 ### A) Organize your crew
 1. Get together: go to the [course's google doc page](https://docs.google.com/document/d/1EX72NInz-eA2d2GOa5aTB8D88GWb91Sk-sCNHwQYXqE)
@@ -332,6 +358,7 @@ At least during the first 2 quests (sections C and D), you will be asked to foll
 
 <br>
 
+
 ### B) Create a shared Git repo on GitHub/GitLab
 1. Go to `exercise_4/treasure_hunt.git`. As you will see, this is a Git repository that already
    contains some files and commits.
@@ -345,14 +372,15 @@ At least during the first 2 quests (sections C and D), you will be asked to foll
 
 2. The first thing you need to do before embarking on your quest is to **setup a remote repository**
    on [GitHub](https://github.com) or [GitLab](https://about.gitlab.com), so that you can use this
-   as a shared repository to synchronize your local Git repos within the team.
-    * As you only need one remote for the entire team, select one person of your crew who will
-      create a new project/repo under their GitHub/GitLab user account.
-    * The repo should be **public**.
-    * Once the repo is created, the owner must **give access to the repo** to the other members
-      of the crew.
-    * For instructions about how to create a new repo on GitHub and give access to the repo to
-      other people, please see the course slides (Exercise 4 help slides).
+   as a shared repository to synchronize your local Git repos within the team. As you only need 1
+   remote for the entire team, proceed as follows:
+    * The **Captain** should create a new **public** project/repo under their GitHub/GitLab user
+      account.
+    * Once the repo is created, the **Captain** must **give access to the repo** to the
+      **Quartermaster** and **First-mate**, who must **accept the invitation** to join the new
+      repo.
+    * :fire: **Hint:** For instructions about how to create a new repo on GitHub and give access
+      to the repo to other people, please see the exercise 4 help slides.
    <br>
 
 3. All members of the crew should add the newly created remote repository as a **remote** to their
@@ -360,13 +388,16 @@ At least during the first 2 quests (sections C and D), you will be asked to foll
    In addition:
     * One pirate should push the `main` branch to the remote.
     * The other pirates, should set `origin/main` as the **upstream** for their `main` branch.
-      This is done with the command: `git branch --set-upstream-to=origin/main`.
+      This is done with the command: `git branch --set-upstream-to=origin/main`. This tells git
+      that the remote branch `origin/main` is the remote branch associated to your local branch
+      `main`.
 
 <br>
 
+
 ### C) Treasure hunt part one: sign the pirate code
 Even pirates have rules! To avoid disputes at sea, you and your fellow pirates should start your
-journey by carrying-out a little paperwork and signing the
+journey by carrying-out a little paperwork: signing the
 [pirate code](https://en.wikipedia.org/wiki/Pirate_code).
 
 Signing the **pirate code**, and thereby officializing your participation and rank in the treasure
@@ -376,14 +407,14 @@ Please **pay particular attention to articles IX, X and XI of the contract!**
 
 To properly edit this file and share your edits with your fellow pirates, proceed as follows:
 
-1. Enter the `treasure_hunt.git` git repo. You should be on a branch named `main`, the main branch
-   of the quest.
+1. Enter the `treasure_hunt.git` git repo. You should be on branch `main`, the main branch of the
+   quest.
 2. The **Captain** should create a new branch named `devel` (for "development"), and push it to the
    remote. This is the branch on which the team will consolidate their work before merging it
    into `main`.
 3. The other crew members can now update their local repos with the new `devel` branch.
    For the time being, this branch is pointing at the latest commit of the `main` branch.  
-   **Important:** other team members should *not* create the `devel` branch locally themselves.
+   **Important:** other team members must *not* create the `devel` branch locally themselves.
      They should check it out from the remote.
 4. Each pirate must now sign the `pirate_code.md` and share the changes with the other members.  
    Proceed as follows:
@@ -412,18 +443,23 @@ To properly edit this file and share your edits with your fellow pirates, procee
    and ranks of all crew-members should be proudly displayed.
 8. If the step above is working as expected for the entire team, it's time to make a **release** to
    the `main` branch:
-    * The **Quartermaster** should merge `devel` into `main`.
-    * The other members of the crew should then update their `main` branch.
-    * The **First-mate** should add a **tag** named `contract-signed` to label this new "release"
-      and push it to the remote.
-    * The other members of the crew should then fetch the tag from the remote.
-9. Each pirate can now delete their personal branch (`add-crew-cp`, `add-crew-qm`, `add-crew-fm`).
-10. That's it, the paperwork is done! Let's get on that ship and sail!
+    * The **Quartermaster** should merge `devel` into `main`, then push `main` to the remote.
+    * The **Quartermaster** should add a **tag** named `contract-signed` (on the latest commit of
+      `main`) to label this new "release", then push the tag to the remote with
+      `git push origin --tags`.
+    * The **Captain** and the **First-mate** should now update their `main` branches.
+9. At this point, everyone should be up-to-date and be able to run `./verify_contract.sh`
+   successfully on their `main` branch. The `main` and `devel` branches should be pointing to the
+   same (latest) commit in the repo.
+10. Each pirate can now delete their personal branch (`add-crew-cp`, `add-crew-qm`, `add-crew-fm`).
+
+That's it, the paperwork is done! Let's get on that ship and sail!
 
 <br>
 
+
 ### D) Treasure hunt part two: gear-up!
-Wait... did I just say "get on that ship"? Well, you see, the problem with that is... there is no
+Wait... did I just say "get on that ship"? Well, you see, the problem is that... there is no
 ship... yet! And we will need a flag too! And rhum of course, lots of rhum for this long journey.  
 The second part of this quest is therefore to find those 3 items: **a ship**, **a flag** and
 (lots of) **rhum**.
@@ -445,7 +481,7 @@ This is how you should proceed:
      * To visit a location, switch/check-out the corresponding branch or commit.
      * As you have done earlier, each pirate should create a personal branch to work on:
        `add-supplies-cp` (Captain), `add-supplies-qm` (Quartermaster) and `add-supplies-fm`
-       (First-mate).
+       (First-mate). The personal branches should initially be rooted the latest commit of `devel`.
 2. Once you have located the commit with the item you are looking for, you should add it to your
    personal branch by **cherry-picking** the commit onto your personal branch
    (`add-supplies-cp`/`add-supplies-qm`/`add-supplies-fm`).
@@ -456,25 +492,30 @@ This is how you should proceed:
    branch to the latest version. The `devel` branch should have 3 new commits (one made by each
    team member), and for every pirate the 3 files `ship.ascii`, `flag.ascii` and `rhum.ascii`
    should be present in the `supplies/` directory.
-5. To verify whether things were done properly, run `./verify_supplies.sh` in your terminal. If
-   your ship is loaded with the correct supplies, a success message will be displayed.
+5. To verify whether things were done properly, run `./verify_supplies.sh` in your terminal (on
+   the `devel` branch). If your ship is loaded with the correct supplies, a success message will be
+   displayed.
 6. If everyone got a success message when running `./verify_supplies.sh`, then it's time to make a
    **release** to the `main` branch:
-   * The **Captain** should merge `devel` into `main`.
-   * The other members of the crew should then update their `main` branch.
-   * The **Quartermaster** should add a **tag** named `read-to-sail` to label this new "release"
-     and push it to the remote.
-   * The other members of the crew should then fetch the tag from the remote.
+    * The **First-mate** should merge `devel` into `main`, then push `main` to the remote.
+    * The **First-mate** should add a **tag** named `ready-to-sail` (on the latest commit of
+      `main`) to label this new "release", then push the tag to the remote with
+      `git push origin --tags`.
+    * The **Captain** and the **Quartermaster** should now update their local `main` branches
+      from the remote.
+9. At this point, everyone should be up-to-date and be able to run `./verify_supplies.sh`
+   successfully on their `main` branch. The `main` and `devel` branches should be pointing to the
+   same (latest) commit in the repo.
 7. Each pirate can now delete their personal branch (`add-supplies-cp`, `add-supplies-qm`,
    `add-supplies-fm`).
 
+The ship is loaded and the flag is flying - now we're talking! Get ready for the final step of this
+*gitventure*: finding **the treasure!**
+
 <br>
 
-### E) Treasure hunt part three: find the treasure
-The ship is loaded and the flag is flying, you're ready for the final step:
-finding **the treasure!**
 
-#### Visit Skull-rock-island to find the treasure
+### E) Treasure hunt part three: visit Skull-rock island to find the treasure
 Start by setting sail on `Skull-rock-island` (i.e. switch to the branch). The island was home to
 **John Longsilver** - a fearsome pirate with a healthy appetite for treasures. Unfortunately,
 pirate lives do sometimes take a turn for the shorter, and so did Longsilver's.
@@ -497,19 +538,23 @@ Proceed as follows:
     **treasure chest**.
 
 You should now also see that you have a new directory named `treasure_chest` at the root of your
-Git repo. To bring the treasure chest aboard your ship, the **First-mate** should do the following:
+Git repo.
+
+To bring the treasure chest aboard your ship, the **First-mate** should do the following:
  1. Merge the `work-in-progress` branch into the `Skull-rock-island` branch (at this point this
-    should be a fast-forward merge).
+    should be a fast-forward merge). Then push the changes on `Skull-rock-island` to the remote.
  2. Merge the `Skull-rock-island` branch into the `main` branch. This will add the treasure chest
     to the `main` branch - along with your new friend the parrot!
- 3. Push the changes to the `main` and `Skull-rock-island` branches to the remote.
- 4. The **Captain** and **Quartermaster** can now update their local repos with the changes to
-    `main` and `Skull-rock-island` that were pushed by the **First-mate**.
- 5. At this point everyone should be synchronized, be on their `main` branch, and have the treasure
-    onboard.
- 6. Congratulations, you're almost there! Let's celebrate this with a new **release**: the
-    **Captain** should add a tag named `treasure-found` and push it to the remote. Everyone else
-    can then fetch it.
+ 3. Push the changes on branch `main` to the remote.
+
+
+The **Captain** and **Quartermaster** can now update their local repos with the changes to `main`
+and `Skull-rock-island` that were pushed by the **First-mate**. At this point everyone should be
+synchronized, be on their `main` branch, and have the treasure onboard.
+
+Congratulations, you're *almost* there! Let's celebrate this with a new **release**:
+ * The **Captain** should add a tag named `treasure-found` and push it to the remote with
+   `git push origin --tags`. Everyone else can then run `git fetch` to fetch it.
 
 Alright, let's see what John Longsilver has been hiding in his treasure. To open it, execute
 `./open_chest.sh` and see what happens...  
@@ -521,15 +566,16 @@ own (without collaboration). You simply have to find the 3 keys for the treasure
 
 <br>
 
-#### Opening the treasure
+
+### F) Treasure hunt final part: opening the treasure
 We are now looking for the **3 keys to open the 3 locks of the chest**. To find where they are,
 listen to the parrot's hints (run `./listen_to_parrot.sh`) and then go back to `Port-royal`,
 `Blackbeard-castle` and `Oyster-bay` to find the keys.
 
 :fire:
-**Hints - please read carefully:**
-* Unlike in the previous quest, the locations that the parrot gives in its hints correspond to
-  **directories** on disk - *not* to commits!
+**Hints - please read this carefully *before* you begin:**
+* Unlike in the previous quest, the locations that the parrot gives in its hints correspond here
+  to **directories** on disk - *not* to commits!
 * The **key files** are files that have the name of the object that contains them or is near them.
   E.g. a file named `candle` would be the "key" file if you think the key is near a candle.
 * Each key file must be placed in the correct lock directory, and renamed to the correct name:
@@ -539,22 +585,22 @@ listen to the parrot's hints (run `./listen_to_parrot.sh`) and then go back to `
 * Once you have located the correct file (based on the hints given by the parrot), **checkout** the
   file to the `main` branch, rename and move it to the correct location (see above), and make a
   new commit.
-  * To **checkout a single file** from a given branch/commit, remember that you can use:
-    `git checkout <commit ref> <file>`. For this exercise, run the command while located at the
-    root of working tree.
-  * To move, rename, or move+rename a file, you can use: `git mv <file> <new_location/new_name>`
+  * To **checkout a single file** from another branch use
+    `git checkout <branch name> <path/to/file>`. For this exercise, run the command while located
+    at the root of `treasure_hunt.git`.
+  * To move and rename the file, use: `git mv <file> <new_location/new_name>`.
 * **Do not modify the content of the file in any way, this would destroy the key**.
 
 As before, this is teamwork and each pirate should retrieve one of the keys. This time however,
 **to save time** (and because we believe that by now you have understood the principle), you can
-**add your commit directly to `main`** (*crazy!*, I know, :tada:).
+**add your commit directly to `main`** (*crazy!* - I know :tada:).
 Make sure to actively coordinate with your team mates so that your `main` branch is up-to-date
 before you add a commit to it: you do not want any divergence in the `main` branch among the team!
 If divergence occurs, you can:
-* **Rebase** your local changes in `main` onto `origin/main`: `git rebase origin/main`
-  or `git pull --rebase` (both will give the same result).
+* **Rebase** your local changes in `main` onto `origin/main`: `git pull --rebase`.
 * **Merge** your local changes in `main` with `origin/main`: `git pull` (on older Git versions) or
-  `git pull --no-rebase` (on recent Git versions).
+  `git pull --no-rebase` (on recent Git versions) - try first the latter and if it fails use the
+  former.
 
 When each pirate has added his key to `main` and everyone has updated their local Git repo copies,
 you can try to run `./open_chest.sh` again. If the keys are the correct files, have been placed at
@@ -565,17 +611,18 @@ the correct location, and have been correctly renamed, the chest should open!
 ### For people doing this exercise as an exam :memo:
 If you would like to receive credits for the course, please do the following within 3 days of the
 end of the course:
-1. Take a screenshot of the output of your Git repo's full history (use
+1. **Take a screenshot** of the output of your Git repo's full history (use
    `git log --all --decorate --oneline --graph`) at the end of your quest.
-2. Create a new branch named `exam-YOUR_FULL_NAME` rooted on the latest commit of `main` (replace
-   `YOUR_FULL_NAME` with your actual name). Add a commit with your screenshot to this new branch
-   and push it to the remote.
-3. Send an email with subject "Git course exam - your name" to `robin.engler@sib.swiss` with the
+2. **Create a new branch** named `exam-YOUR_FULL_NAME` rooted on the latest commit of `main`
+   (replace `YOUR_FULL_NAME` with your actual name). Add a commit with your screenshot to this
+   new branch and push it to the remote.
+3. **Send an email** with subject "Git course exam - your name" to `robin.engler@sib.swiss` with the
    following information:
     * Your **full name**.
     * The **URL of the remote repo** that you have used for this exercise (repo must be public).
     * The **secret code** you found when opening the chest.
-4. Make sure you have signed-up for the exam on the Google doc of the course.
+4. **Make sure you have signed-up for the exam** on the Google doc of the course by highlighting
+   your name in green.
 
 
 <br>
