@@ -162,7 +162,10 @@ necessarily correspond to the final version.
 
 * [Solutions day 1 - first steps](solutions_first_steps.md)
 * [Solutions day 2 - advanced topics](solutions_advanced_topics.md)
-* [Solutions day 3 - optional modules](solutions_optional_modules.md)
+* Solutions day 3 - optional modules:
+  * Solutions CI/CD - solutions are integrated in exercise instructions.
+  * [Solutions submodules](solutions_optional_submodules.md)
+  * [Solutions Git LFS](solutions_optional_LFS.md)
 
 <br>
 
