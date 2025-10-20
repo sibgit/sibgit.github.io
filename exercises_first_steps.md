@@ -1,6 +1,6 @@
 # Exercises - first steps with Git
 
-<br>
+**Table of Content:**
 
 [[_TOC_]]
 
@@ -289,8 +289,8 @@ will be guided step-by-step on exactly what you need to do.
     ignore files so that:  
      * Files in `large_data` are ignored by all copies of the repo.
      * `personal_notes.txt` is ignored *only* by your local copy of the repo.
-     * **Hint**: use the **`.gitignore`** and **`.git/info/exclude`** files.
-       Note that `.git/info/exclude` is a file, not a directory.
+     * :dart: **Hint**: use the **`.gitignore`** and **`.git/info/exclude`**
+       files. Note that `.git/info/exclude` is a file, not a directory.
     <br>
 
 13. **Commit the changes** to the `DESCRIPTION`, `README.md` and `.gitignore`
@@ -372,7 +372,7 @@ working as expected.
 
 4. On the new branch, edit the `references.html` file to fix the link to the
    "ProGit" book.  
-   :fire:
+   :dart:
    **Hint:** to fix the link, add `https://` in front of the URL.  
 
 5. **Verify in your browser** that the link is now working properly (you might
@@ -479,6 +479,7 @@ completed.
   is that it creates a local copy of a Git repository stored on a remote server
   (typically on GitHub or GitLab). So essentially, it downloads the content
   of the Git repo to your local machine.
+  <br>
 * You should now have a new directory named "peak_sorter". Enter it with the
   command `cd peak_sorter`.
 * To see the peak sorter script in action, run the following command in your
