@@ -9,9 +9,9 @@
 :fire:
 **About "Additional Tasks"**  
 As you will see, some of the exercises contain an **Additional Tasks** section.
-These are tasks that you can do if you have completed the regular part of the
+These are tasks you can do if you have completed the regular part of the
 exercise but there is still time in the exercise session. Additional Tasks will
-not be corrected in class, but you can find corrections for them in the
+*not* be corrected in class, but you can find corrections for them in the
 exercise solutions.
 
 <br>
@@ -57,259 +57,410 @@ make commits.
 Welcome to the first exercise of this Git course! This is a warm-up, so you
 will be guided step-by-step on exactly what you need to do.
 
-### Create a new repo, add content, and make commits
-1. **Change directory** into `/exercise_1` and list its content using the
-   following shell commands:
+<br>
+
+### Part A: create a new repo from scratch and make a first commit
+
+1. **Change directory** into `exercise_1/test-project` and list the
+   directory's content using the following shell commands:
    ```yaml
-   cd exercise_1
+   cd exercise_1/test-project
    ls -l
    ```
-   You will see that the directory contains (parts of) the source code of the
-   R package `stringr`.
 
-2. **Initialize a new Git repository** at the root of the `exercise_1`
+   You should see that it contains files reminiscent of a simple scripting
+   project, e.g. a data analysis pipeline (here written in Python).
+   ```sh
+     test-project
+      ├── doc
+      │   └── user-guide.pdf
+      ├── README.md
+      ├── script.py
+      ├── script.pyc
+      └── tests
+          ├── output.csv
+          ├── tests.py
+          └── tests.pyc
+   ```
+   <br>
+
+2. **Initialize a new Git repository** at the root of the `test-project`
    directory:
-    * Run **`git init`**: this creates a new Git repo in the current working
-      directory.
-       ```yaml
-       git init
-       ```
-    * Initializing a new Git repo creates a **hidden `.git` directory**. You
-      can view this directory by running the command:
-      ```yaml
-      ls -la
-      ```
+   * Create a new Git repo in the current working directory with the command:
+     ```yaml
+     git init
+     ```
+   * Initializing a new Git repo creates a **hidden `.git` directory**. You
+     can view this directory by running the shell command:
+     ```yaml
+     ls -la
+     ```
 
-      :fire:
-      **Important:** this directory is where Git stores the history of your
-      repository (as well as various settings). If you delete it,
-      **you will lose all your version control history (and settings)** for
-      the current repo. You can do this if e.g. you want to start the exercise
-      from scratch again.
-    * Run the **`git status`** command:
-       ```yaml
-       git status
-       ```
-    * :question:
-      **Question:** what is the status of the files in your working directory?
+     :fire:
+     **Important:** this directory is where Git stores the history of your
+     repository (as well as various settings). If you delete it,
+     **you will lose all your version control history (and settings)** for
+     the current repo. You can do this if e.g. you want to start the exercise
+     from scratch again.
 
-3. Now that we have a Git repo, we would like to keep track of all files in
-   our directory *except* `test_results.out` (this is the output of a test, we
-   do not want to track it).
-    * **Stage all files** except `test_results.out`.  
-      :fire:
-      **Reminder:** the command to add/stage files is: **`git add <files to stage...>`**  
-      :pushpin:
-      **Note:** *staging* a file is a synonym of *adding to the Git index*.
-    * To make sure that you have staged the correct files, run the `git status`
-      command again. The output of the command should look like this:
-       ```
-       Changes to be committed:
-            new file:   DESCRIPTION
-            new file:   LICENSE
-            new file:   R/sort.R
-            new file:   R/split.r
-            new file:   R/stringr.R
-            new file:   README.md
-            new file:   tests/testthat.R
-            new file:   tests/testthat/test-case.R
+     <br>
 
-        Untracked files:
-            test_results.out
-       ```
-       <br>
+3. **Display the status of files** in the working tree (i.e. the `test-project`
+   directory):
+   * Run the command:
+     ```yaml
+     git status
+     ```
+   * :question:
+     **Question:** what is the status of the files in your working directory?
 
-4. **Make a first commit** in the repo with the message
-   > Initial commit for fake stringr package
-
-   :fire:
-   **Reminder:** the command to make a commit is: **`git commit -m "<commit message>"`**
-
-   Then, do the following:  
-    * Run **`git log`** to display the repository's history.
-    * Run **`git show`** to have a look at your commit.  
-    * Run **`git status`** again.
-    * :question:
-      **Question:** are there any untracked files left?
    <br>
 
-   :pushpin:
-   **Note:** depending on how much there is to print, `git show` will displays
-   the content of a commit with the GNU program `less`:
-    * Use your keyboard arrow keys to move up/down.
-    * Press `q` to exit and return to the shell.
+4. **Stage the files** `README.md`, `script.py`, `doc/user-guide.pdf`,
+   `tests/output.csv` and `tests/tests.py` (i.e. all files except the `*.pyc`
+   files, which are some sort of "python cache" files we don't want to track).  
+   * The command to stage files is: `git add <files or directories>`. For
+     instance, `git add README.md` will stage the file `README.md`.
+   * :owl:
+     **Reminder:** *staging* a file is a synonym of *adding to the Git index*.
+   * To make sure that you have staged the files correctly, run the command
+     **`git status`**. The output of the command should look like this:
+     ```txt
+     Changes to be committed:
+        	new file:   README.md
+        	new file:   doc/user-guide.pdf
+        	new file:   script.py
+        	new file:   tests/output.csv
+        	new file:   tests/tests.py
+
+     Untracked files:
+        	script.pyc
+        	tests/tests.pyc
+     ```
+     <br>
+
+5. **Add a first commit** to the repo with the commit message
+   `"Initial commit for test project"`.
+   * The command to make a commit is:
+     **`git commit -m "<commit message>"`**
+     (or, in the long form: `git commit --message "<commit message>"`)
+   * After the commit is done, run the following commands:  
+     * **`git log`**: to display the repository's history. At this point you
+       should have a single commit, that looks like (your exact
+       values for commit hash, date, etc. will differ):
+       ```txt
+       commit a0da6303e9d6dfc34986f959a076721e153f382d (HEAD -> main)
+       Author: Your Name <your.email@example.org>
+       Date:   Mon Oct 14 13:55:08 2024 +0200
+
+           Initial commit for test project
+       ```
+     * **`git show`**: to have a look at the content of your commit.  
+       :question:
+       **Question:** why are the details of the `doc/user-guide.pdf` file not
+       displayed by `git show`?
+
+       :pushpin:
+       **Note:** when the amount of text to be printed by `git show` exceeds one
+       screen, the content is shown with the GNU program `less`. In `less`, you
+       can use your keyboard arrow keys to move up/down, and press `q` to exit and
+       return to the shell.
+
+<br>
+
+### Part B: commit an update to a tracked file
+
+In this section, we will make an update to the `README.md` file, and then
+create a new commit that adds this change.
+
+1. **Open the `README.md` file** in your favorite text editor.
+   * Change the 3rd line of the file to:
+     > Demo project for the Git course. This will be great!
+   * Save your changes and close the file.
+   * Run `git status`: the file `README.md` should now be listed as modified:
+     ```txt
+     Changes not staged for commit:
+	       modified:   README.md
+
+     Untracked files:
+    	   script.pyc
+         tests/
+     ```
    <br>
 
-5. **There should be exactly 1 untracked file** at this point:
-   `test_results.out`.
-    * To stop this file from appearing as untracked, create a
-      **`.gitignore` file** that contains the name of the file to ignore (here
-      `test_results.out`).
-    * Now run the `git status` command again: you should see that you still
-      have an untracked file: the `.gitignore` file you just created!
-    * :question:
-      **Question:** how should we deal with this untracked file? Should it be
-      added to the repo, or added to the ignore list?
-    * Stage the `.gitignore` file (add it to the git index), and make a new
-      commit.
+2. **Display the changes** to files in the working tree:
+   * Run the command `git diff`, which displays the difference in tracked
+     files between the working tree and the Git index (staging area).
+     ```yaml
+     git diff
+     git diff README.md  # Gives the same result, as only README.md was modified.
+     ```
+   * It will show that `README.md` has one line removed (shown in red,
+     prefixed with `-`), and one line added (shown in green, prefixed with `+`).
+     ```diff
+     -Demo project for the Git course.
+     +Demo project for the Git course. This will be great!
+     ```
+   <br>
 
-   At the end of this step, your working tree should be "clean": when you
+3. **Commit the changes** you just made:
+   * Add/stage the changes made to `README.md` with `git add`.
+     Remember that each time you modify a file and want to include these
+     changes into your next commit, you have to `git add` that file again.
+   * :fire:
+     **Tip:** to stage all modified files at once, you can use the
+     **`git add -u`** shortcut. In this case it does not make a lot of
+     difference as there is only 1 modified file, but if there are many of
+     them, this command can be useful.
+   * Run `git status` again: you should see that the `README.md` file is now
+     listed under `Changes to be committed:` (in green).
+   * Commit your changes with the message `"Make README file more cheerful"`.
+
+<br>
+
+### Part C: adding files to the `.gitignore` list
+
+At this point, the only files that should be left **untracked** in our
+repository are the two `*.pyc` files (you can verify this by running
+`git status`). Since we are never going to track these files, we would like
+to **permanently ignore** them, so that they stop being listed as *untracked*.
+
+1. **Add `*.pyc` files to `.gitignore`**:
+   * At the root of the working tree, create a `.gitignore` file with the name
+     of the files to ignore. We can also use the pattern `*.pyc` to ignore all
+     files ending in `.pyc`.
+
+     :fire:
+     **Tip**: you can create the `.gitignore` in any text editor you like,
+     but you can also easily generate it with a shell command:
+     ```yaml
+     echo "*.pyc" > .gitignore
+     ```
+   * Now run the `git status` command again: you should see that you still
+     have an untracked file: the `.gitignore` file you just created
+     :sweat_smile: !
+   * :question:
+     **Question:** how should we deal with this untracked file? Should it be
+     added to the repo, or added to the ignore list ?  
+     <br>
+
+2. **Add a new commit with the `.gitignore`** file:
+   * Stage the `.gitignore` file.
+   * Make a new commit with commit message `"Add *.pyc to ignore list"`.
+
+   At the end of this step, your working tree should now be "clean": when you
    run `git status`, the output should be:
-    ```
-    On branch main
-    nothing to commit, working tree clean
-    ```
-   <br>
+   ```txt
+   On branch main
+   nothing to commit, working tree clean
+   ```
+  <br>
 
-6. If you look at the content of the `README.md` file, you will see that it
-   contains the string `MISSING` on two different lines.
-   Edit the `README.md` file to replace the `MISSING` values by their correct
-   content:  
-    * The author of the stringr package: "Hadley Wickham"  
-    * The URL of the package: https://cran.r-project.org/web/packages/stringr
-   <br>
+ 3. **Display the (modest) history of your Git repo** with the following
+    variations of the `git log` command. Observe how history is displayed by
+    each command:
+     * `git log`  
+     * `git log --pretty=oneline`
+     * `git log --oneline`
+     * `git log --all --decorate --oneline --graph`
+    <br>
 
-   Run the `git status` command again. You should see that the `README.md` file
-   is now marked as "modified". To see the changes made to the file, run
-   **`git diff`**.
+    With the current history of our git repo, the output of
+    `git log --all --decorate --oneline --graph` is the same as
+    `git log --oneline`. This will however change when we start working with
+    **branches**, and the longer version of the command will become very
+    useful.
 
-   You can now commit the changes you just made:
-    * Add/stage the changes made to `README.md` with the `git add` command.
-      Remember that each time you modify a file and want to include these
-      changes into your next commit, you have to `git add` that file again.
-    * :fire: **Tip:** to stage all modified files at once, you can use the
-      **`git add -u`** shortcut.
-    * Run `git status` again: you should see that the `README.md` file is now
-      listed under `Changes to be committed:` (in green).
-    * Commit your changes with the message `README: add author and URL`.
-   <br>
-
-7. **Display the (modest) history of your Git repo** with the following
-   variations of the `git log` command. Observe how history is displayed by
-   each command:
-    * `git log`  
-    * `git log --pretty=oneline`
-    * `git log --oneline`
-    * `git log --all --decorate --oneline --graph`
-   <br>
-
-8. As you can see, with the current history of our git repo, there is not much
-   difference between the outputs of `git log --oneline` and
-   `git log --all --decorate --oneline --graph`. This will however change later
-   when we start working with **branches**, and you will soon notice that the
-   `git log --all --decorate --oneline --graph` command is very handy.
-
-   **So let's create a Git shortcut named `adog`** for it:  
-    * The command to create this shortcut is:
-      ```yaml
-      git config --global alias.adog "log --all --decorate --oneline --graph"
-      ```
-    * Test your new shortcut by typing: `git adog`.
-    * Your commit history should look like this (commit ID values will differ):
-      ```
-      * 8b14ba7 (HEAD -> main) README: add author and URL
-      * b48e2c1 Add gitignore file
-      * cd56e1e Initial commit for fake stringr package
-      ```
-    * :fire: **Tip:** to list your defined Git aliases, use:
-      `git config --list | grep ^alias`
+    **So let's create a Git shortcut named `adog`** for it:  
+      * The command to create this shortcut is:
+        ```yaml
+        git config --global alias.adog "log --all --decorate --oneline --graph"
+        ```
+      * Test your new shortcut by typing: `git adog`.
+      * Your commit history should look like this (commit ID values will differ):
+          ```txt
+          * 81d03aa (HEAD -> main) Add *.pyc to ignore list
+          * 029a389 Make README file more cheerful
+          * da59f94 Initial commit for test project
+          ```
+      * :fire: **Tip:** to list your defined Git aliases, use:
+        `git config --list | grep ^alias`
 
 <br>
 
 ### Additional Tasks (if you have time)
 
-9. **Let's create some additional files** at the root of the `exercise_1`
-   directory by copy-pasting the following 6 lines in your shell (with the
-   working dir set to `exercise_1`):  
+For some of the next steps, we will need an additional file named
+`personal_notes.md`, as well as a change in the `script.py` file.  
+**Let's generate this file/changes** by running the following command at the
+root of the `test-project` directory:
    ```yaml
-   echo "Let's keep this local" > personal_notes.txt
-   mkdir large_data
-   echo "A large file in the making..." > large_data/large_1.csv
-   cp large_data/large_1.csv large_data/large_2.csv
-   echo "adding a line" >> DESCRIPTION
-   echo "adding a line" >> README.md
+   echo "Let's keep this local" > personal_notes.md
+   echo "adding a bad line..." >> script.py
+
+   # You can then visualize the changes by running:
+   git status
+   git diff
    ```
-   This should create a new file named `personal_notes.txt`, as well as a
-   directory `large_data` with 2 files in it: `large_1.csv` and `large_2.csv`.  
-   It will also modify the existing files `DESCRIPTION` and `README.md`.
 
-10. We now want to experiment the difference between the **`git add --all`**
-    and  **`git add -u`** commands (`-u` is a shortcut for `--update`).  
-    Proceed as follows:
-     * Run `git status`, and note the state of each file. You should have both
-       modified and untracked changes.
-     * Run `git add -u` followed by `git status`: note which files have been
-       staged (added to the index).
-     * Run `git reset HEAD` (we will see this command later in the course)
-       followed `git status`: you should see that this command has removed all
-       newly staged content (the changes made to `DESCRIPTION` and `README.md`
-       are no longer staged).
-     * Now run `git add --all` followed by `git status`: again, note which files
-       have been staged. You should now be able to answer the question below.
-     * :question:
-       **Question:** what is the difference between `git add --all` and `git add -u`?
-    <br>
+<br>
 
-11. **Unstage** the following 3 files: `personal_notes.txt`,
-    `large_data/large_1.csv` and `large_data/large_2.csv`.  
-    :pushpin:
-    **Note:** "unstaging" is a synonym for "removing from the git index".
+1. **Removing content from the Git index (unstaging)**.
+   * Start by staging all untracked and modified files with `git add --all`.
+     The status of your files should look like:
+     ```txt
+     Changes to be committed:
+         new file:   personal_notes.md
+         modified:   script.py
+     ```
 
-    To unstage a file, you can use either of these commands (the first option
-    is the recommended way to unstage files):
-     * `git restore --staged <file>`
-     * `git reset HEAD <file>`
-     * `git rm --cached <file>`
+   Actually, we do *not* want to add these changes to the repository,
+   so **let's  unstage them**.
+    * Unstage the changes to `script.py` using the command:
+      **`git restore --staged`**
+    * Unstage the entire file `personal_notes.md`, using either
+      **`git restore --staged`** or **`git rm --cached`**
 
-    :fire:**Reminder:** make sure to not run `git rm` instead of `git rm --cached`,
-    as this would not only remove the files from the git index, but also delete
-    them from your working tree!
+      * :owl:
+        **Reminder:** the difference between `git rm --cached` and `git restore --staged`
+        is that `git rm --cached` **removes the entire file from the index**,
+        while `git restore --staged` **reverts it to the version in the last
+        commit** (`HEAD` commit).
+      * :pushpin:
+        **Note**: The reason why in this particular case `git rm --cached` does
+        exactly the same as `git restore --staged ` is because
+        `personal_notes.md` is a newly added file. There is thus no difference
+        between removing it completely, or just resetting it back to its
+        version from the latest commit (since it is absent from the latest
+        commit).
+      * :warning:
+        Make sure *not* to run `git rm` instead of `git rm --cached`, as this
+        would not only remove the file from the Git index, but also delete it
+        from your working tree!
 
-    :question:
-    **Questions:**
-     * The 2 first commands are identical, but what is the difference with
-       `git rm --cached <file>`?
-     * Why does `git rm --cached <file>` give the same result as the first two
-       commands in this particular case?
-    <br>
+    * At this point, changes in `script.py` should again be unstaged, and
+      `personal_notes.md` should be untracked.  
+      Run **`git status`** to confirm this:
+       ```txt
+        Changes not staged for commit:
+        	modified:   script.py
 
-12. **Run `git status`** to verify that you have successfully unstaged the 3 files
-    (see point 10). They should appear as "untracked".
-    ```
-    On branch main
-    Changes to be committed:
-    	modified:   DESCRIPTION
-    	modified:   README.md
+        Untracked files:
+        	personal_notes.md
+        ```
+       <br>
 
-    Untracked files:
-    	large_data/
-    	personal_notes.txt
-    ```
-    To stop these files from appearing as untracked, add them to the correct
-    ignore files so that:  
-     * Files in `large_data` are ignored by all copies of the repo.
-     * `personal_notes.txt` is ignored *only* by your local copy of the repo.
-     * :dart: **Hint**: use the **`.gitignore`** and **`.git/info/exclude`**
-       files. Note that `.git/info/exclude` is a file, not a directory.
-    <br>
+2. **File staging shortcuts:** `git add --update` vs. `git add --all`.  
 
-13. **Commit the changes** to the `DESCRIPTION`, `README.md` and `.gitignore`
-    files with the message `Update DESCRIPTION and README`.  
-    Your working tree should now be clean - verify it with `git status`.  
+   :owl:
+   **Reminder:**
+   * **`git add --all`**: updates the Git index with
+     **all modified and untracked files**.
+   * **`git add --update`:** updates the Git index only with the new versions
+     of files that are **already tracked**. It does *not* stage any new,
+     untracked files. In a sense, `--update` is safer because it prevents you
+     from adding completely new files to the Git repo by mistake.
 
-    The output of `git status` should be the following:
-    ```
-    On branch main
-    nothing to commit, working tree clean
-    ```
-    The output of `git adog` should be the following (commit ID values will
-    differ):
-    ```
-    * 30e657b (HEAD -> main) Update DESCRIPTION and README
-    * b6d778e README: add author and URL
-    * fd570c5 Add .gitignore file
-    * e50b5cc Initial commit for fake stringr package
-    ```
+   In the task just above, we have used `git add --all`. Now we would like to
+   stage only the modified file `script.py`.
+   * Run the command **`git add -u`**, then look at the status of your files.
+     You should see that only `script.py` was staged (because it's a modified
+     file), but not `personal_notes.md` (because it's untracked).
+     ```sh
+     git add -u   # -u is the shortcut for --update
+     git status
+     ```
+     ```txt
+      Changes to be committed:
+        modified:   script.py
+
+      Untracked files:
+        personal_notes.md
+     ```
+
+   * Run `git restore --staged script.py` to unstage the changes to `script.py`.
+   <br>
+
+3. **Ignore a file using `.git/info/exclude`**.  
+   `personal_notes.md` is a file that we never intend to track and share with
+   other people. Therefore we would like to **ignore** it. However, since this
+   file is specific to our own local setup, it should only be ignored by our
+   local Git repo, and not by everyone else.
+
+   :owl:
+   **Reminder:** in Git, files/patterns to ignore only in your local repo
+   should be added to **`.git/info/exclude`**. This is a text file that is
+   automatically present in a `.git` repo.
+
+    * Edit the file **`.git/info/exclude`** to ignore `personal_notes.md`.
+      you can do this with a regular text editor, or using the following
+      shell command:
+      ```yaml
+      echo "personal_notes.md" >> .git/info/exclude
+
+      # Display the content of the file:
+      cat .git/info/exclude
+      ```
+    * Run `git status` again. The file `personal_notes.md` should not longer
+      be listed as *untracked*.  
+      <br>
+
+4. **Undo a changes from `script.py` in your working tree**.  
+   If you run **`git diff`**, you will see that we currently have an
+   uncommitted change in the `script.py` file:
+     ```diff
+     +adding a bad line...
+     ```
+   However, this is not a modification we want to keep. Instead, we would
+   like to **reset the content of `script.py`** to its previous version
+   (as in the Git index and the previous commit).
+
+   * Using `git restore`, reset the content of `script.py` to its version in
+     the Git index.
+   * Run `cat script.py` to make sure the  "bad line" has been removed from the
+     file.
+   * Run `git diff`: there should be no difference anymore (no output).
+   * Run `git status`: at this point, your working tree should be clean.
+     ```txt
+     On branch main
+     nothing to commit, working tree clean
+     ```
+
+   :warning:
+   As you have just experienced, `git restore <file>` really overwrites
+   uncommitted modifications in your files. Use this command carefully to
+   avoid losing work by mistake.
+   <br>
+
+
+5. **Remove a file from the repository**.  
+   Currently the file `tests/output.csv` is being tracked in our Git repo.
+   However, all things considered, this file is not really needed, and we now
+   would like to delete it from both our repo and working tree.
+   * Delete the file with **`git rm`**.
+   * Run `git status`: you should see that the was was deleted, and that this
+     deletion is already stage.
+     ```txt
+     On branch main
+     Changes to be committed:
+        deleted:    tests/output.csv
+     ```
+   * Make a new commit that removes this file from the repo. You can use the
+     commit message `"Remove test output"`
+
+   :owl:
+   **Reminder:** while we have delete the file `output.csv` from the git index
+   and the last commit, a copy of it still remains in the history of our
+   repository.
+
+6. **Retrieve `output.csv` from an older commit**.  
+   Let's imagine that, for some reason, we want to retrieve the file
+   `tests/output.csv` from our commit history.
+   * Use command **`git restore --source <commit ref> tests/output.csv`**.
+     You need to replace `<commit ref>` with the commit ID of the commit
+     from where to retrieve the file.
+   * :fire:
+     **Tip:** you can use `HEAD~1` to refer to the second-to-last commit.
 
 
 <br>
@@ -475,11 +626,11 @@ completed.
     ```yaml
     git clone https://github.com/sibgit/peak_sorter.git
     ```
-  :pushpin:
-  **Note:** we have not seen the **`git clone`** command yet, but what it does
-  is that it creates a local copy of a Git repository stored on a remote server
-  (typically on GitHub or GitLab). So essentially, it downloads the content
-  of the Git repo to your local machine.
+  :owl:
+  **Reminder:** the **`git clone`** command yet creates (downloads) a local
+  copy of a Git repository from an online source (typically on GitHub or
+  GitLab). It is probably the most common way of starting to work on a
+  repository.
   <br>
 * You should now have a new directory named "peak_sorter". Enter it with the
   command `cd peak_sorter`.
@@ -505,7 +656,7 @@ To apply this commit on the `main` branch of the `peak_sorter` script, proceed
 as follows:
 
 1. **Create a new `hotfix` branch** - we wouldn't want to work directly on
-  `main`, wouldn't we?.
+  `main`, would we?.
 
 2. **Cherry-pick** the commit that contains Jimmy's fix onto your `hotfix`
    branch.
@@ -547,6 +698,13 @@ Proceed as follows:
     ```yaml
    ./peak_sorter.sh
    ```
+   :pushpin:
+   **Note:** when switching to a branch that already exists on a remote,
+   there is no need to add the `-c/--create` option to `git switch`. Here,
+   this means that you can simply run `git switch feature-dahu` and Git will
+   automatically create a local branch `feature-dahu` based on
+   `origin/feature-dahu`.
+
    Verify that the script prints Dahu counts as part of its output. A column
    named `DAHU_POPULATION` should now also be present in the output file
    `sorted_peaks.txt`. You can have a look at this file with the command:
@@ -562,9 +720,9 @@ Proceed as follows:
    can compare it before and after the rebase that we will do at the next step.
 
 2. **Rebase the `feature-dahu` branch on `main`**. This will result in
-   conflicts that have to manually resolve. In all 3 conflicts, always keep the
-   version that is coming from the feature branch (it's the second version when
-   you open the file to manually solve the conflicts - the version that is
+   conflicts that you have to manually resolve. In all 3 conflicts, always keep
+   the version that is coming from the feature branch (it's the second version
+   when you open the file to manually solve the conflicts - the version that is
    *not* coming from `HEAD`).
 
 3. When you completed the rebase, run again:
@@ -572,7 +730,10 @@ Proceed as follows:
     ./peak_sorter.sh
     ```
    It should still display the number of Dahus observed on the Alps' highest
-   peaks as it did before the rebase.
+   peaks as it did before the rebase. And it should also display the data
+   integrity check message `### Running data integrity check...OK` that
+   we added to `main` earlier (because our `feature-dahu` branch now also
+   contains the latest commits of `main`).
 
    Look again at your repo's history (`git adog`). Compare it to what you had
    before the merge (scroll up in your shell), to visually see how the rebase
@@ -794,6 +955,7 @@ will in turn:
    diverged from your local copy, you can do a `git fetch` + `git status`
    before running `git pull`. In this way you will see whether the merge
    that will be done by `git pull` will be fast-forward or not.
+   :owl:
    Reminder: `git pull` is a shortcut for `git fetch` + `git merge <upstream>`.
 
 2. **Rebase their personal branch** on the team's main development branch. Note

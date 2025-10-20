@@ -18,87 +18,166 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 
 ## Exercise 1 - Your first commit
 
-1. To initialize a new git repository, we must first enter the repository in
+### Part A: create a new repo from scratch and make a first commit
+
+1. To initialize a new Git repository, we must first **enter the directory** in
    which we want to track changes.
-    ```yaml
-    cd exercise_1  # Enter the directory.
-    ls -l          # This command lists the files present the directory.
+    ```sh
+    cd exercise_1/test-project  # Enter the directory.
+    ls -l                       # List files present the directory.
     ```
 
-2. After initializing a new Git repository with `git init`, we run `git status`:
-   what we see is that, as expected at this point, all files are untracked.
-   The next step will therefore be to stage some of the files (add them to the
-   git index) so they can then be committed.
-    ```yaml
-    git init    # Create a new Git repository.
-    ls -la      # We can observer that a new ".git" hidden directory was created.
+2. We can now **initialize a new Git repository** with `git init`.
+    ```sh
+    git init  # Create a new Git repository.
+    ls -la    # We can observe that a new ".git" hidden directory was created.
+    ```
+
+3. **Running `git status`**, we see that (as expected at this point) all
+   files are untracked.
+    ```sh
     git status  # At this point, all files are untracked.
     ```
 
-3. Stage all files except `test_results.out`, then check the status of the
-   repository again.
-    ```yaml
-    git add R/ tests/ DESCRIPTION LICENSE README.md
-    git status  # Files that have been added to the Git index for the first
-                # time are displayed as "new file". These files are now
-                # "staged" and are ready to be committed.
+   Output of `git status`:
+    ```txt
+      On branch main
+      No commits yet
+
+      Untracked files:
+        (use "git add <file>..." to include in what will be committed)
+      	README.md
+      	doc/
+      	script.py
+      	script.pyc
+      	tests/
     ```
 
-4. Make a first commit.
-    ```yaml
-    git commit -m "Initial commit for fake stringr package"
-    git log     # Show commit history.
+4. **Stage all files** except the `*.pyc` files. There are several ways we can
+   do this:
+   * By staging individual files:
+      ```sh
+      git add README.md
+      git add script.py
+      git add doc/
+      git add tests/tests.py
+      git add tests/output.csv
+      # Note that we can also stage all 3 files in a single command:
+      git add README.md script.py doc/ tests/tests.py tests/output.csv
+      ```
+   * By staging all files in the directory, then removing the `*.pyc` files
+     from the staging area (Git index):
+      ```sh
+      git add --all  # Or we can also use `git add .`
+      git rm --cached script.pyc tests/tests.pyc # Do not forget the --cached option,
+                                                 # otherwise files are deleted on disk !
+      ```
+     Note that in this specific case we can not use `git restore --staged` to
+     remove files from the Git index because we do not have any commits yet
+     in the repository (and `git restore --staged` needs a commit to restore
+     from).
+
+   We then display the status the files in the working tree, we should see that
+   all our files (except the `.pyc` files) are displayed as "new file" and are
+   now ready to be committed.
+    ```sh
+    git status
+    ```
+    ```txt
+    Changes to be committed:
+         new file:   README.md
+         new file:   doc/user-guide.pdf
+         new file:   script.py
+         new file:   tests/output.csv
+         new file:   tests/tests.py
+
+    Untracked files:
+         script.pyc
+         tests/tests.pyc
+    ```
+
+5. **Make a first commit**, then display the history of the repo and the status
+   of the files in the working tree.
+    ```sh
+    git commit -m "Initial commit for test project"
+    git log     # At this point the commit history contains a single commit.
     git show    # Show content of the last commit.
-    git status  # Show status of files in the working tree.
-    ```
-   At this point there is only 1 untracked files left: `test_results.out`.
-
-5. Since we want the `test_results.out` file to be ignored by all copies of the
-   repository, the correct location to exclude it is in `.gitignore`.  
-   After having created a new `.gitignore` file that contains the text
-   `test_results.out`, we still have one untracked file: the `.gitignore`
-   file itself! This file is meant to be tracked by Git, so that it can be
-   shared with others. Therefore we stage and commit it.
-    ```yaml
-    echo "test_results.out" >> .gitignore
-    git status                           # There is still one untracked file: .gitignore !
-
-    git add .gitignore                   # Stage the .gitignore file.
-    git commit -m "Add gitignore file"   # Commit your changes.
-    git status                           # Now there are no more untracked files displayed.
     ```
 
-6. Edit the `README.md` file to add the package author and URL information.
-   Then commit the changes:
-    ```yaml
-    # Editing the README.md file:
-    vim README.md      # Edit author and URL manually (any text editor can be used).
-    git status         # Show the status of files in the repo: the README.md file should
-                       # now be listed as "modified".
-    git diff           # Show the differences between the version of the files on disk
-                       # and the version of the files in the index.
+   :question:
+   **Question answer:**
+   Looking at the output of `git show`, we can see that the newly added content
+   for the file `doc/user-guide.pdf` is not displayed (unlike for `README.md`
+   for instance, where the content of the file is shown). The reason for
+   this is that `user-guide.pdf` is a **binary file** (and not a plain text
+   file), and Git does not display details for binary files (it simply lists
+   the file has having been modified).
 
-    # Staging (i.e. adding to the git index) the file:
-    git add README.md  # Alternatively: git add -u
-    git status         # The README.md file should now be listed under "Changes to be committed:".
+<br>
 
-    # Commit the changes to README.md:
-    git commit -m "README: add author and URL info"
+### Part B: commit an update to a tracked file
 
-    # Shortcut to stage and commit in a single command:
-    git commit -m "README: add author and URL info" README.md
+1. **Edit the file** `README.md` as instructed (nothing to correct).
+
+2. **Show the differences in tracked files** between the working tree and the
+   Git index (staging area) with `git diff`.
+   ```sh
+   # In this case, since only the README.md file was modified, both of the
+   # following command produce the same result.
+   git diff
+   git diff README.md
+   ```
+
+3. **Stage the changes** to `README.md` and **make a new commit**.
+   ```sh
+   git add README.md
+   git commit -m "Make README file more cheerful"
+
+   # Alternative options: staging all modified files with "git add -u" (since
+   # only README.md was modified, this results in the same as staging the
+   # README.md file).
+   git add -u
+   git commit -m "Make README file more cheerful"
+
+   # Alternative using "git commit" shortcuts to stage + commit in a single
+   # command.
+   git commit -m "Make README file more cheerful" README.md
+   git commit --all -m "Make README file more cheerful"
+   ```
+
+<br>
+
+### Part C: adding files to the `.gitignore` list
+
+1. **Add `*.pyc` files to `.gitignore`**:
+   After having create a `.gitignore` file and ignored the `*.pyc` pattern,
+   we see that the two `.pyc` files are not longer listed as *untracked*.
+    ```sh
+    echo "*.pyc" > .gitignore
+    git status
     ```
 
-7. Explore different ways to display a Git repository's history:
-    ```yaml
+  However, we now have a new untracked file: the `.gitignore` file itself.
+  Since the rules defined in the `.gitignore` file are useful to all users of
+  the repository, this file should be added to the repo.
+
+2. **Add a new commit with the `.gitignore`** file:
+    ```sh
+    git add .gitignore
+    git commit -m "Add *.pyc to ignore list"
+    git status  # -> nothing to commit, working tree clean
+    ```
+
+3. **Display the (modest) history of your Git repo**.
+    ```sh
     git log                                     # Prints the full commit message along with author and date.
     git log --pretty=oneline                    # 1 commit per line. Full commit hash/ID (checksum).
     git log --oneline                           # 1 commit per line. Abbreviated commit hash/ID.
     git log --all --decorate --oneline --graph  # Shows commits for all branches.
     ```
 
-8. Create an `adog` alias Git command and test it:
-    ```yaml
+   Create an `adog` alias Git command and test it:
+    ```sh
     git config --global alias.adog "log --all --decorate --oneline --graph"
     git adog
 
@@ -110,125 +189,69 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 
 ### Additional Tasks
 
-9. Run the commands given in the instructions to create 3 new files and modify
-   2 existing files. When running `git status` you should see that 2 files are
-   modified, and 3 are untracked (actually, the entire `large_data` directory
-   will be shown as untracked).
+1. **Removing content from the Git index (unstaging)**.
+    ```sh
+    git add --all
+    git restore --staged script.py          # Unstage changes to script.py
+    git restore --staged personal_notes.md  # Unstage personal_notes.md
 
-    ```
-    On branch main
-    Changes not staged for commit:
-      (use "git add <file>..." to update what will be committed)
-      (use "git restore <file>..." to discard changes in working directory)
-    	modified:   DESCRIPTION
-    	modified:   README.md
-
-    Untracked files:
-      (use "git add <file>..." to include in what will be committed)
-    	large_data/
-    	personal_notes.txt
+    # To unstage personal_notes.md, we can also use:
+    git rm --cached personal_notes.md
     ```
 
-10. Explore the difference between **`git add -u`** and **`git add --all`**.
-
-    * **First let's see what `git add -u` does**: it updates the Git index with
-      the new version of all files that are **already tracked** by Git (in our
-      case these are `DESCRIPTION` and `README.md`). But it does *not* stage
-      any new, untracked files. In our case, `personal_notes.txt` and the files
-      in `large_data` thus remain untracked.
-
-        ```yaml
-        git status
-        git add -u       # The long form of -u is: git add --update
-        git status       # personal_notes.txt and files in large_data remain unstaged, because
-                         # the "-u/--update" option only stages files that are already tracked.
-
-        git reset HEAD   # Remove the staged changes for `DESCRIPTION` and `README.md`
-                         # so we can test the "add --all" option.
-        ```
-
-    * **Now let's test what `git add --all` does:** it updates the Git index
-      with all modified and untracked files. As can be seen, our 5 files
-      (modified and new) have now been staged:
-
-        ```yaml
-        git status
-        git add --all
-        git status
-
-        Changes to be committed:
-            modified:   DESCRIPTION
-            modified:   README.md
-            new file:   large_data/large_1.csv
-            new file:   large_data/large_2.csv
-            new file:   personal_notes.txt
-        ```
-
-    :question:
-    **Question answer:** the difference between `git add -u/--update` and
-    `git add --all` is that using `--update` will only add files that are
-    already tracked in Git, while `--all` will add all files (except ignored
-    files), whether they are already tracked (modified) or not (untracked).  
-    In a sense, `--update` is safer because it prevents you from adding
-    completely new files to the Git repo by mistake.
-
-11. let's unstage each of our 3 files with one of the possible commands to
-    remove content from the git index:
-    ```yaml
-    git restore --staged personal_notes.txt
-    git reset HEAD large_data/large_1.csv
-    git rm --cached large_data/large_2.csv
+2. **File staging shortcuts:** `git add --update` vs. `git add --all`.
+   The difference between `git add -u/--update` and `git add --all` is that
+   using `--update` will only add files that are already tracked in Git, while
+   `--all` will add all files (except ignored files), whether they are already
+   tracked (modified) or not (untracked).
+   In a sense, `--update` is safer because it prevents you from adding
+   completely new files to the Git repo by mistake.
+    ```sh
+    git add -u                      # Stage all modified files.
+    git status                      # We can see that modifications in script.py are now staged.
+    git restore --staged script.py  # Unstage the modifications.
     ```
 
-    :question:
-    **Question answer:**
-    * The difference between `git rm --cached` and the two other commands is
-      that `git rm --cached` will **unstage the entire file**, not just the new
-      changes that were made to it since the last commit.
-    * The reason why in this particular case `git rm --cached` does exactly the
-      same as `git restore --staged ` and `git reset HEAD` is because the 3
-      files that we unstaged are new and have never been added to the Git repo
-      before.
-      There is thus no difference between removing them completely, or just
-      resetting them back in the index to their version from the latest commit
-      (since they are all absent from the latest commit).
 
-12. Since the content of `large_data` should be ignored by all copies of the
-    repository, we ignore it using the `.gitignore` file.  
-    `personal_notes.txt`, on the other hand, should only be ignored only by the
-    local instance of our Git repo, and must therefore be added to
-    `.git/info/exclude`.
+3. **Ignore a file using `.git/info/exclude`**.  
+    ```sh
+    # Add "personal_notes.md" to the "exclude"  file:
+    echo "personal_notes.md" >> .git/info/exclude
+    cat .git/info/exclude  # Display the content of the file
 
-    ```yaml
-    echo "large_data" >> .gitignore
-    echo "personal_notes.txt" >> .git/info/exclude
+    # personal_notes.md is no longer listed as untracked.
     git status
     ```
 
-    At this point, the output of `git status` should look like this:
+4. **Undo a change in your working tree**.
+   `git restore script.py` overwrites the version of `script.py` present in
+   the working tree with the version from the Git index.
+    ```sh
+    git restore script.py
+    cat script.py           # The line "adding a bad line..." is gone.
+    git diff                # Empty output, which is what we expect.
+    git status              # No more uncommitted changes.
     ```
-    On branch main
-    Changes to be committed:
-    	modified:   DESCRIPTION
-    	modified:   README.md
 
-    Changes not staged for commit:
-    	modified:   .gitignore
-    ```
 
-13. Commit all remaining changes:
-    ```yaml
-    # Stage the .gitignore file (add it to the index).
-    git add .gitignore
+5. **Remove a file from the repository**.  
+   We use `git rm <file>` to remove the file from both the Git index and the
+   working tree. To delete the file only from the index we would use
+   `git rm --cached <file>`.
+    ```sh
+    git rm tests/output.csv
     git status
-
-    # Commit the file.
-    git commit -m "Update DESCRIPTION and README"
-    git status                                      # The working tree should now be clean.
-
-    # Show commit history of the current branch.
-    git log --oneline
+    git commit -m "Remove test output"
     ```
+
+6. **Retrieve `output.csv` from an older commit**.  
+   The `--source` argument is used to indicate from which commit the file
+   should be restored. You can pass a commit ID (hash), or use a reference to
+   a commit such as `HEAD~1` in the solution below. `HEAD~1` refers to the
+   parent of the current `HEAD`.
+   ```sh
+   git restore --source HEAD~1 tests/output.csv
+   ```
 
 
 <br>
