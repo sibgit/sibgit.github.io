@@ -10,7 +10,7 @@ system.
 
 <br>
 
-## Course Description
+## Course Description :owl:
 
 ### Overview
 
@@ -18,47 +18,44 @@ system.
 tracking changes in code and other types of text documents. First released in
 2005, Git has become the **de-facto standard** for version control, and is
 extensively used in both open source and commercial software development.
-
-Git is not limited to software development, and has proved to be an essential
-tool in **reproducible research** - allowing to keep track of files such as
-data analysis scripts, pipelines, reports or more generally any text-based
-document.
+Beyond software development, Git has also proven to be an essential tool in
+**reproducible research** - allowing to keep track of files such as data
+analysis scripts, pipelines, reports or more generally any text-based document.
 
 This **2-days course** gives a **comprehensive overview of Git** and its most
 useful commands, as well as an introduction to collaborative workflows using
-GitHub through both theory and practical exercises.
+[**GitHub**](https://github.com) through both theory and practical exercises.
 
 The course starts with the basics of Git - it is therefore suitable for people
-with no or little knowledge of Git - and will take the participants all the
-way into more advanced territory such as editing the history of a Git
-repository. Emphasis is also put on collaborative workflows, which are actively
-practiced in some of the exercises.
+with no or little knowledge of Git - and will take participants all the way
+into more advanced territory such as editing the history of a Git repository.
+Emphasis is also put on collaborative workflows, which are actively practiced
+in some of the practical exercises.
 
-Please note that this course focuses exclusively on using Git via
-**command line**. This knowledge is then easily transferrable to any GUI
+**Important:** please note that this course focuses exclusively on using Git
+via **command line**. This knowledge is then easily transferrable to any GUI
 environment (e.g. VS Code, RStudio, etc.).
 
-Specifically, the course covers the following topics:
+The course covers the following topics:
 
 #### Day 1: first steps with Git
 
 * Brief introduction to version control systems and Git.
-* Git basics: creating a git repository and making commits.
-* Git concepts: commits, the HEAD pointer and the Git index.
+* Git basics: creating a Git repository and making commits.
+* Git concepts: commits, the `HEAD` pointer and the Git index.
 * Git branches: introduction to branched workflows and collaborative
   workflow examples.
 * Branch management: merge, rebase and cherry-pick.
-* Retrieving data from the Git database: git checkout.
+* Retrieving data from the Git database: `git checkout`.
 * Working with remotes: collaborating with Git and GitHub.
-* GitHub: a brief overview.
 
 #### Day 2: Git advanced topics
 
 * Rewriting history: interactive rebase, git reset and commit amending.
-* The detached HEAD state explained.
-* The Git stash: Git’s “cut and paste” functionality.
+* The detached `HEAD` state explained.
+* The Git stash.
 * Git tags: label important commits.
-* GitHub: creating a new project, adding new users and collaborating with them.
+* GitHub: creating new projects, adding users and collaborating with them.
 
 #### Optional modules
 
@@ -88,7 +85,7 @@ institutions.
 
 <br>
 
-## Course prerequisites
+## Course prerequisites :sunrise:
 
 ### Knowledge/competencies
 
@@ -96,25 +93,28 @@ The course is focused on using Git in command line mode (no graphical user
 interface). It is therefore
 **highly recommended to have some basic knowledge of the UNIX command line**:
 e.g. how to change directory or how to edit a file in a command line editor
-such as vim/nano.
+such as `vim`/`nano`.
 
 If you are not familiar with these UNIX fundamentals, we strongly recommend
-that you either follow an introductory UNIX course (e.g. the SIB "First Steps
-with UNIX" course - see
-[upcoming training courses](https://www.sib.swiss/training/upcoming-training-courses),
-or take the an online tutorial such as
-[this one](https://edu.sib.swiss/pluginfile.php/2878/mod_resource/content/4/couselab-html/content.html)
-before the start of the course.
+that you either:
+
+* Follow an introductory UNIX course (e.g. the SIB "First Steps with UNIX"
+  course - see [upcoming training courses](https://www.sib.swiss/training/upcoming-training-courses),
+* Take an online tutorial such as
+  [this one](https://edu.sib.swiss/pluginfile.php/2878/mod_resource/content/4/couselab-html/content.html)
+  before the start of the course.
 
 ### Technical
 
 * A Wi-Fi enabled laptop with a recent version of Git installed. Git is
   available on all major platforms and can be
   [downloaded here](https://git-scm.com/download).
-* For online classes, you should also have a working microphone as some
+* For online classes, you should also have a working microphone, as some
   exercises involve collaboration/communication with other participants.
 
-### Setting-up your environment
+<br>
+
+## Setting-up your environment :hatching_chick:
 
 * Please complete the [environment setup instructions](environment_setup.md)
   **before** the start of the course.  
@@ -123,12 +123,13 @@ before the start of the course.
 
 <br>
 
-## Course material
+## Course material :books:
 
 :fire:
 **Please note:** the definitive course material (slides and exercises) will be
 made available on the first day of the course. Until then files do not
-necessarily correspond to the final version.
+necessarily correspond to the final version (but are in principle very close
+to it).
 
 ### Course slides
 
@@ -169,86 +170,22 @@ Simply click on the link below to display them.
 
 <br>
 
-## Course schedule
+## Course schedule :hourglass_flowing_sand:
 
-Please note that this schedule is approximate.
-
-* **Day 1 and 2:** 9h00 - 17h30
-
-### First steps with Git [day 1]
-
-* 09h00: Welcome and intro to Git
-* 09h10: Git basics
-* 10h00: Exercise 1
-* 10h30: BREAK - 15 min
-* 10h45: Exercise 1 - corrections
-* 11h00: Git concepts: commits, the HEAD pointer and the git index
-* 11h30: Git branches, git merge
-* 12h15: LUNCH BREAK - 1h
-* 13h15: Exercise 2
-* 13h45: Exercise 2 - corrections
-* 14h00: Git rebase, git cherry-pick
-* 14h45: Git commit --amend, git checkout
-* 15h00: BREAK - 15 min
-* 15h15: Exercise 3
-* 15h45: Exercise 3 - corrections
-* 16h00: Working with remotes, GitHub
-* 16h15: Exercise 4
-* 17h00: End of day 1
-
-### Git advanced topics [day 2]
-
-* 09h00: Intro + recap
-* 09h20: Continue and finish exercise 4 of day 1
-* 10h30: BREAK - 15 min
-* 10h45: Commit amending and interactive rebase
-
-* 09h20: Interactive rebase
-* 10h00: Exercise 1
-* 10h40: BREAK - 15 min
-* 10h55: Exercise 1 - Corrections
-* 11h15: Git reset
-* 11h35: Exercise 2
-* 12h15: LUNCH BREAK - 1h
-* 13h15: Exercise 2 - corrections
-* 13h30: Detached HEAD mode, git stash, tags.
-
-* 14h45: BREAK - 15 min
-* 15h00: Exercise 4
-* 17h00: End of day 2
-
-
-
-Day 1
-
-At lunch we were about to start branches.
-
-Started ex 4 at 16h30
-
-
-day 2:
-Recap -> 10-20 min
-Finish ex 4 -> 1h
-
-at lunch we reached end of exercise 1 corrections
-14h
-
-
-### Breaks
-
-* 1 hour break for lunch.
-* 15 minutes breaks in each half-day sessions.
+* **Day 1 and 2:** 9h00 - 17h00.
+* 1 hour **lunch break** (usually 12h00-13h00).
+* 15 minutes breaks in each half-day session.
 
 <br>
 
-## Useful references and tutorials
+## Useful references and tutorials :crystal_ball:
 
 * [Pro Git - free Git book](https://git-scm.com/book/en/v2)
 * [Atlassian Git tutorials](https://www.atlassian.com/git/tutorials)
 
 <br>
 
-## Acknowledgments and funding
+## Acknowledgments and funding :euro:
 
 ### Funding
 
