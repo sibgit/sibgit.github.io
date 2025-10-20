@@ -1,29 +1,40 @@
-# Optional module exercises: Git LFS
+# Optional module exercises: Git LFS (Large File Storage)
+
+:dart:
+**Objective:** learn to use Git LFS in two different use cases:
+* Starting with a Git repo from scratch - **Exercise 1**.
+* Starting with an already existing Git repo - **Exercise 2**.
+
+:dart:
+**Cleanup:** when you are done with the exercises, you can delete your repo on
+GitHub, so you don't waste precious storage space:
+* In your repo on GitHub, go to **Settings**.
+* Scroll to the bottom of the page. You will see a **"Danger Zone"** box.
+  Click on **"Delete this repository"**.
+
+:fire:
+**Important:** if you have not run the `git lfs install` command yet (at
+least once) on your system, please do it now.
 
 <br>
+
+**Table of Content:**
 
 [[_TOC_]]
 
 <br>
 <br>
 
-## Exercise 7 - Git LFS (Large File Storage)
-**Objective:** learn to use Git LFS in two different use cases: starting with
-a Git repo from scratch, and starting with an already existing Git repo.
+## Exercise 1 - Create a new Git repository from scratch with Git LFS file tracking [20 min]
+In this first exercise, you are asked to create a new Git repository from
+scratch, and have certain types of files tracked by Git LFS.
 
-### A) Create a new Git repository from scratch with Git LFS file tracking [20 min]
-In this first part of the exercise, you are asked to create a new Git
-repository from scratch, and have certain types of files tracked by Git LFS.
-
-1. Change directory to `exercise_7/test_lfs.git`. Initialize a new empty Git
-   repository, and make a first commit that only adds the `README.md` file.
-
-   :fire:
-   **Important:** if you have not run the `git lfs install` command yet (at
-   least once) on your system, please do it now.
+1. **Change directory to `exercise_lfs/test_lfs.git`**. Initialize a new empty
+   Git repository, and make a first commit that only adds the `README.md` file.
 
 2. Make a second commit that adds all files present in the directory. However,
-   the following files should be tracked by Git LFS (and not by Git directly):
+   the following files should be **tracked by Git LFS** (and not by Git
+   directly):
     * All `.fasta` files located in the directory.
     * The `logo.png` file.
     * The `db_file.txt` located in the `db` sub-directory.
@@ -48,14 +59,16 @@ repository from scratch, and have certain types of files tracked by Git LFS.
    differences between regular files and files tracked by Git LFS?
 
 <br>
+<br>
+<br>
 
-### B) Migrate an existing directory to Git LFS [40 min]
-In this part of the exercise, you will start with an existing Git repo named
+## Exercise 2 - Migrate an existing directory to Git LFS [40 min]
+In this exercise, you will start with an existing Git repo named
 `arctic_animals.git`. As its name suggests, this repo contains images of arctic
 animals in different formats.
 
 1. **Explore the history** of the Git repository located at
-   `exercise_7/arctic_animals.git` and check the following:
+   `exercise_lfs/arctic_animals.git` and check the following:
     * How many branches are there in the repository?
     * Are there any files that are not currently tracked by Git in the
       working tree?
@@ -204,16 +217,6 @@ animals in different formats.
       regular push...  
       Run the `git push` command again but adding the option to allow history
       overwriting on the remote.
-
-<br>
-
-### Cleanup
-When you are done with your exercise, you can delete your repo on GitHub, so
-you don't waste some precious storage space:
- * In your repo on GitHub, go to **Settings**.
- * Scroll to the bottom of the page. You will see a **"Danger Zone"** box.
-   Click on **"Delete this repository"**.
-
 
 <br>
 <br>

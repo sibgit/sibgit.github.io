@@ -9,7 +9,7 @@
 <br>
 <br>
 
-## Exercise 1 - Introduction to automation pipelines [45 min]
+## Exercises 1A and 1B - Introduction to automation pipelines [45 min]
 
 :fire:
 **Please read before starting:**  
@@ -31,7 +31,7 @@ platform that interests you most.
 
 ### A) Create a repository on GitHub
 
-1. **Change into the `exercise_1_cicd` directory.** You will see that it
+1. **Change into the `exercise_cicd` directory.** You will see that it
    already contains a Git repository with a couple of commits.
 
 2. **Go to your GitHub account** and create a new repository. You will work on
@@ -48,7 +48,7 @@ platform that interests you most.
 
 <br>
 
-### B) Your first workflow
+### B) Your first GitHub workflow
 So far so good - but let's admit it: we stayed in our comfort zone!
 This will all change now, as we create our first **GitHub Actions workflow**.  
 This first workflow will be very simple and not do anything useful. It's just
@@ -281,9 +281,8 @@ jobs:
 ### E) Add a job that depend on jobs 1 and 2
 Let's continue improving our `python-code-check.yml` workflow by adding
 another job to it:
-* **unit-tests (job 3):** runs [unit-tests](https://en.wikipedia.org/wiki/Unit_testing)
-  on our code. But don't worry, you will not need to write any Python code - we
-  already wrote the unit tests for you!
+* **unit-tests (job 3):** runs
+  [unit-tests](https://en.wikipedia.org/wiki/Unit_testing) on our code.
 
 Unlike the first 2 jobs of the workflow, **jobs 3 should run conditionally**:
 job 3 should only run if both jobs 1 (**format-check**) *and*
@@ -392,16 +391,18 @@ of this exercise's directory.
 </p>
 </details>
 
+
 <br>
 <br>
 <br>
+
 
 ## Exercise 1B - Introduction to automation pipelines: GitLab CI/CD
 **Objective:** learn the basics of creating automation pipelines for **GitLab**.
 
 ### A) Create a repository on GitLab
 
-1. **Change into the `exercise_1_cicd` directory.** You will see that it
+1. **Change into the `exercise_cicd` directory.** You will see that it
    already contains a Git repository with a couple of commits.
 
 2. **Go to your GitLab account** and create a new repository. You will work on
@@ -418,7 +419,7 @@ of this exercise's directory.
 
 <br>
 
-### B) Your first CI/CD pipeline
+### B) Your first GitLab CI/CD pipeline
 So far so good - but let's admit it: we stayed in our comfort zone!
 This will all change now, as we create our first **GitLab CI/CD pipeline**.  
 This first pipeline will be very simple and not do anything useful. It's just
@@ -479,6 +480,8 @@ Let's do this one step at a time and add only the first job for now:
 1. **Edit the `.gitlab-ci.yml` file**:
    * Remove the `test-pipeline` job.
    * Change the **name** of the workflow to `Python code check`.
+   * Change the name of the **first stage** of the pipeline to `syntax-check`
+     (note: at this point the pipeline has a single stage).
    * The pipeline should **run on every push** to the repository. This is
      the default behavior in GitLab CI/CD, so there is nothing special to do.
 
@@ -488,7 +491,7 @@ Let's do this one step at a time and add only the first job for now:
     ```yaml
     # Run the Python Black formatter.
     format-check:
-      stage: test
+      stage: syntax-check
       image: python:slim
       before_script:
         # Install the Black python formatter.
@@ -500,7 +503,9 @@ Let's do this one step at a time and add only the first job for now:
     ```
 
     Here are some notes about the job:
-    * **`stage:`** indicates which **stage** the job belongs-to.
+    * **`stage:`** indicates which **stage** the job belongs-to. The value
+      must correspond to one of the stages listed under the **`stages:`**
+      entry in the `.gitlab-ci.yml` file.
     * **`image:`** indicates the container to use for running our job.
       We here use `python:slim`, an
       [official DockerHub python image](https://hub.docker.com/_/python)
@@ -509,7 +514,7 @@ Let's do this one step at a time and add only the first job for now:
       Here we install *[Black](https://github.com/psf/black)*, a Python
       format checker.
     * **`script:`** this final step of the job runs *Black* on all python
-      files it can find in our repo.
+      files it can find in our repo.  
       How *Black* works is not important for this exercise, just know that it
       looks at all Python code files it can find in the repository and will
       return an error if it detects that one or more files do not follow
@@ -549,6 +554,37 @@ Let's do this one step at a time and add only the first job for now:
 
 
 <br>
+<br>
+<details><summary><b>Solution part C)</b></summary>
+<p>
+
+The file `.gitlab-ci.yml` should look like:
+
+```yaml
+# GitLab CI/CD configuration file.
+
+workflow:
+  name: "Python code check"
+
+stages:
+  - syntax-check
+
+# Run the Python Black formatter.
+format-check:
+  stage: syntax-check
+  image: python:slim
+  before_script:
+    # Install the Black Python formatter.
+    - python -m pip install --upgrade pip
+    - pip install black
+  script:
+    # Run the Black Python code formatter.
+    - black --check .
+```
+
+</p>
+</details>
+<br>
 
 ### D) Add a second job to the Python code check pipeline
 Now that we got the first job working, let's add a second job to our pipeline.
@@ -557,6 +593,7 @@ This second job should run a Python code syntax checker called
 
 The job should be named **syntax-check**, and, just like our first job in the
 pipeline, this job should do the following:
+* Be part of the same **stage** as the first job: `syntax-check`.
 * **Use `python:slim`** as container to run the job.
 * **Install _Pylint_**. The shell commands to install *Pylint* are the
   following:
@@ -590,11 +627,11 @@ workflow:
   name: "Python code check"
 
 stages:
-  - test
+  - syntax-check
 
 # Run the Python Black formatter.
 format-check:
-  stage: test
+  stage: syntax-check
   image: python:slim
   before_script:
     # Install the Black Python formatter.
@@ -606,7 +643,7 @@ format-check:
 
 # Run pylint, a Python code linter (checks for syntax errors).
 syntax-check:
-  stage: test
+  stage: syntax-check
   image: python:slim
   before_script:
     python -m pip install --upgrade pip
@@ -624,18 +661,21 @@ syntax-check:
 ### E) Add a job that depend on jobs 1 and 2
 Let's continue improving our `Python code check` pipeline by adding another
 job to it:
-* **unit-tests (job 3):** will run the [unit-tests](https://en.wikipedia.org/wiki/Unit_testing)
-  for the code (good news: the tests are already written, you only need to run
-  them).
+* **unit-tests (job 3):** will run the
+  [unit-tests](https://en.wikipedia.org/wiki/Unit_testing) for the code.
 
 Unlike the first 2 jobs of the pipeline, **jobs 3 should run conditionally**:
 it should only run if both jobs 1 (**format-check**) *and* job 2
 (**syntax-check**) completed successfully.
-There are 2 options to make a job conditional on other jobs in GitLab CI/CD:
-* Add the **`needs: [<job to depend on>]`** keyword to the job (we will use
-  this method here for job 3).
-* Add the job to a different **stage** of the pipeline (we will use this
-  method later for job 4).
+
+**There are 2 options to make a job conditional** on other jobs in GitLab CI/CD:
+1. Add the job to a different **stage** of the pipeline (we will use this
+   method in this exercise). Jobs in a given stage will only run if all jobs
+   from the previous stage have completed successfully.
+2. Add the **`needs: [<job to depend on>]`** keyword to the job. This can be
+   used e.g. to create dependency rules within the same stage. We will not use
+   this method here, but you can read about it in the GitLab documentation
+   if interested.
 
 <br>
 
@@ -643,8 +683,7 @@ Here are the instructions for job 3:
 ```yaml
 # Run unit-tests for our code.
 unit-tests:
-  stage: test
-  needs: [format-check, syntax-check]
+  stage: unit-tests
   image: python:slim
   before_script:
     # Install Pytest.
@@ -654,15 +693,14 @@ unit-tests:
     # Run unit-tests with Pytest.
     - pytest test_*.py
 ```
-* The **`needs: [format-check, syntax-check]`** key-value pair is used to
-  indicate that the job depends on the first 2 jobs.
-* Job 3 is still part of the `test` stage, as indicated with `stage: test`.
 
 <br>
 
 **Add the job 3** to the `Python code check` pipeline, and verify that
 all jobs in the pipeline run as expected (go to the GitLab **Pipelines tab**
-to check this). This job should succeed.
+to check this). This job should succeed.  
+:dart:
+**Hint:** don't forget to define `unit-tests` as a new stage of the pipeline!
 
 **To test that the conditional execution** really works, let's try to make
 Job 2 fail by introducing an error into the file `simple_script.py`:
@@ -675,6 +713,21 @@ Job 2 fail by introducing an error into the file `simple_script.py`:
    **job 3 should no longer be run**.
 
 <br>
+<br>
+<details><summary><b>Solution part E)</b></summary>
+<p>
+
+The `stages:` section of the pipeline should now look like this:
+
+```yaml
+stages:
+  - syntax-check
+  - unit-tests
+```
+
+</p>
+</details>
+<br>
 
 ### F) Add a fourth - and final - job to the `Python code check` pipeline
 Almost done: let's add a final job to our `Python code check` pipeline:
@@ -686,15 +739,16 @@ You task is to add this new job to the pipeline, so that:
 * The job is named **test-run-script**.
 * **It uses `python:slim`** as container to run the job.
 * The job **only runs if all previous jobs complete successfully**. To
-  achieve this, you should add the job to a different stage: the `build` stage.
+  achieve this, you should add the job to a different stage: the
+  `integration-tests` stage.
 * As its last step, the job should **run the command**:
   `GIT_HOST_SERVICE="GitLab" ./simple_script.py`
 * :dart:
   **Hints:**
-  * You should add a new stage named `build` to the list of stages of the
-    pipeline.
-  * To indicate that your job belongs to the `build` stage, use the
-    `stage: build` key-value pair.
+  * You should add a new stage named `integration-tests` to the list of stages
+    of the pipeline.
+  * To indicate that your job belongs to the `integration-tests` stage, use the
+    `stage: integration-tests` key-value pair.
   * This job does not need a `before_script:` section, because there is nothing
     additional to install (Python is needed, but it comes already in the
     `python:slim` container).
@@ -720,11 +774,11 @@ The instructions for the **test-run-script** job should look like:
 ```yaml
 # Test run the entire script (integration test).
 test-run-script:
-  stage: build
+  stage: integration-tests
   image: python:slim
   script:
     # Run the script.
-    - GIT_HOST_SERVICE="GitHub" ./simple_script.py
+    - GIT_HOST_SERVICE="GitLab" ./simple_script.py
 ```
 
 </p>
@@ -733,13 +787,12 @@ test-run-script:
 <details><summary><b>Overall solution to exercise 1B</b></summary>
 <p>
 
-You can find the final workflow in the file `.solutions/.gitlab-ci.yml`
+You can find the final pipeline in the file `.solutions/.gitlab-ci.yml`
 of this exercise's directory.
 
 </p>
 </details>
-
-
+<br>
 
 <br>
 <br>

@@ -1,17 +1,17 @@
-# Optional module exercises: Git submodules
+# Optional module exercises - Git submodules
 
-<br>
+**Table of Content:**
 
 [[_TOC_]]
 
 <br>
 <br>
 
-## Exercise 6 - The Git reference web page gets better with submodules [45 min]
+## Exercise 1 - The Git reference web page gets better with submodules [45 min]
 **Objective:** introduction to git submodule.
 
 In this exercise, we will implement some improvements to two web pages using
-**submodules**.  
+Git **submodules**.  
 The projects for these web pages are the following:
 * The [git resource webpage](https://github.com/sibgit/git_resources_webpage),
   which you might remember from the *Version Control with Git – First Steps*
@@ -24,7 +24,7 @@ The projects for these web pages are the following:
 
 ### A) Clone the projects - including their submodule
 
-1. Change into the `exercise_6` directory - it should be empty.
+1. Change into the `exercise_submodules` directory - it should be empty.
 2. Clone the repositories for the 2 web pages (links above). These repositories
    contain submodules, so **make sure to also download the submodule content**.
 3. Display the two web-pages `references.html` and `useful-tools.html` in your
@@ -44,7 +44,7 @@ The projects for these web pages are the following:
 
 ### B) Change the style of the web sites by adding a submodule
 
-1. Go to [the great-style GitHub page](https://github.com/sibgit/great-style)
+1. **Go to [the great-style GitHub page](https://github.com/sibgit/great-style)**
    in your browser and create a **Fork** of the project. To create a fork,
    click on the **Fork** button, near the top right of the project's GitHub
    web page.
@@ -56,11 +56,11 @@ The projects for these web pages are the following:
 
 2. Add the **forked** *great-style* repo as a new submodule to both
    `git_resources_webpage` and `useful-tools`.  
-  :fire:
-  **Important:** make sure to use the **forked** project, and *not* the
-  original project!
+   :fire:
+   **Important:** make sure to use the **forked** project, and *not* the
+   original project!
 
-3. Refresh the two web pages in your browser, they should now have another
+3. **Refresh the two web pages** in your browser, they should now have another
    style. If the new style is working as expected, **commit the changes**
    (i.e. the addition of the new submodule) in your two local repos
    (`git_resources_webpage` and `useful-tools`) with the commit message:
@@ -78,21 +78,22 @@ style to its full extent. So let's slow that down a bit.
 We will first do the changes from within the project `git_resources_webpage`
 and then pull the latest version of the submodule in `useful-tools`.
 
-1. Open the file `git_resources_webpage/great-style/great_style.css` in a text
-   editor, and change the `--anim-cicle-time` value to 10s (line 4 of file).  
+1. **Open the file `git_resources_webpage/great-style/great_style.css`** in a
+   text editor, and change the `--anim-cicle-time` value to 10s (line 4 of
+   file).  
    Reload the web page `references.html` in your browser, and verify that the
    colors now change more slowly.
 
-   Wait... did we just make a great style even greater? *Yes, we did !*
+   Wait... did we just make a great style even greater? *Yes, we did !* :rainbow:
 
 2. Let's keep these changes for posterity by committing them to the
    `great_style` submodule and then pushing them to the remote (your forked
    *great-style* remote).  
 
-   :pushpin:
-   **Note:** if you get a message telling you that you are not allowed to push,
-   then it's probably because you have added the original *great-style* project
-   as a remote, and not your forked version.
+   :bomb:
+   **Pitfall:** if you get a message telling you that you are not allowed to
+   push, then it's probably because you have added the original *great-style*
+   project as a remote, and not your forked version.
 
 3. Almost done! All that is left to is to update the *git_resources_webpage*
    repository (the super-project) so that it points at the new version of
