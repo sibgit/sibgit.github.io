@@ -64,7 +64,7 @@ Proceed as follows:
    two branches. To get rid of them, rebase `dev` on `main`, then return to
    `main`.
 
-   :pushpin:  
+   :pushpin:
    **Note:** after the rebase completed, you should observe that Git
    **automatically skipped the duplicated commits** on `dev`, because they have
    the exact same content as their counterparts on `main`.
@@ -205,7 +205,7 @@ Proceed as follows:
 In this exercise, we will build a Git repo to keep track of our favorite
 [Chuck Norris](https://en.wikipedia.org/wiki/Chuck_Norris) quotes :tada:.
 
-:pushpin:  
+:pushpin:
 **Note:** in order show you some use cases of `git reset`, we will
 **intentionally make some mistakes** along the way so that we can
 then correct them. So don't be unsettled by the fact that this exercise keeps
@@ -511,7 +511,7 @@ If a divergence on the `main` branch occurs, you can either:
 1. **Get together:** go to the
    [course's google doc page](https://docs.google.com/document/d/1EX72NInz-eA2d2GOa5aTB8D88GWb91Sk-sCNHwQYXqE)
    and check which team you belong to by looking at the **Team** column in the
-   GitHub user names table.
+   GitHub/GitLab user names table.
     * **On-site course:** locate your other team members in the classroom and
       sit together so you can communicate.
     * **Online course:** you will be placed in a breakout-room with your
@@ -543,25 +543,27 @@ If a divergence on the `main` branch occurs, you can either:
    system as Linux/MacOS.
 
 3. The first thing you need to do before embarking on your quest is to
-   **setup a remote repository** for your crew on [GitHub](https://github.com)
-   or [GitLab](https://about.gitlab.com). You will use this as a shared remote
-   repo to synchronize your local Git repos within the team.  
+   **setup a remote repository** for your crew on either
+   [GitHub](https://github.com) or [GitLab](https://gitlab.com).
+   You will use this as a shared remote repo to synchronize your local Git
+   repos within the team.
+
    As you only need 1 remote for the entire team, proceed as follows:
     * **One team member** should create a new **public repository** under
       their GitHub/GitLab user account. You can name it anything,
       e.g. `treasure-hunt`.
     * Once the repo is created, the owner of the repo must **give access** to
       the **other team members**, who must **accept the invitation** to join
-      the new repo (you will in receive an email from GitHub, or you can check
-      the notifications in your GitHub user account).
-    * :dart: **Hint:** for instructions on how to create a new repo on GitHub
-      and how to give access to other people, please see the exercise 4 helper
-      slides.
+      the new repo (you will in receive an email from GitHub/GitLab, or you can
+      check the notifications in your GitHub/GitLab user account).
+    * :dart: **Hint:** for instructions on how to create a new repo on
+      GitHub/GitLab and how to give access to other people, please see the
+      exercise 4 helper slides.
    <br>
 
-4. All members of the crew should add the newly created GitHub project as a
-   **remote** to their local copy of `treasure_hunt.git` (please use `origin`
-   as remote name).  
+4. All members of the crew should add the newly created GitHub/GitLab project
+   as a **remote** to their local copy of `treasure_hunt.git` (please use
+   `origin` as remote name).  
    In addition:
     * One pirate should **push the `main` branch** to the remote.
     * The other pirates, should set `origin/main` as the **upstream** for their
@@ -807,8 +809,8 @@ open it, run:
 
 :pushpin:
 **Note:** If you are running out of time, you can finish this last part of the
-exercise on your own (without collaboration). You simply have to find the 3
-keys for the treasure on your own.
+exercise on your own. You simply have to find the 3 keys for the treasure on
+your own.
 
 <br>
 
@@ -850,11 +852,13 @@ keys.
     git mv <path/to/file> treasure_chest/lock_2/key_2  # For key 2
     git mv <path/to/file> treasure_chest/lock_3/key_3  # For key 3
     ```
+
   * :sparkles:
     **Note:** it is also possible to use `git restore -s <branch name> <path/to/file>`
     instead of `git checkout`.
+
 * :bomb:
-  **Do not modify the content of the file in any way, this would destroy the key**.
+  **Do not modify the content of the key file in any way, this would destroy the keys**.
 
 As before, this can be done as teamwork and each pirate retrieves one of the
 keys. This time however, **to save time** (and because we believe that by now

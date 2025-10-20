@@ -330,6 +330,7 @@ Let's get started:
 2. Open the `references.html` page in your web browser.
 3. Explore the content of the Git repo using the `git log`, `git status` and
    `git branch` commands.
+
    :question:
    **questions:**  
     * How many commits have already been made in the repo?  
@@ -681,12 +682,22 @@ GitHub or GitLab.
       your machine.
    <br>
 
-2. Change into `exercise_4/` and **clone** the *Awesome Animal Awareness Project*
-   project from its [GitHub repository](https://github.com/sibgit/sibgit.github.io)
-   or [GitLab repository](https://gitlab.com/sib-git-training/awesome-animal-awareness).  
+2. Change into `exercise_4/`, **clone the Awesome Animal Awareness project**,
+   then **enter the cloned repo**. Here are the commands to do this:  
    :fire:
-   **Important**: use the GitHub or GitLab repo, depending on whether the class
-   is taught with GitHub or GitLab.
+   **Important**: use the correct **GitHub** or **GitLab** repo, depending on
+   whether the class is taught with GitHub or GitLab.
+
+   * If working with **GitHub**:
+      ```sh
+      git clone https://github.com/sibgit/sibgit.github.io
+      cd sibgit.github.io
+      ```
+   * If working with **GitLab**:
+       ```sh
+       git clone https://gitlab.com/sib-git-training/awesome-animal-awareness
+       cd awesome-animal-awareness
+       ```
 
 3. **Among your group, chose a "team lead"**. The team lead should create a
    new **team branch** named after your animal's name followed by `-dev`.  
