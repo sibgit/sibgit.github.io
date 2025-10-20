@@ -75,7 +75,11 @@ will be guided step-by-step on exactly what you need to do.
        git init
        ```
     * Initializing a new Git repo creates a **hidden `.git` directory**. You
-      can view this directory by running the command `ls -la`.  
+      can view this directory by running the command:
+      ```yaml
+      ls -la
+      ```
+
       :fire:
       **Important:** this directory is where Git stores the history of your
       repository (as well as various settings). If you delete it,
@@ -467,7 +471,9 @@ completed.
 * Start the exercise by changing your work directory to `exercise_3/` - it
   should be empty.
 * Clone (download) the git repo for exercise 3 from GitHub with the command:
-  `git clone https://github.com/sibgit/peak_sorter.git`.  
+    ```yaml
+    git clone https://github.com/sibgit/peak_sorter.git
+    ```
   :pushpin:
   **Note:** we have not seen the **`git clone`** command yet, but what it does
   is that it creates a local copy of a Git repository stored on a remote server
@@ -477,9 +483,9 @@ completed.
   command `cd peak_sorter`.
 * To see the peak sorter script in action, run the following command in your
   shell:
-  ```yaml
-  ./peak_sorter.sh
-  ```
+    ```yaml
+    ./peak_sorter.sh
+    ```
 * Have a look at the history of the git repo with
   `git log --all --decorate --oneline --graph` (or use the alias `git adog`,
   if you have created it).
@@ -502,10 +508,13 @@ as follows:
 2. **Cherry-pick** the commit that contains Jimmy's fix onto your `hotfix`
    branch.
 
-3. When the cherry-pick is completed, test run the `./peak_sorter.sh` script to
-   **make sure nothing was broken**. When running the script, you should now
-   see an additional printed line saying that a data integrity check was
-   performed:
+3. When the cherry-pick is completed, test run the `peak_sorter.sh` script to
+   **make sure nothing was broken**:
+    ```yaml
+    ./peak_sorter.sh
+    ```
+   When running the script, you should now see an additional printed line
+   informing you that a data integrity check was performed:
    > Running data integrity check...OK
 
    This shows us that the cherry-picked commit has indeed added the expected
@@ -532,10 +541,13 @@ branch of the Git repo. That branch is aptly named `feature-dahu`.
 Proceed as follows:  
 
 1. **Checkout the `feature-dahu` branch** and test whether the new "Dahu count"
-   feature has been implemented properly: run `./peak_sorter.sh` and verify
-   that its output contains Dahu counts.
-   A column named `DAHU_POPULATION` should now also be present in the output
-   file `sorted_peaks.txt`. You can have a look at this file with the command:
+   feature has been implemented properly by running:
+    ```yaml
+   ./peak_sorter.sh
+   ```
+   Verify that the script prints Dahu counts as part of its output. A column
+   named `DAHU_POPULATION` should now also be present in the output file
+   `sorted_peaks.txt`. You can have a look at this file with the command:
    ```yaml
    head sorted_peaks.txt
    ```
@@ -553,9 +565,12 @@ Proceed as follows:
    you open the file to manually solve the conflicts - the version that is
    *not* coming from `HEAD`).
 
-3. When you completed the rebase, run `./peak_sorter.sh` again to make sure it
-   works as expected: it should still display the number of Dahus observed on
-   the Alps' highest peaks as it did before the rebase.
+3. When you completed the rebase, run again:
+    ```yaml
+    ./peak_sorter.sh
+    ```
+   It should still display the number of Dahus observed on the Alps' highest
+   peaks as it did before the rebase.
 
    Look again at your repo's history (`git adog`). Compare it to what you had
    before the merge (scroll up in your shell), to visually see how the rebase
