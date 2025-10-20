@@ -1,5 +1,9 @@
 # Version control with Git
 
+A 2-days course providing a
+**comprehensive overview of the [Git version control](https://git-scm.com)**
+system.
+
 **Table of Content:**
 
 [[_TOC_]]
@@ -10,15 +14,19 @@
 
 ### Overview
 
-**Git** is an open source version control system for tracking changes
-in code and other types of text documents. First released in 2005, Git has
-become the de-facto standard for version control, and is extensively used in
-both open source and commercial software development. The usage of Git is not
-limited to software development, but can also be used to keep track of data
-analysis scripts, pipelines, and more generally any text-based document.
+[**Git**](https://git-scm.com) is an open source **version control system** for
+tracking changes in code and other types of text documents. First released in
+2005, Git has become the **de-facto standard** for version control, and is
+extensively used in both open source and commercial software development.
 
-This 2-day course gives a **comprehensive overview of Git** and its most useful
-commands, as well as an introduction to collaborative workflows using GitHub.
+Git is not limited to software development, and has proved to be an essential
+tool in **reproducible research** - allowing to keep track of files such as
+data analysis scripts, pipelines, reports or more generally any text-based
+document.
+
+This **2-days course** gives a **comprehensive overview of Git** and its most
+useful commands, as well as an introduction to collaborative workflows using
+GitHub through both theory and practical exercises.
 
 The course starts with the basics of Git - it is therefore suitable for people
 with no or little knowledge of Git - and will take the participants all the
@@ -108,11 +116,10 @@ before the start of the course.
 
 ### Setting-up your environment
 
-* Please complete the [environment setup instructions](Setting_up_your_environment.md)
+* Please complete the [environment setup instructions](environment_setup.md)
   **before** the start of the course.  
 * In particular, make sure to communicate us your GitHub user name
-  **at least 2 days before** the start of the course - see the
-  [environment setup instructions](Setting_up_your_environment.md).
+  **at least 2 days before** the start of the course.
 
 <br>
 
@@ -187,11 +194,15 @@ Please note that this schedule is approximate.
 * 15h45: Exercise 3 - corrections
 * 16h00: Working with remotes, GitHub
 * 16h15: Exercise 4
-* 17h30: End of day 1
+* 17h00: End of day 1
 
 ### Git advanced topics [day 2]
 
-* 09h00: Intro + review/reminder
+* 09h00: Intro + recap
+* 09h20: Continue and finish exercise 4 of day 1
+* 10h30: BREAK - 15 min
+* 10h45: Commit amending and interactive rebase
+
 * 09h20: Interactive rebase
 * 10h00: Exercise 1
 * 10h40: BREAK - 15 min
@@ -201,11 +212,27 @@ Please note that this schedule is approximate.
 * 12h15: LUNCH BREAK - 1h
 * 13h15: Exercise 2 - corrections
 * 13h30: Detached HEAD mode, git stash, tags.
-* 14h00: Exercise 3
-* 14h30: Exercise 3 - corrections
+
 * 14h45: BREAK - 15 min
 * 15h00: Exercise 4
-* 17h30: End of day 2
+* 17h00: End of day 2
+
+
+
+Day 1
+
+At lunch we were about to start branches.
+
+Started ex 4 at 16h30
+
+
+day 2:
+Recap -> 10-20 min
+Finish ex 4 -> 1h
+
+at lunch we reached end of exercise 1 corrections
+14h
+
 
 ### Breaks
 
