@@ -6,26 +6,29 @@
 
 <br>
 
-**Note:** course material such as slides and exercises will be made available on the first day of
-the course (until then files might either not be available or not correspond to the final version).
-Please complete the [environment setup](Setting_up_your_environment.md) **before** the start of the
-course.
+**Please note:**
+* The course material such as slides and exercises will be made available on the first day of
+  the course. Until then files might either not be available or not correspond to the final
+  version.
+* Please complete the [environment setup](Setting_up_your_environment.md) **before** the start
+  of the course.
 
 <br>
 
 ## Course links and slides
 Useful links during the course:
-* [Course page](https://edu.sib.swiss/course/view.php?id=576): for giving your feedback at the end
-  of the course. Please note that a login is required, credentials will be sent by email.
 * [Google doc](https://docs.google.com/document/d/1EX72NInz-eA2d2GOa5aTB8D88GWb91Sk-sCNHwQYXqE):
   for asking questions, finding your team (exercise 4), and see answers to previously asked
   questions.
 * [Zoom link](https://us02web.zoom.us/j/84868422273?pwd=YWdkT3NNVEltZCtPVy90TURSYzY1QT09): for
   online courses.
+* [Feedback form](https://forms.office.com/pages/responsepage.aspx?id=KewaGuOxtEGL2iiKlpme_4W5j_y6UXxNg-bVSoI3oSFUMU81M0tEOUZBVEpWQlRIT0FXUFNZNVo3Sy4u): for giving your feedback at the
+   end of the course.
 
 **Course slides:**
 * [First steps with Git](slides_git_first_steps.pdf)
 * [Git advanced topics](slides_git_advanced_topics.pdf)
+* [Git optional modules](slides_git_optional_modules.pdf)
 
 **Git commands summary:**
 * [PDF document summarizing all commands seen during the course](git_command_summary.pdf)
@@ -34,20 +37,20 @@ Useful links during the course:
 
 
 ## Exercises
-**Exercise material:** please download the following `.zip` files and decompress them on your
-local machine:
-* [Exercise material day 1](exercises_first_steps.zip)
-* [Exercise material day 2 and 3](exercises_advanced.zip)
-
 **Exercise instructions:**
 * [Exercises day 1 - first steps](exercises_first_steps.md)
 * [Exercises day 2 - advanced topics](exercises_advanced_topics.md)
 * [Exercises day 3 - optional modules](exercises_optional_modules.md)
 
+**Exercise material:** please download the following `.zip` files and decompress them on your
+local machine:
+* [Exercise material day 1](exercises_first_steps.zip)
+* [Exercise material day 2 and 3](exercises_advanced.zip)
+
 **Exercise solutions** will be made available at the end of each day:
-* [Solutions day 1 - first steps](exercises_solutions_first_steps.md)
-* [Solutions day 2 - advanced topics](exercises_solutions_advanced.md)
-* [Solutions day 3 - optional modules](exercises_solutions_optional_modules.md)
+* [Solutions day 1 - first steps](solutions_first_steps.md)
+* [Solutions day 2 - advanced topics](solutions_advanced_topics.md)
+* [Solutions day 3 - optional modules](solutions_optional_modules.md)
 
 <br>
 
@@ -55,7 +58,7 @@ local machine:
 ## Setting-up your environment
 Please complete the [environment setup instructions](Setting_up_your_environment.md) **before** the
 start of the course.  
-In particular, make sure to send us your GitHub user name **at least 3 days before** the start of
+In particular, make sure to send us your GitHub user name **at least 2 days before** the start of
 the course.
 
 <br>
