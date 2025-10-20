@@ -18,7 +18,16 @@ exercise solutions.
 <br>
 
 ## Exercise 1 - The vim cheat-sheet rebase  [40 min]
-**Objective:** learn to use **interactive rebase**.
+**Objective:** learn to use **interactive rebase**. You will be using the
+following commands:
+```sh
+git rebase                                  # Rebase a branch.
+git rebase --interactive                    # Interactively rebase a branch.
+git switch                                  # Switch to a different branch.
+git log --all --decorate --oneline --graph  # Or the "git adog" alias if you created it.
+```
+
+<br>
 
 In this exercise, your task is to perform a cleanup on an existing repository
 that contains instructions on how to use the `vim` editor.
@@ -33,8 +42,6 @@ Proceed as follows:
 1. Enter the `exercise_1/vim_cheatsheet.git` repository and have a look at it's
    history. If you are using `vim` as an editor in Git, you can have a look at
    the content of the files to learn about some useful `vim` commands.  
-   Switch to the `dev` branch, and look which files it contains. Then go back
-   to the `main` branch.
 
 2. Looking at the **commit history** on the `main` branch, you will see that
    the edits to the different files are all over the place. To make things more
@@ -53,6 +60,13 @@ Proceed as follows:
     7. Add 'command_mode' file: commands for vim's command mode
     8. Edit 'command_mode' file: add more commands
    ```
+   :warning:
+   Note that we are only re-ordering commits that affect completely different
+   files, but we are keeping the order of commits that affect the same file
+   in the same order, because they "build on each other" (e.g. we could not
+   have the commit that edits the file `normal_mode` before the commit that
+   creates it!).
+
    <br>
 
 3. **After you are done with the re-ordering**, display the history of the repo
@@ -67,7 +81,13 @@ Proceed as follows:
    :pushpin:
    **Note:** after the rebase completed, you should observe that Git
    **automatically skipped the duplicated commits** on `dev`, because they have
-   the exact same content as their counterparts on `main`.
+   the exact same content as their counterparts on `main`. Git gives us warning
+   about the skipped commits, but this is fine because skipping these commits
+   is precisely what we here intended.
+   ```txt
+   warning: skipped previously applied commit 8ec5c65
+   warning: skipped previously applied commit eb8d137
+   ```
 
    <br>
 
@@ -105,7 +125,8 @@ Proceed as follows:
    However, in this case, a regular rebase will *not* be able to automatically
    remove the duplicated commits (because they no longer exactly match).
    Instead, a regular rebase would raise conflicts that you would then have
-   to manually resolve.  
+   to manually resolve.
+
    Since we know which commits are duplicated (all except the last 2 commits
    of `dev`), the **better approach here is to use interactive rebase** and
    manually instruct Git to drop the duplicated commits.  
@@ -200,7 +221,19 @@ Proceed as follows:
 
 ## Exercise 2 - The big reset [40 min]
 **Objective:** get familiar with `git reset` and its `--mixed`, `--soft` and
-`--hard` options.
+`--hard` options. You will be using the following commands:
+```sh
+git init                      # Initialize new Git repo.
+git add                       # Stage files (add files to Git index).
+git commit                    # Create a commit.
+git commit --amend --no-edit  # Amend the latest commit, without changing its commit message.
+git switch --create           # Create a new branch and switch to it. `-c` is the short form for `--create`.
+git reset --soft              # Reset while preserving the index and working tree.
+git reset --mixed             # Reset while preserving only the working tree.
+                              # Note: `--mixed` is the default option of `git reset`.
+git reset --hard              # Reset everything: HEAD, index and working tree!
+```
+<br>
 
 In this exercise, we will build a Git repo to keep track of our favorite
 [Chuck Norris](https://en.wikipedia.org/wiki/Chuck_Norris) quotes :tada:.
@@ -217,15 +250,15 @@ asking you to change things: *it's by design*!
    find a number of files. Your first task is to turn this directory into a Git
    repository.
 
-2. Add/Stage the file `README.md` to the Git repo, then make a first commit
-   with the commit message `First commit` (or any other message you like).
+2. Stage the file `README.md`, then make a first commit with the commit message
+   `"First commit"` (or any other message you like).
 
-3. Add/stage the file `my_quotes.md`, and make a new commit with the message
-   `Add a file to keep track of quotes`.
+3. Stage the file `my_quotes.md`, and make a new commit with the message
+   `"Add a file to keep track of quotes"`.
 
 4. Wait, that last commit message is not nearly dramatic enough for what is
    about to unfold in this exercise. Let's change it to:
-   `Starting The Big Reset`.  
+   `"Starting The Big Reset"`.  
    :pushpin:
    **Note:** while the optimal way to do this is using `git commit --amend`,
    we here suggest that you try to use **`git reset`** (with either the
@@ -242,14 +275,13 @@ asking you to change things: *it's by design*!
    **Hint:** you will need to use a combination of **reset** and **amending**,
    and then re-do the second commit.
 
-   :pushpin:
-   **Note:** instead of re-doing the second commit, you could also delete the
+   :sparkles:
+   **Tip:** instead of re-doing the second commit, you could also delete the
    `my_quotes.md` file and then **cherry-pick** the `Starting The Big Reset!`
    commit you made earlier (this commit will be orphaned after you reset your
    `HEAD` to the first commit, but it can still be cherry-picked!). If you
    can't find its commit ID displayed in your shell, you can use the
    **`git reflog`** command to find it.
-
    <br>
 
 6. Alright, fixing stuff is fun, but let's try to get some real work done here.
@@ -259,21 +291,19 @@ asking you to change things: *it's by design*!
     * So after that, you should have 3 additional commits in your history, and
       a total of 5 commits. Your git history should look like this (commit IDs
       will differ):
-        ```
+        ```txt
         * 5560a53 (HEAD -> main) Add 3rd favorite quote
         * e78e2ab Add 2nd favorite quote
         * 70c65be Add 1st favorite quote
         * c3d7850 Starting the Big Reset
         * e044feb First commit
         ```
-        <br>
 
 7. With so many epic quotes to chose from, it a real shame we can chose only 3!
    But wait - Git has a solution for us: **branches**!.  
    Create an alternate branch named `second_choice` at the point in history
-   where the `my_quotes.md` file was still empty. Then switch to your new
-   `second_choice` branch and verify that `my_quotes.md` does indeed not
-   contain any quotes.
+   where the `my_quotes.md` file was still empty and switch to it. Verify that
+   `my_quotes.md` does indeed not contain any quotes.
 
 8. Add 3 new Chuck Norris quotes to the `my_quotes.md` file, and commit. This
    time, we make a single commit with all quotes. Then, have a look at your
@@ -281,7 +311,7 @@ asking you to change things: *it's by design*!
    (or `git adog`, if you have created this alias).
 
    You should see that your 2 branches have diverged, like so:
-    ```
+    ```txt
     * 23c0462 (HEAD -> second_choice) Add alternate favorite quotes
     | * 5560a53 (main) Add 3rd favorite quote
     | * e78e2ab Add 2nd favorite quote
@@ -316,7 +346,7 @@ asking you to change things: *it's by design*!
     ```
 
     Can we fix it? *Yes, we can!*
-     * Revert the repository to its state before the merge.
+     * Reset the repository to its state before the merge.
        :dart: **Hint:** time to put that `--hard` option to good use!.
      * Rebase `second_choice` on `main`, before merging `second_choice` into
        `main`.
@@ -450,10 +480,13 @@ comes alone, they need this *right now*.
 
 ## Exercise 4 - The treasure hunt [120 min]
 **Objective:** collaborative exercise to review the Git commands and concepts
-seen during the course.  
-For participants who wish to receive **ECTS credits** for this course, this
-exercise also serves as **exam** - please see the instructions at the end of
-the exercise on how to submit your work.
+seen during the course.
+* :pushpin:
+  For participants who wish to receive **ECTS credits** for this course, this
+  exercise also serves as **exam** - please see the instructions at the end of
+  the exercise on how to submit your work.
+
+<br>
 
 **We have saved the best for last!** In this collaborative exercise, you will
 **team-up with two fellow pirates** in order to retrieve the lost treasure of
@@ -472,36 +505,50 @@ For instance:
 
 In your quests, you will be asked to follow a **collaborative workflow** that
 uses the following branches:
-* **`main`:** this is the *production* branch, i.e. the branch on which only
+* **`main`:** this is the **production branch**, i.e. the branch on which only
   final, production ready, material is published. Do *not* work directly on the
   `main` branch.
 * Short-lived **personal branches** (feature branches) will be created by each
   team member to add their work, before merging it into `main`.
 * Each **new release** of your work will be indicated by **a tag**.
 
-If a divergence on the `main` branch occurs, you can either:
-* **Rebase** your local changes in `main` onto `origin/main`: `git pull --rebase`.
-  This is often the best solution, as it will give you a cleaner branch history
-  than using a merge.
-* **Merge** your local changes in `main` with `origin/main`: `git pull --no-rebase`.
-* **Hard reset** your local `main` branch to `origin/main`: `git reset --hard origin/main`.
+:owl:
+**Reminder:** if a divergence on the `main` branch occurs between you local
+repo and the remote, you can either:
+* **Rebase** your local changes in `main` onto `origin/main` (this is often
+  the best solution, as it will give you a cleaner branch history than using
+  a merge):
+  ```sh
+  git pull --rebase
+  # Which, for the branch `main`, is the same as doing:
+  git fetch
+  git rebase origin/main
+  ```
+* **Merge** your local changes in `main` with `origin/main`:
+  ```sh
+  git pull --no-rebase
+  # Which, for the branch `main`, is the same as doing:
+  git fetch
+  git merge origin/main
+  ```
+* **Hard reset** your local `main` branch to `origin/main`:
+  `git reset --hard origin/main`.
   Use this **with caution**, as it can result in loss of local commits or
-  uncommitted changes to files.
+  loss of uncommitted changes to files.
 
 :fire:
-**Important** - please pay particular attention to:
+**Important** - please pay particular attention to the following points:
 * Keep a **clean history** by avoiding unnecessary merges. Rebase branches to
   be merged before merging them whenever possible (unless explicitly instructed
   otherwise).
 * Use **clear and meaningful commit messages** for your commits.
 * **Delete temporary branches** that are no longer needed (e.g. a personal
   feature branch).
-* Please pay particular attention to these points if you are taking this
-  exercise as **exam for the course**.
 * **Make sure to fully, carefully, read the instructions and hints** given
   for each section, before starting the work.
 * **Please ask for help** if you are stuck at any point, especially if you
-  cannot solve one of the riddles.
+  cannot solve one of the riddles (the objective is not to test your
+  puzzle-solving abilities :bulb:).
 
 <br>
 
@@ -534,7 +581,7 @@ If a divergence on the `main` branch occurs, you can either:
    **IMPORTANT step for Windows users**
    **(if you are on Linux or Mac, you should skip this step)**.
    Windows users only - run the following command *inside* the Git repository:
-    ```yaml
+    ```sh
     git config core.filemode false
     # Do not add the `--global` flag, so that this change only affects the current repo.
     ```
@@ -563,7 +610,7 @@ If a divergence on the `main` branch occurs, you can either:
 
 4. All members of the crew should add the newly created GitHub/GitLab project
    as a **remote** to their local copy of `treasure_hunt.git` (please use
-   `origin` as remote name).  
+   **`origin`** as remote name).  
    In addition:
     * One pirate should **push the `main` branch** to the remote.
     * The other pirates, should set `origin/main` as the **upstream** for their
@@ -854,7 +901,7 @@ keys.
     ```
 
   * :sparkles:
-    **Note:** it is also possible to use `git restore -s <branch name> <path/to/file>`
+    **Note:** it is also possible to use `git restore --source <branch name> <path/to/file>`
     instead of `git checkout`.
 
 * :bomb:

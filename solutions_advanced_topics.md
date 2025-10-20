@@ -19,19 +19,19 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 ## Exercise 1 - The vim cheat-sheet rebase
 
 1. Explore the `vim_cheatsheet.git` repository.
-    ```yaml
+    ```sh
     cd exercise_1/vim_cheatsheet.git            # Enter exercise directory.
     git log --all --decorate --oneline --graph  # Show history of repo and branches.
     cat *.md                                    # Display the content of all .md files in the repo.
 
     # Switch to the "dev" branch and list its content.
-    git switch dev   # Switch to "dev" branch.
-    ls -l            # Lis the content of the directory (now in "dev" branch).
-    git switch main  # Go back to branch "main".
+    git switch dev   # Switch to `dev` branch.
+    ls -l            # List the content of the directory (now in `dev` branch).
+    git switch main  # Go back to branch `main`.
     ```
 
 2. Re-order the commits on `main` using **interactive rebase**:
-    ```yaml
+    ```sh
     git rebase -i 0fbf901
 
     # Display history of repo to see how it looks like after the rebase.
@@ -57,7 +57,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 3. Rebase `dev` branch on `main`. This automatically gets rid of the duplicated
    commits that are left on `dev` after we did the interactive rebase (history
    rewrite) on `main`:
-    ```yaml
+    ```sh
     git log --all --decorate --oneline --graph
     git switch dev
     git rebase main
@@ -104,7 +104,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
         ```
 
 5. Rebase the `dev` branch on `main`:
-    ```yaml
+    ```sh
     git log --all --decorate --oneline --graph
     git switch dev
     git rebase -i main
@@ -122,7 +122,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
     ```
 
 6. Switch back to the `main` branch and display the history of the repo.
-   ```yaml
+   ```sh
    git switch main
    git log --all --decorate --oneline --graph
    ```
@@ -133,7 +133,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 
 7. Fix errors in the `README.md` and `normal_mode.md` files, then perform the
    interactive rebase on `main` with the **`--autosquash`** option:
-    ```yaml
+    ```sh
     # Display the repo's status: it will show that README.md and normal_mode.md
     # have been modified.
     git status
@@ -149,19 +149,19 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 
 8. Rebase `dev` on `main`. Make sure to use interactive rebase to discard all
    the duplicated commits, as we did previously:
-    ```yaml
+    ```sh
     git switch dev
     git rebase -i main  # Important: discard all duplicated commits in the rebase file.
     git switch main
     ```
 
 9. Merge the first two commits:
-    ```yaml
+    ```sh
     git rebase -i --root main
     ```
 
    Change the commit message of latest `dev` commit:
-    ```yaml
+    ```sh
     git switch dev
     git commit --amend -m "Add xkcd comic image file"
     ```
@@ -175,19 +175,19 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 ## Exercise 2 - The big reset
 
 1. Initialize a new Git repo.
-    ```yaml
+    ```sh
     cd exercise_2/the_big_reset.git
     git init
     ```
 
 2. Make a first commit with the `README.md` file.
-    ```yaml
+    ```sh
     git add README.md
     git commit -m "First commit"
     ```
 
 3. Make a second commit with the `my_quotes.md` file.
-    ```yaml
+    ```sh
     git add my_quotes.md
     git commit -m "Add a file to keep track of quotes"
     ```
@@ -203,7 +203,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
    not modify the git index. In other words, the `--soft` option leaves staged
    the content that was added between the current commit and the commit to
    which we reset.
-    ```yaml
+    ```sh
     git reset --soft HEAD~1
     git commit -m "Starting The Big Reset!"
     git log --pretty=oneline                 # To check the commits message was changed.
@@ -220,7 +220,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 5. We must do a reset to the first commit, then add `chuck_norris_quotes.txt`
    to a `.gitignore` file, and amend the first commit with the addition of the
    `.gitignore` file. Then we can redo the second commit.
-    ```yaml
+    ```sh
     # Create the .gitignore file.
     echo "chuck_norris_quotes.txt" > .gitignore
 
@@ -247,14 +247,14 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
     the **`git reflog`** command to find it).  
     Note that in the solution below, your commit ID of the cherry-pick command
     will differ.
-    ```
+    ```sh
     rm my_quotes.md
     git cherry-pick f35665e
     ```
     <br>
 
 6. Add 3 favorite quotes in 3 different commits.
-    ```yaml
+    ```sh
     echo -e "When Chuck Norris does division, there are no remainders.\n" >> my_quotes.md
     git commit -m "Add 1st favorite quote" my_quotes.md
     echo -e "When Chuck Norris throws exceptions, it’s across the room.\n" >> my_quotes.md
@@ -265,13 +265,13 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 
 7. Create a new branch at the second commit. Note that with `switch -c` we
    create the branch and check it out at the same time.
-    ```yaml
+    ```sh
     git switch -c second_choice HEAD~3
     cat my_quotes.md                    # Verify there are no quotes in the file.
     ```
 
 8. Add 3 other quotes, then commit.
-    ```yaml
+    ```sh
     echo -e "Chuck Norris can divide by zero.\n" >> my_quotes.md
     echo -e "Chuck Norris never gets a syntax error. Instead, the language gets an DoesNotConformToChuck error.\n" >> my_quotes.md
     echo -e "Chuck Norris doesn't wear a watch. He simply decides what time it is.\n" >> my_quotes.md
@@ -279,7 +279,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
     ```
 
 9. Merge branch `second_choice` into `main`.
-    ```yaml
+    ```sh
     git switch main
     git merge second_choice
     vim my_quotes.md         # There is a conflict, we need to solve it manually.
@@ -292,7 +292,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 
 10. Revert back to before the merge. Then rebase `second_choice` onto `main`
     to get a cleaner history.
-    ```yaml
+    ```sh
     # Revert the "main" branch to its state as before the merge.
     git reset --hard HEAD~1
 
@@ -322,7 +322,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 1. Enter repo and explore its content. We can see that there are 2 branches
    and 3 tags. Also, the current working tree is not clean, there are 2 files
    with uncommitted changes.
-    ```yaml
+    ```sh
     cd exercise_3/backport.git
     git log --all --decorate --oneline --graph  # Show history.
     git status                                  # Reveal uncommitted changes.
@@ -336,7 +336,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
     * A new (temporary) "commit" has appeared at the tip of the `dev` branch:
       it's the stashed content.
 
-    ```yaml
+    ```sh
     git stash
     git checkout v1.0.1
     git log --all --decorate --oneline --graph
@@ -344,7 +344,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 
 3. Implement the support for JSON files in `functions.py` (the backport fix),
    then commit the changes.
-    ```yaml
+    ```sh
     git commit -m "Backport: add support for 'json' file type" functions.py
     ```
 
@@ -357,7 +357,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
    option for commit that we want to keep.
    We follow Git's advice and create a new branch. We then switch to the new
    branch, and add a tag `v1.0.1b`.
-    ```yaml
+    ```sh
     git switch dev
     git branch backport 1a2fa0c  # Note: your commit ID will differ.
     git switch backport
@@ -369,7 +369,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 
 5. Go back to `dev`, restore the stashed changes with **`git stash pop`**,
    then make a commit.
-    ```yaml
+    ```sh
     git switch dev
     git stash pop
     git commit -am "Improve file import tests"
@@ -382,7 +382,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
    > error: The branch 'backport' is not fully merged.`
 
    So we must "force delete" the branch with `git branch -D`.
-    ```yaml
+    ```sh
     git branch -D backport
     ```
 
@@ -391,7 +391,7 @@ Similarly, `git switch -c` (create + switch branch) must be replaced by
 ### Additional Tasks
 
 7. Rebase and merge `dev` into `main`. Add a `v2.0.0` tag.
-    ```yaml
+    ```sh
     # Rebase "dev" on "main".
     git rebase main
 
