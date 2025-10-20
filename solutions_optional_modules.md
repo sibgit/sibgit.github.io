@@ -1,0 +1,380 @@
+# Exercise solutions - Git advanced topics - optional modules
+
+**Table of Content:**
+
+[[_TOC_]]
+
+<br>
+
+:pushpin:  
+**Note:** in these corrections, `git switch` is used to checkout/switch branches. If you are using
+a Git version older than `2.23`, `git checkout` should be used instead.
+Similarly, `git switch -c` (create + switch branch) must be replaced by `git checkout -b`.
+
+
+## Exercise 5 - The git reference web page gets better with submodules
+
+### A) Clone the projects - including their submodule
+To get the actual content of the submodules, it is not enough to simply make a `git clone`.
+The submodules must also be initialized and updated. There are 3 different methods to do this:
+1. Use `git clone --recurse-submodules <repo URL>` (this is the method you want to use most of
+   the time).
+2. Clone the repo, then use `git submodule update --init --recursive`
+3. Clone the repo, then initialize the submodules with `git submodule init`, then update the
+   submodules with `git submodule update`.
+
+```yaml
+cd exercise_5
+
+# Option 1:
+git clone --recurse-submodules https://github.com/sibgit/git_resources_webpage.git
+git clone --recurse-submodules https://github.com/sibgit/useful-tools.git
+
+# Option 2:
+git clone https://github.com/sibgit/git_resources_webpage.git
+git clone https://github.com/sibgit/useful-tools.git
+cd git_resources_webpage
+git submodule update --init --recursive
+cd ../cd useful-tools
+git submodule update --init --recursive
+
+# Option 3: same as option 2, using individual "init" and "update" commands
+# instead of the "update --init" shortcut.
+git submodule init
+git submodule update
+
+# Print the content of .gitmodules to the terminal.
+cat .gitmodules
+```
+
+**Question**: which command would you use to update the content of the `git_resources_webpage` and
+`useful-tools` repositories (so that changes also affect submodules)?
+```yaml
+# The command must be run in the main project - not in the glitter-cursor subdirectory!
+git pull --recurse-submodule
+
+# On older Git versions (<2.14), the update must be done manually.
+git pull
+git submodule update --init --recursive
+```
+
+### B) Change the style of the web sites by adding a submodule
+First we need to fork https://github.com/sibgit/great-style from the GitHub web interface into
+our own account (so that we own the repo and can push changes to it).
+
+Then we can add the *great-style* repo as a submodule to our two projects (the commands are the
+same for both `git_resources_webpage` and `useful-tools`).
+```yaml
+# Add the submodule.
+git submodule add https://github.com/<your-github-username>/great-style.git
+
+# Commit the changes. Note that both "great-style" and ".gitmodules" have already been
+# automatically been staged by Git (this might not be the case in some older versions of Git,
+# and you would then need to stage the files manually).
+git commit -m "Add great-style submodule"
+```
+
+Looking at the content of `.gitmodules`, we now see that a second submodule was added.
+```yaml
+cat .gitmodules
+[submodule "glitter-cursor"]
+    path = glitter-cursor
+    url = https://github.com/sibgit/glitter-cursor.git
+    branch = main
+[submodule "great-style"]
+    path = great-style
+    url = https://github.com/<your-github-username>/great-style
+```
+
+Note: to see the current commit at which our submodules are pointing, we can use:
+```yaml
+git submodule status
+
+# Or we could also run a command like:
+git submodule foreach "git log --oneline"
+```
+
+### C) Improve the great-style submodule
+Enter the submodule and change the code like you would in a normal Git repository.
+```yaml
+# Edit the great_style.css file
+cd git_resources_webpage/great-style
+vim great_style.css   # on line 4, change --anim-cicle-time from 1s to 10s
+
+# Commit the changes in the great-style submodule:
+git add great_style.css
+git commit -m "Slow down font color shift loop to 10s"
+git push
+
+# Now commit the changes in the super-project:
+cd ..
+git diff --submodule=diff   # show the actual changes (like a git diff) in the submodule.
+git add great-style
+git commit -m "Update great-style submodule with slowed-down color changes"
+```
+
+As we do not have permission to write to the `git_resources_webpage` remote, we cannot push our
+changes to the super-project. But if we did, the command would be:
+```yaml
+git push --recurse-submodules=on-demand
+```
+
+We can now update our second project, *useful-tools*, with the new version of *great-style*. There
+are 2 ways to get the new changes from *great-style* into the submodule of our local `useful-tools`
+repo.
+
+1. Pull the changes manually:
+```yaml
+# Enter the submodule.
+cd useful-tools/great-style
+# Pull new updates on "main*. You should in principle already be on "main", if not: git switch main
+git pull
+```
+
+2. Use `git submodule update --remote` (must be run in the super-project).
+```yaml
+cd useful-tools/
+git submodule update --remote
+```
+
+**Note**: if the pull on the `main` branch does not work automatically, we need to edit the
+`.gitmodules` file and add `branch = main` for the "great-style" submodule, like so:
+```yaml
+[submodule "great-style"]
+    path = great-style
+    url = https://github.com/<github-username>/great-style
+    branch=main
+```
+
+After *great-style* is updated to its latest version, we can now commit the change in the
+super-project (*useful-tools*).
+```yaml
+# Commit changes in useful-tools
+git diff --submodule
+git add great-style
+git commit -m "Update great-style submodule with slowed-down color changes"
+```
+
+<br/>
+<br/>
+
+
+## Exercise 6 - Git LFS (Large File Storage)
+
+### A) Create a new repository from scratch
+1. Initialize a new Git repository and make a first commit with the `README.md` file:
+```yaml
+cd exercise_6/test_lfs.git
+git init
+git add README.md
+git commit -m "First commit"
+```
+
+2. We start by telling Git LFS which files should be tracked. Then we add all files and commit:
+```yaml
+git lfs track logo.png "*.fasta" "db/db_file.txt"
+git add --all
+git commit -m "Add all files to the Git repo"
+```
+
+3. Verify that the correct files are being tracked.
+```yaml
+git lfs ls-files
+d6c210aeaf * db/db_file.txt
+34804bc7cb * logo.png
+6f0a4add2f * sequences/sample_A.fasta
+efdc76ef2a * sequences/sample_B.fasta
+```
+   Note: to display the actual files in the LFS object store, we can use e.g.
+   `ls -l .git/lfs/objects/*/*` or `tree .git/lfs/objects/`
+
+4. Since only a pointer/placeholder of the files tracked by Git LFS is stored in the Git database
+   (the actual files are in the Git LFS cache), the `git show` command only shows the content of
+   the pointer file, and not the content of the actual file.
+
+5. For files tracked by Git LFS, `git diff` only shows the difference between the two versions
+   of the pointer file, not the two versions of the file. Therefore it just shows the difference
+   in hash value and in size between the two versions of a file.
+
+<br>
+
+### B) Migrate an existing directory
+1. Explore the `arctic_animals.git` repository. Using `git log` we can see the entire commit
+   history, and see that there are 2 branches, `master` and `dev`.
+```yaml
+cd exercise_6/arctic_animals.git
+git log --all --decorate --oneline --graph
+```
+
+   Are there any files that are not currently tracked by Git in the working tree? We answer this
+   question using `git status`, and find that our working tree is clean (and there is no
+   `.gitignore` file either, so no files are ignored).
+
+   What are the respective sizes of the `.git` and `.git/objects` repositories?
+```yaml
+du -sh .git/
+    61M	.git/
+du -sh .git/objects/
+    61M	.git/objects/
+```
+
+2. Migrate all `.tif` and `.jpg` files to Git LFS throughout the entire history of the Git repo.
+```yaml
+# Print the current history of the repo, so we can later compare it to the one after migration.
+git log --all --decorate --oneline --graph
+
+# Migrate all `.tif` and `.jpg` files to Git LFS.
+git lfs migrate import --include="*.tif,*.jpg" --everything
+
+# Compare the history with what we had before the "git lfs migrate" command.
+git log --all --decorate --oneline --graph
+```
+
+3. After the migration command, we can no longer open any of the images in the working tree. The
+   reason for this is because the file content has been replaced by the content of the pointer,
+   e.g. `mammals/animal_walrus.tif` now contains:
+    ```
+    version https://git-lfs.github.com/spec/v1
+    oid sha256:3e45f949e2234094fd2946875a7e8b3a0ff9b182f85f0e4538471e59a00b5c81
+    size 7994968
+    ```
+
+   To restore the files in the working tree, we run:
+    ```yaml
+    git lfs checkout
+    ```
+   Now the walrus image is back!
+
+   To list all files that are tracked by Git LFS, we use: `git lfs ls-files --all`. The
+   files with a `*` are those that are currently checked-out.
+    ```
+    git lfs ls-files --all
+    ea67d4f8a5 * birds/animal_atlantic_puffin.tif
+    8c92a37ac7 * birds/animal_snowy_owl.jpg
+    6b58d6ac09 - fish/animal_pink_salmon.tif
+    1aa9297470 * mammals/animal_arctic_fox.jpg
+    2519e9a194 - mammals/animal_blue_whale.tif
+    47f090bd68 - mammals/animal_muskox.jpg
+    3e45f949e2 * mammals/animal_walrus.tif
+    4cf1383168 - birds/animal_emperor_penguin.tif
+    642c1360fe - birds/animal_gentoo_penguin.jpg
+    ```
+
+   Finally, let's have a look at the size of the `.git/objects`,  `.git/lfs` and `.git/`
+   directories again.
+   As can be seen below, the size of the `.git` directory has actually increased (doubled!),
+   because we now have a copy of all files both in the Git LFS object store [`.git/lfs/objects`]
+   and in the Git database [`.git/objects`].
+    ```yaml
+    du -sh .git
+        133M	.git
+    du -sh .git/objects
+        61M	.git/objects
+    du -sh .git/lfs
+        73M	.git/lfs
+    ```
+
+   However, this is only temporary. At some point Git will do garbage collection of all the commits
+   from the old history, and the copy of the files present in `.git/objects` will be removed.  
+   To force immediate removal of the files, you can run:
+    ```yaml
+    git reflog expire --expire-unreachable=now --all
+    git gc --prune=now
+    ```
+   The garbage collection has now reduced the size of the Git object store down to 40 KB !!
+    ```yaml
+    du -sh .git/objects/
+        28K	.git/objects/
+    ```
+
+4. Adding the humpback whale image as a LFS-tracked file. Since the humpback whale is a mammal,
+   we store it in the `mammals` sub-directory.
+```yaml
+git switch dev
+cp ../animal_humpback_whale.bmp mammals/
+git lfs track "*.bmp"       # The ".bmp" is a new file type,
+                            # we must tell Git LFS to track it.
+echo "Humpback Whale: Megaptera novaeangliae" >> mammals/mammal_list.txt
+git add mammals/animal_humpback_whale.bmp mammals/mammal_list.txt .gitattributes
+git commit -m "Add Humpback Whale"
+git switch master
+```
+
+5. Create a new empty repository on GitHub. The instructions for this are given in the exercise
+   and it's all done via the GitHub website.
+
+6. Now that we have an empty GitHub repo named `arctic_animals`, we can push the content of our
+   local repo to it. First we add the URL of the remote, then we push our two branches. Note that
+   the URL depends on the name of your GitHub user name
+```yaml
+git remote add origin https://github.com/<GitHub user name>/arctic_animals.git
+git switch master
+git push -u origin master
+git switch dev
+git push -u origin dev
+```
+
+7. To clear the local Git LFS cache [`.git/lfs/objects`], we use the `git lfs prune` command. As
+   can be seen below, there are 2 files that can be deleted, allowing us to reclaim 14 MB of disk
+   space (83 - 69 = 14 MB). After clearing of the cache, the size of the local LFS cache is 69 MB.
+```yaml
+git lfs prune --dry-run
+    prune: 10 local object(s), 8 retained, done.
+    prune: 2 file(s) would be pruned (8.4 MB), done.
+
+du -sh .git/lfs/
+    83M	.git/lfs/
+
+git lfs prune --verify-remote
+    prune: 9 local object(s), 8 retained, 1 verified with remote, done.
+    prune: Deleting objects: 100% (1/1), done.
+
+du -sh .git/lfs/
+    69M	.git/lfs/
+```
+
+8. Let's clone our `arctic_animals` repository at a different location, and see how much data
+   is downloaded (this simulates another person cloning the repository).
+```yaml
+cd ..
+git clone https://github.com/<GitHub user name>/arctic_animals.git arctic_animals_COPY
+cd arctic_animals_COPY
+du -sh .git/objects
+    32K	.git/objects
+du -sh .git/lfs
+    32M	.git/lfs
+```
+
+   As can be seen above, the size of the Git object store is now only 32 KB, and the size of the
+   Git LFS cache is 32 MB. The Git LFS cache size is smaller than in the original repo (69 MB),
+   because the `git clone` operation has only downloaded the files that are necessary for the
+   latest commit of the `master` branch (the branch that is checked-out by default). All other
+   files will only be downloaded when they are necessary: e.g. the files needed for the `dev`
+   branch will only be downloaded when doing a `git switch dev` / `git checkout dev`.
+
+9. On branch master, we edit the file `birds/birds_list.txt` and remove its 2 last lines which
+   contain the entries for the penguins. After this we stage the modified `birds/birds_list.txt`
+   file, and since the commit we wish to modify is the latest one on the current branch, we can
+   simply use the `--amend --no-edit` options of `git commit`.
+```yaml
+git switch master
+# Edit file birds/birds_list.txt: remove the last 2 lines.
+git add birds/birds_list.txt
+git commit --amend --no-edit
+```
+
+    Since this introduces a change in the history of branch `master`, we need to rebase `dev` on
+    `master`. We can then push our changes on `dev` to the remote. Note that we must use the
+    `--force` option of `git push` since we are re-writing history.
+```yaml
+git switch dev
+git rebase master
+git push --force
+```
+
+    Finally we can do the same `--force` push on branch master, so that our local and remote repo are
+    perfectly synchronized.
+```yaml
+git switch master
+git push --force
+```
