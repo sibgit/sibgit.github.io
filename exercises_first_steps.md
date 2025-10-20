@@ -641,33 +641,38 @@ should look like this:
 
 
 ## Exercise 4 - The Awesome Animal Awareness Project [60 min]
-**Objectives:** learn to collaborate with others on a project hosted on GitHub.
+**Objectives:** learn to collaborate with others on a project hosted on GitHub
+or GitLab.
 
 Congratulations! Your improving Git skills have not gone unnoticed, and you are
-now hired by our agile *A3P* startup to work on the
-[Awesome Animal Awareness Project](https://github.com/sibgit/sibgit.github.io).
+now hired by our agile startup to work on the
+**Awesome Animal Awareness Project** !
 
 Your mission - should you choose to accept it - is to help us build new
 website. This is a **collaborative effort**, and you will be working in teams
 of 3 people.
 Each team will contribute a web page about a specific, and awesome, animal.
 At the end of the exercise, the page created by your team will be integrated
-into the [Awesome Animal Awareness website](https://sibgit.github.io).
+into the [Awesome Animal Awareness website (GitHub)](https://sibgit.github.io)
+or [Awesome Animal Awareness website (GitLab)](https://sib-git-training.gitlab.io/awesome-animal-awareness) -
+use the GitHub or GitLab link, depending on whether the class is taught with
+GitHub or GitLab.
 
 * :fire:
   **Important:** please follow the **naming convention for branches** tightly,
   as our company's internal Git policies are **very strict**.
 * :fire:
-  **Before you start:** create a GitHub **personal access token** on GitHub.
-  This will be needed in order to allow you to push changes to GitHub. Please
-  refer to the course slides for instructions on how to create the token (a
-  demo might also be made in the class before the exercise).
+  **Before you start:** create a **personal access token (PAT)** on
+  GitHub/GitLab.
+  This will be needed in order to allow you to push changes to GitHub/GitLab.
+  Please refer to the course slides for instructions on how to create the token
+  (a demo might also be made in the class before the exercise).
 
 ### A) Organize your team
 1. **Get together:** go to the
    [course's google doc page](https://docs.google.com/document/d/1EX72NInz-eA2d2GOa5aTB8D88GWb91Sk-sCNHwQYXqE)
    and check which team you belong to by looking at the **Team** column in the
-   GitHub user names table.
+   GitHub/GitLab user names table.
     * **On-site course:** locate your other team members in the classroom and
       sit together so you can communicate.
     * **Online course:** you will be placed in a breakout-room with your
@@ -677,13 +682,17 @@ into the [Awesome Animal Awareness website](https://sibgit.github.io).
    <br>
 
 2. Change into `exercise_4/` and **clone** the *Awesome Animal Awareness Project*
-   project from its [GitHub repository](https://github.com/sibgit/sibgit.github.io).
+   project from its [GitHub repository](https://github.com/sibgit/sibgit.github.io)
+   or [GitLab repository](https://gitlab.com/sib-git-training/awesome-animal-awareness).  
+   :fire:
+   **Important**: use the GitHub or GitLab repo, depending on whether the class
+   is taught with GitHub or GitLab.
 
 3. **Among your group, chose a "team lead"**. The team lead should create a
    new **team branch** named after your animal's name followed by `-dev`.  
    Examples: `tiger-dev`, `yeti-dev`, `sunfish-dev`, `pallas-cat-dev`, ...  
    After the branch is created, the team leader should push it to the repo on
-   GitHub.
+   GitHub/GitLab.
 
    :fire:
    **Important:** when you push a local branch to a remote *for the first time*,
@@ -733,9 +742,9 @@ animal.
 
 2. On your personal branch, **edit the HTML file corresponding to your animal**.
    The topics that each member of the team has to work on are listed in the
-   Google doc - see the **Task** column of the GitHub user name table. In the
-   HTML file, the `??` mark the positions where you have to add your content
-   (make sure to remove the `??` after you are done editing).
+   Google doc - see the **Task** column of the table.
+   In the HTML file, the `??` mark the positions where you have to add your
+   content (make sure to remove the `??` after you are done editing).
    * For the team member with the task "Animal name", make sure to include the
      [binomial name](https://en.wikipedia.org/wiki/Binomial_nomenclature) of
      the species as well, e.g. "Pallas's cat (*Otocolobus manul*)"
@@ -759,7 +768,7 @@ animal.
 ### C) Merge your branch with your team's animal-dev branch
 Each team member should now merge the edits made on their personal branch (e.g.
 `tiger-sandra`) into the team's main development branch (e.g. `tiger-dev`), and
-then push the changes back to the remote repo on GitHub.
+then push the changes back to the remote repo on GitHub/GitLab.
 
 This is **best done as a coordinated, iterative, process**, where each member
 will in turn:
@@ -784,8 +793,8 @@ will in turn:
 3. **Merge the changes** from their personal branch into the team's main
    development branch.
 
-4. **Push the changes** back to the remote repo on GitHub. Then let the next
-   team member know that they can proceed.
+4. **Push the changes** back to the remote repo on GitHub/GitLab. Then let the
+   next team member know that they can proceed.
 
 <br>
 
@@ -794,20 +803,23 @@ development branch should contain the work of all 3 team members.
 
 <br>
 
-### D) Create a pull request for the top-level management to verify and approve your work.
+### D) Create a pull request / merge request for the top-level management to verify and approve your work.
 Now that your team's main branch is all merged and clean, the team leader
-should **create a pull request** for the team branch to be merged into the
-project's `main` branch.
+should **create a pull request** (or a **merge request** if using GitLab) for
+the team branch to be merged into the project's `main` branch.
 
-1. Creating such a pull request is done online, in the project's
-   [GitHub repository](https://github.com/sibgit/sibgit.github.io).  
-   In the **Pull requests** tab, click on **New pull request** (green button).
-   For more details on how to create a pull request, please refer to the course
-   slides.
+1. Creating a pull request (merge request) is done online, in the project's
+   [GitHub repository](https://github.com/sibgit/sibgit.github.io) or
+   [GitLab repository](https://github.com/sibgit/sibgit.github.io).
+   In the **Pull requests** / **Merge requests** tab, click on
+   **New pull request** / **New Merge request**.
+   For more details on how to create a pull request / merge request, please
+   refer to the course slides.
 
 2. Once the management approved your work and merged it into `main`, you should
    be able to see your animal's page on the
-   [Awesome Animal Awareness website](https://sibgit.github.io)!
+   [Awesome Animal Awareness website (GitHub)](https://sibgit.github.io) or
+   [Awesome Animal Awareness website (GitLab)](https://gitlab.com/sib-git-training/awesome-animal-awareness)!
 
 Well done! Enjoy your success by reading about your awesome animal and
 looking-up some of the other teams' pages.
