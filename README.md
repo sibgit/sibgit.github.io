@@ -10,23 +10,32 @@
 
 ### Overview
 
-Git is an open source, distributed, version control system for tracking changes
-in source code and other types of text documents. Created by Linus Torvald and
-first released in 2005, Git has become the de-facto standard for code/script
-management, and is extensively used both in open source and commercial software
-development. The usage of Git is not limited to code development, but
-can also be used to keep track of data analysis scripts and pipelines.
+**Git** is an open source version control system for tracking changes
+in code and other types of text documents. First released in 2005, Git has
+become the de-facto standard for version control, and is extensively used in
+both open source and commercial software development. The usage of Git is not
+limited to software development, but can also be used to keep track of data
+analysis scripts, pipelines, and more generally any text-based document.
 
-This 2-day course gives a very comprehensive introduction to Git and its most
-useful commands, as well as an introduction to collaborative workflows using
-GitHub.
+This 2-day course gives a **comprehensive overview of Git** and its most useful
+commands, as well as an introduction to collaborative workflows using GitHub.
 
-The course covers the following topics:
+The course starts with the basics of Git - it is therefore suitable for people
+with no or little knowledge of Git - and will take the participants all the
+way into more advanced territory such as editing the history of a Git
+repository. Emphasis is also put on collaborative workflows, which are actively
+practiced in some of the exercises.
+
+Please note that this course focuses exclusively on using Git via
+**command line**. This knowledge is then easily transferrable to any GUI
+environment (e.g. VS Code, RStudio, etc.).
+
+Specifically, the course covers the following topics:
 
 #### Day 1: first steps with Git
 
-* Introduction to version control systems and Git.
-* Git basics: your first commit.
+* Brief introduction to version control systems and Git.
+* Git basics: creating a git repository and making commits.
 * Git concepts: commits, the HEAD pointer and the Git index.
 * Git branches: introduction to branched workflows and collaborative
   workflow examples.
@@ -48,9 +57,10 @@ The course covers the following topics:
 This material is not formally presented during the course. It covers topics
 that can be useful in certain scenarios:
 
-* GitHub Actions and GitLab CI/CD: writing automated pipelines.
-* Git submodules: embed a Git repository as a subdirectory of another Git repo.
-* Git LFS: versioning large files with Git.
+* **GitHub Actions** and **GitLab CI/CD**: writing automated pipelines.
+* **Git submodules**: embed a Git repository as a subdirectory of another Git
+  repo.
+* **Git LFS**: versioning large files with Git.
 
 ### Audience
 
@@ -60,11 +70,6 @@ their scripts, files or code base.
 This includes people working on code development, but also scientists
 interested in improving the reproducibility of their data analyses by keeping
 track of their scripts using version control.
-
-The course starts with the basics of Git - and is therefore suitable for people
-with no or little knowledge of Git - and will take the participants to a fairly
-advanced level that should be more than enough to do most tasks you will want
-to carry-out with Git.
 
 ### ECTS credits
 
@@ -80,9 +85,10 @@ institutions.
 ### Knowledge/competencies
 
 The course is focused on using Git in command line mode (no graphical user
-interface). It is therefore highly recommended to have some basic knowledge
-of the UNIX command line: e.g. how to change directory or how to edit a file
-in a command line editor such as vim/nano.
+interface). It is therefore
+**highly recommended to have some basic knowledge of the UNIX command line**:
+e.g. how to change directory or how to edit a file in a command line editor
+such as vim/nano.
 
 If you are not familiar with these UNIX fundamentals, we strongly recommend
 that you either follow an introductory UNIX course (e.g. the SIB "First Steps
@@ -113,8 +119,8 @@ before the start of the course.
 ## Course links, exercises and slides
 
 :fire:
-**Please note:** the definitive course material such as slides and exercises
-will be made available on the first day of the course. Until then files do not
+**Please note:** the definitive course material (slides and exercises) will be
+made available on the first day of the course. Until then files do not
 necessarily correspond to the final version.
 
 Useful links during the course:
@@ -122,7 +128,6 @@ Useful links during the course:
 * [Google doc](https://docs.google.com/document/d/1EX72NInz-eA2d2GOa5aTB8D88GWb91Sk-sCNHwQYXqE):
   for asking questions, finding your team (exercise 4), and see answers to
   previously asked questions.
-* [Zoom link](not available): for online courses only.
 
 ### Course slides
 
@@ -218,7 +223,7 @@ Please note that this schedule is approximate.
 ## Useful references and tutorials
 
 * [Pro Git - free Git book](https://git-scm.com/book/en/v2)
-* [Atlassian Git tutorial - become a git guru](https://www.atlassian.com/git/tutorials)
+* [Atlassian Git tutorials](https://www.atlassian.com/git/tutorials)
 
 <br>
 
