@@ -74,11 +74,13 @@ git config --list --show-origin
 🚀 **Objective:** learn how to create a new Git repository, add files to it,
 and make commits.
 
-Welcome to the first exercise of this Git course !
+Welcome to the first exercise of this Git course !  
 This is a warm-up, so you will be guided step-by-step on exactly what you need
 to do.
 
-### Part A: create a new repo from scratch and make a first commit
+<br>
+
+### A) Creating a new repo from scratch
 
 1. **Change directory** into `exercise_1/test-project` and list the
    directory's content using the following shell commands:
@@ -109,23 +111,23 @@ to do.
 2. **Initialize a new Git repository** at the root of the `test-project`
    directory (the current working directory) with the command:
 
-   ```sh
-   git init   # Initialize a new Git repository.
-   ```
+     ```sh
+     # Initialize a new Git repository.
+     git init
+     ```
 
    Initializing a new Git repo creates a **hidden `.git` directory**. You
    can view this directory by running the shell command:
 
-   ```sh
-   ls -la   # You should observe that a new ".git" hidden directory was created.
-   ```
+     ```sh
+     # You should observe that a new ".git" hidden directory was created.
+     ls -la   
+     ```
 
-   > 🔥 **Important**
-   >
-   > The `.git` directory is where Git stores the entire history of your
-   > repository (as well as various settings). If you delete it, all your
-   > version control history (and settings) for this repository
-   > **will be permanently lost** (there is no "undo" !).
+   > 🔥 **Important:** the `.git` directory is where Git stores the entire
+   > history of your repository (as well as various settings). If you delete
+   > it, all your version control history (and settings) for this repository
+   > **will be permanently lost** (there is no "undo"!).
    >
    > You can nevertheless do this in certain circumstances, e.g. if you want
    > to start this exercise from scratch again.
@@ -160,11 +162,11 @@ to do.
    <br>
 
 4. **Stage the files** `README.md`, `script.py`, `doc/user-guide.pdf`,
-   `tests/output.csv` and `tests/tests.py` (i.e. all files except the `*.pyc`
-   files - these are "python cache" files we don't want to track).
+   `tests/output.csv` and `tests/tests.py` (all files except the `*.pyc`
+   files - these are "python cache" files that we don't want to track).
 
    > 🦉 **Reminders**
-   > * _staging_ a file is synonym of _adding to the Git index_.
+   > * _Staging_ a file is synonym of _adding to the Git index_.
    > * The command to stage files is: `git add <files or directories>`.
    >   For instance, `git add README.md` will stage the file `README.md`.
 
@@ -225,8 +227,8 @@ to do.
 5. **Add a first commit** to the repo with the commit message
    `Initial commit for test project`.
 
-   The command to make a commit is: **`git commit -m "commit message"`**
-   (or, in the long form: `git commit --message "commit message"`).
+   The command to make a commit is: **`git commit -m "commit message"`**.
+   `-m` is the short form of `--message`.
 
    After the commit is done, run the following commands:
    * **`git log`**: to display the repository's history. At this point you
@@ -246,34 +248,34 @@ to do.
       > 🌈 **Note:** when the amount of text to be printed by `git show`
       > exceeds one screen, the content is shown with the GNU program `less`.
       > In `less`, you can use your keyboard arrow keys to move up/down, and
-      > press `q` to exit and return to the shell.
+      > **press `q` to exit** and return to the shell.
 
-    <br>
+      ❓ **Question:** why are the details of the `doc/user-guide.pdf` file
+      not displayed by `git show`?
 
-   ❓ **Question:** why are the details of the `doc/user-guide.pdf` file not
-   displayed by `git show`?
+      <details><summary><b>✅ Solution</b></summary>
 
-    <details><summary><b>✅ Solution</b></summary>
+        ```sh
+        git commit -m "Initial commit for test project"
+        git log     # At this point the commit history contains a single commit.
+        git show    # Show content of the last commit.
+        ```
 
-      ```sh
-      git commit -m "Initial commit for test project"
-      git log     # At this point the commit history contains a single commit.
-      git show    # Show content of the last commit.
-      ```
+        Looking at the output of `git show`, we can see that the newly added
+        content for the file `doc/user-guide.pdf` is _not_ displayed (unlike
+        for `README.md` for instance, where the content of the file is shown).
 
-      Looking at the output of `git show`, we can see that the newly added
-      content for the file `doc/user-guide.pdf` is _not_ displayed (unlike
-      for `README.md` for instance, where the content of the file is shown).
+        The reason is that `user-guide.pdf` is a **binary file** and not a
+        plain text file. Git does not display details for binary files.
 
-      The reason is that `user-guide.pdf` is a **binary file** and not a
-      plain text file. Git does not display details for binary files.
-
-    </details>
+      </details>
 
    <br>
 
-   > ✨ **Tip:** to crate a commit with a multi-line commit message, we can
-   > run the command `git commit` with no addition arguments.
+   > ✨ **Tip: interactive commit messages**
+   >
+   > To crate a commit with a multi-line commit message, we can run the
+   > command **`git commit`** with no addition arguments.
    >
    > This opens a text editor (by default `vim`) where one can manually enter
    > the commit message. The convention for multi-line messages is to have a
@@ -292,7 +294,7 @@ to do.
 
 <br>
 
-### Part B: commit changes to tracked files
+### B) Committing changes to tracked files
 
 In this section, we will make an update to the `README.md` file, and then
 create a new commit that adds the change we made to our Git repo.
@@ -381,7 +383,7 @@ create a new commit that adds the change we made to our Git repo.
 
 <br>
 
-### Part C: adding files to the `.gitignore` list
+### C) Ignoring files with `.gitignore`
 
 At this point, the only files that should be left **untracked** in our
 repository are the two `*.pyc` files (you can verify this by running
